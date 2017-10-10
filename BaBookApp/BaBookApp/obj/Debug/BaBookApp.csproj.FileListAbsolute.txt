@@ -1,0 +1,17 @@
+C:\Users\Studentas\Desktop\Project\App\BaBookApp\BaBookApp\bin\Debug\BaBookApp.dll
+C:\Users\Studentas\Desktop\Project\App\BaBookApp\BaBookApp\bin\Debug\BaBookApp.pdb
+C:\Users\Studentas\Desktop\Project\App\BaBookApp\BaBookApp\bin\Debug\BaBookApp.BaBookApp.apk
+C:\Users\Studentas\Desktop\Project\App\BaBookApp\BaBookApp\bin\Debug\BaBookApp.BaBookApp-Signed.apk
+C:\Users\Studentas\Desktop\Project\App\BaBookApp\BaBookApp\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Studentas\Desktop\Project\App\BaBookApp\BaBookApp\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Studentas\Desktop\Project\App\BaBookApp\BaBookApp\obj\Debug\BaBookApp.csprojResolveAssemblyReference.cache
+C:\Users\Studentas\Desktop\Project\App\BaBookApp\BaBookApp\obj\Debug\BaBookApp.csproj.CoreCompileInputs.cache
+C:\Users\Studentas\Desktop\Project\App\BaBookApp\BaBookApp\obj\Debug\BaBookApp.dll
+C:\Users\Studentas\Desktop\Project\App\BaBookApp\BaBookApp\obj\Debug\BaBookApp.pdb
+C:\Users\Studentas\Desktop\Project\App\BaBookApp\BaBookApp\obj\Debug\android\bin\BaBookApp.BaBookApp.apk
+C:\Users\Studentas\Desktop\Project\App\BaBookApp\BaBookApp\obj\Debug\res\layout\main.xml
+C:\Users\Studentas\Desktop\Project\App\BaBookApp\BaBookApp\obj\Debug\res\values\strings.xml
+C:\Users\Studentas\Desktop\Project\App\BaBookApp\BaBookApp\obj\Debug\R.cs.flag
+C:\Users\Studentas\Desktop\Project\App\BaBookApp\BaBookApp\obj\Debug\uploadflags.txt
+C:\Users\Studentas\Desktop\Project\App\BaBookApp\BaBookApp\bin\Debug\BaBookApp.dll.mdb
+C:\Users\Studentas\Desktop\Project\App\BaBookApp\BaBookApp\obj\Debug\android\assets\BaBookApp.dll.mdb

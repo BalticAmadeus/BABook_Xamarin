@@ -1,0 +1,4 @@
+BaBookApp.MainActivity, BaBookApp;md56d5baaf7b69e030eb36e273b71d700ab.MainActivity
+BaBookApp.MainActivity, BaBookApp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null;md56d5baaf7b69e030eb36e273b71d700ab.MainActivity
+BaBookApp.MainActivity;md56d5baaf7b69e030eb36e273b71d700ab.MainActivity
+babookapp.MainActivity;md56d5baaf7b69e030eb36e273b71d700ab.MainActivity
