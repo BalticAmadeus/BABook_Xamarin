@@ -11,10 +11,22 @@ public final class R {
     public static final class attr {
     }
     public static final class id {
-        public static final int mainFrame=0x7f040000;
+        public static final int AddDescriptionTxt=0x7f040001;
+        public static final int AddEventDate=0x7f040003;
+        public static final int AddLocationTxt=0x7f040002;
+        public static final int AddNewEventButton=0x7f040004;
+        public static final int AddTitleTxt=0x7f040000;
+        public static final int Date=0x7f040007;
+        public static final int Description=0x7f040006;
+        public static final int Title=0x7f040005;
+        public static final int addEventButton=0x7f04000a;
+        public static final int listView1=0x7f040009;
+        public static final int mainFrame=0x7f040008;
     }
     public static final class layout {
-        public static final int main=0x7f020000;
+        public static final int addeventdialog=0x7f020000;
+        public static final int eventlistview=0x7f020001;
+        public static final int main=0x7f020002;
     }
     public static final class string {
         public static final int app_name=0x7f030000;

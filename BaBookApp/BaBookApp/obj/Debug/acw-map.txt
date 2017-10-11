@@ -2,3 +2,15 @@ BaBookApp.MainActivity, BaBookApp;md56d5baaf7b69e030eb36e273b71d700ab.MainActivi
 BaBookApp.MainActivity, BaBookApp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null;md56d5baaf7b69e030eb36e273b71d700ab.MainActivity
 BaBookApp.MainActivity;md56d5baaf7b69e030eb36e273b71d700ab.MainActivity
 babookapp.MainActivity;md56d5baaf7b69e030eb36e273b71d700ab.MainActivity
+BaBookApp.Resources.AddEventDialogClass, BaBookApp;md561e2c754f206fbdc7d187a9aed2293fa.AddEventDialogClass
+BaBookApp.Resources.AddEventDialogClass, BaBookApp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null;md561e2c754f206fbdc7d187a9aed2293fa.AddEventDialogClass
+BaBookApp.Resources.AddEventDialogClass;md561e2c754f206fbdc7d187a9aed2293fa.AddEventDialogClass
+babookapp.resources.AddEventDialogClass;md561e2c754f206fbdc7d187a9aed2293fa.AddEventDialogClass
+BaBookApp.Resources.ViewHolder, BaBookApp;md561e2c754f206fbdc7d187a9aed2293fa.ViewHolder
+BaBookApp.Resources.ViewHolder, BaBookApp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null;md561e2c754f206fbdc7d187a9aed2293fa.ViewHolder
+BaBookApp.Resources.ViewHolder;md561e2c754f206fbdc7d187a9aed2293fa.ViewHolder
+babookapp.resources.ViewHolder;md561e2c754f206fbdc7d187a9aed2293fa.ViewHolder
+BaBookApp.Resources.EventList, BaBookApp;md561e2c754f206fbdc7d187a9aed2293fa.EventList
+BaBookApp.Resources.EventList, BaBookApp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null;md561e2c754f206fbdc7d187a9aed2293fa.EventList
+BaBookApp.Resources.EventList;md561e2c754f206fbdc7d187a9aed2293fa.EventList
+babookapp.resources.EventList;md561e2c754f206fbdc7d187a9aed2293fa.EventList
