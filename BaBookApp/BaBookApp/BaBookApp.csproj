@@ -61,8 +61,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MainActivity.cs" />
-    <Compile Include="Resources\AddEventDialogClass.cs" />
-    <Compile Include="Resources\EventList.cs" />
+    <Compile Include="Resources\Fragments\Dialog\FinallAddEventDialog.cs" />
+    <Compile Include="Resources\Fragments\Dialog\PickDataDialog.cs" />
+    <Compile Include="Resources\Fragments\Dialog\PickTimeDialog.cs" />
+    <Compile Include="Resources\ListViews\EventList.cs" />
+    <Compile Include="Resources\Fragments\Dialog\AddEventFragment.cs" />
     <Compile Include="Resources\Models\EventModel.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -76,7 +79,16 @@
     <AndroidResource Include="Resources\layout\EventListView.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
-    <AndroidResource Include="Resources\layout\AddEventDialog.axml">
+    <AndroidResource Include="Resources\layout\AddEventFragmentView.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\DatePicerDialogView.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\TimePicerDialogView.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\AddEventFinalView.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>

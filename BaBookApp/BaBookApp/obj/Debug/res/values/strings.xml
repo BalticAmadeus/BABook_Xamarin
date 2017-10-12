@@ -1,1 +1,1 @@
-<resources><string name="app_name">BaBookApp</string></resources>
+<resources><string name="app_name">BaBookApp</string><string name="BackApiUrl">http://trycatch2017.azurewebsites.net/api/</string></resources>

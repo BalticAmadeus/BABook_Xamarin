@@ -1,7 +1,7 @@
-package md561e2c754f206fbdc7d187a9aed2293fa;
+package md52523d154b8eabca39ca40219fec8acb8;
 
 
-public class AddEventDialogClass
+public class PickDataDialog
 	extends android.app.DialogFragment
 	implements
 		mono.android.IGCUserPeer
@@ -12,15 +12,15 @@ public class AddEventDialogClass
 		__md_methods = 
 			"n_onCreateView:(Landroid/view/LayoutInflater;Landroid/view/ViewGroup;Landroid/os/Bundle;)Landroid/view/View;:GetOnCreateView_Landroid_view_LayoutInflater_Landroid_view_ViewGroup_Landroid_os_Bundle_Handler\n" +
 			"";
-		mono.android.Runtime.register ("BaBookApp.Resources.AddEventDialogClass, BaBookApp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null", AddEventDialogClass.class, __md_methods);
+		mono.android.Runtime.register ("BaBookApp.Resources.Fragments.Dialog.PickDataDialog, BaBookApp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null", PickDataDialog.class, __md_methods);
 	}
 
 
-	public AddEventDialogClass ()
+	public PickDataDialog ()
 	{
 		super ();
-		if (getClass () == AddEventDialogClass.class)
-			mono.android.TypeManager.Activate ("BaBookApp.Resources.AddEventDialogClass, BaBookApp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null", "", this, new java.lang.Object[] {  });
+		if (getClass () == PickDataDialog.class)
+			mono.android.TypeManager.Activate ("BaBookApp.Resources.Fragments.Dialog.PickDataDialog, BaBookApp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null", "", this, new java.lang.Object[] {  });
 	}
 
 

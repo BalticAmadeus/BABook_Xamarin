@@ -44,38 +44,65 @@ namespace BaBookApp
 		public partial class Id
 		{
 			
-			// aapt resource value: 0x7f040001
-			public const int AddDescriptionTxt = 2130968577;
-			
-			// aapt resource value: 0x7f040003
-			public const int AddEventDate = 2130968579;
-			
-			// aapt resource value: 0x7f040002
-			public const int AddLocationTxt = 2130968578;
-			
-			// aapt resource value: 0x7f040004
-			public const int AddNewEventButton = 2130968580;
-			
-			// aapt resource value: 0x7f040000
-			public const int AddTitleTxt = 2130968576;
+			// aapt resource value: 0x7f04000b
+			public const int AddDateButton = 2130968587;
 			
 			// aapt resource value: 0x7f040007
-			public const int Date = 2130968583;
-			
-			// aapt resource value: 0x7f040006
-			public const int Description = 2130968582;
-			
-			// aapt resource value: 0x7f040005
-			public const int Title = 2130968581;
-			
-			// aapt resource value: 0x7f04000a
-			public const int addEventButton = 2130968586;
-			
-			// aapt resource value: 0x7f040009
-			public const int listView1 = 2130968585;
+			public const int AddDescriptionTxt = 2130968583;
 			
 			// aapt resource value: 0x7f040008
-			public const int mainFrame = 2130968584;
+			public const int AddLocationTxt = 2130968584;
+			
+			// aapt resource value: 0x7f040006
+			public const int AddTitleTxt = 2130968582;
+			
+			// aapt resource value: 0x7f04000e
+			public const int Date = 2130968590;
+			
+			// aapt resource value: 0x7f04000d
+			public const int Description = 2130968589;
+			
+			// aapt resource value: 0x7f040005
+			public const int FinalAddEventButton = 2130968581;
+			
+			// aapt resource value: 0x7f040003
+			public const int FinallDate = 2130968579;
+			
+			// aapt resource value: 0x7f040001
+			public const int FinallDescription = 2130968577;
+			
+			// aapt resource value: 0x7f040002
+			public const int FinallLocation = 2130968578;
+			
+			// aapt resource value: 0x7f040004
+			public const int FinallTime = 2130968580;
+			
+			// aapt resource value: 0x7f040000
+			public const int FinallTitle = 2130968576;
+			
+			// aapt resource value: 0x7f04000f
+			public const int Location = 2130968591;
+			
+			// aapt resource value: 0x7f04000a
+			public const int NewEventDate = 2130968586;
+			
+			// aapt resource value: 0x7f040009
+			public const int NewEventDatePick = 2130968585;
+			
+			// aapt resource value: 0x7f040013
+			public const int NewEventTime = 2130968595;
+			
+			// aapt resource value: 0x7f04000c
+			public const int Title = 2130968588;
+			
+			// aapt resource value: 0x7f040012
+			public const int addEventButton = 2130968594;
+			
+			// aapt resource value: 0x7f040011
+			public const int listView1 = 2130968593;
+			
+			// aapt resource value: 0x7f040010
+			public const int mainFrame = 2130968592;
 			
 			static Id()
 			{
@@ -91,13 +118,22 @@ namespace BaBookApp
 		{
 			
 			// aapt resource value: 0x7f020000
-			public const int AddEventDialog = 2130837504;
+			public const int AddEventFinalView = 2130837504;
 			
 			// aapt resource value: 0x7f020001
-			public const int EventListView = 2130837505;
+			public const int AddEventFragmentView = 2130837505;
 			
 			// aapt resource value: 0x7f020002
-			public const int Main = 2130837506;
+			public const int DatePicerDialogView = 2130837506;
+			
+			// aapt resource value: 0x7f020003
+			public const int EventListView = 2130837507;
+			
+			// aapt resource value: 0x7f020004
+			public const int Main = 2130837508;
+			
+			// aapt resource value: 0x7f020005
+			public const int TimePicerDialogView = 2130837509;
 			
 			static Layout()
 			{
@@ -111,6 +147,9 @@ namespace BaBookApp
 		
 		public partial class String
 		{
+			
+			// aapt resource value: 0x7f030001
+			public const int BackApiUrl = 2130903041;
 			
 			// aapt resource value: 0x7f030000
 			public const int app_name = 2130903040;

@@ -2,9 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:minWidth="25px"
-    android:minHeight="25px">
+    android:layout_height="match_parent">
     <TextView
         android:text="Add New Event"
         android:textSize="20sp"
@@ -20,9 +18,9 @@
     <EditText
         android:id="@+id/AddTitleTxt"
         android:layout_height="wrap_content"
-                android:layout_width="match_parent"
+        android:layout_width="match_parent"
         android:layout_marginLeft="24.0dp"
-        android:layout_marginRight="24.0dp"/>
+        android:layout_marginRight="24.0dp" />
     <TextView
         android:text="Description:"
         android:layout_gravity="center"
@@ -32,7 +30,7 @@
     <EditText
         android:id="@+id/AddDescriptionTxt"
         android:layout_height="wrap_content"
-                android:layout_width="match_parent"
+        android:layout_width="match_parent"
         android:layout_marginLeft="24.0dp"
         android:layout_marginRight="24.0dp" />
     <TextView
@@ -46,23 +44,10 @@
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:layout_marginLeft="24.0dp"
-        android:layout_marginRight="24.0dp"/>
-    <TextView
-        android:text="Date of occurance:"
-        android:layout_gravity="center"
-        android:textSize="15sp"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content" />
-    <EditText
-        android:inputType="date"
-        android:id="@+id/AddEventDate"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:layout_marginLeft="24.0dp"
         android:layout_marginRight="24.0dp" />
     <Button
-        android:text="Add Event"
+        android:text="Next"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:id="@+id/AddNewEventButton" />
+        android:id="@+id/NewEventDatePick" />
 </LinearLayout>

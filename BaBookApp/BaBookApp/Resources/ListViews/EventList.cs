@@ -19,6 +19,7 @@ namespace BaBookApp.Resources
         public TextView Title { get; set; }
         public TextView Description { get; set; }
         public TextView Date { get; set; }
+        public TextView Location { get; set; }
     }
 
     public class EventList : BaseAdapter
@@ -57,9 +58,11 @@ namespace BaBookApp.Resources
             var txtTitle = view.FindViewById<TextView>(Resource.Id.Title);
             var txtDescription = view.FindViewById<TextView>(Resource.Id.Description);
             var txtDate = view.FindViewById<TextView>(Resource.Id.Date);
+            var txtLocation = view.FindViewById<TextView>(Resource.Id.Location);
             txtTitle.Text = _events[position].Title;
             txtDescription.Text = _events[position].Description;
             txtDate.Text = _events[position].DateOfOccurance.ToString();
+            txtLocation.Text = _events[position].Location;
             return view;
         }
     }

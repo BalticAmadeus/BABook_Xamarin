@@ -10,13 +10,16 @@ using Android.Views;
 using AndroidApp.Resources.Models;
 using Newtonsoft.Json;
 using BaBookApp.Resources;
-using static Android.Renderscripts.Element;
+using BaBookApp.Resources.Fragments.Dialog;
 
 namespace BaBookApp
 {
     [Activity(Label = "BaBookApp", MainLauncher = true)]
     public class MainActivity : Activity
     {
+        private EventViewModel _event = new EventViewModel();
+        private List<EventViewModel> _events = new List<EventViewModel>();
+        private EventList adabter;
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -25,75 +28,88 @@ namespace BaBookApp
 
             var EventListView = FindViewById<ListView>(Resource.Id.listView1);
             var AddEvent = FindViewById<Button>(Resource.Id.addEventButton);
+            var EventListConectionTask = UpdateEventList(EventListView);
+
+            //if(EventListConectionTask.IsCompleted)
+            //{
+            //    var toastText = new TextView(this){Text = "Connection Error !"};
+            //    Toast.MakeText(this, toastText.Id, ToastLength.Long).Show();
+            //}
+            
 
             AddEvent.Click += (object sender, EventArgs args) =>
             {
-                FragmentTransaction transaction = FragmentManager.BeginTransaction();
-                AddEventDialogClass AddEventDialog = new AddEventDialogClass();
-                AddEventDialog.Show(transaction, "Add New Event");
+                var transaction = FragmentManager.BeginTransaction();
+                var addEventDialog = new AddEventFragment();
+                addEventDialog.Show(transaction, "addnewevent");
+                addEventDialog.EventNextStep += AddEventDialog_EventNextStep;
             };
-
-
-
-            List<EventViewModel> _events = new List<EventViewModel>();
-            for (int i = 0; i < 30; i++)
-            {
-                EventViewModel ev = new EventViewModel
-                {
-                    Title = "As" + i.ToString(),
-                    Description = "Des" + i.ToString(),
-                    DateOfOccurance = DateTime.Now
-                };
-                _events.Add(ev);
-            }
-            var adabter = new EventList(this, _events);
-            EventListView.Adapter = adabter;
-
         }
-        //public async void UpdateEventList(LinearLayout frame)
-        //{
-        //    var json = await RefreshDataAsync();
-        //    var eventList = JsonConvert.DeserializeObject<List<EventViewModel>>(json);
-        //    foreach (var _event in eventList)
-        //    {
-        //        frame.AddView(AddEventToList(_event));
-        //    }
-        //}
 
-        //public async Task<string> RefreshDataAsync()
-        //{
-        //    HttpClient client = new HttpClient
-        //    {
-        //        MaxResponseContentBufferSize = 256000
-        //    };
-        //    var uri = new Uri("http://192.168.22.46:50039/api/events");
+        private void AddEventDialog_EventNextStep(object sender, AddNewEventEvent e)
+        {
+            _event.Title = e.Title;
+            _event.Description = e.Description;
+            _event.Location = e.Location;
+            var transaction = FragmentManager.BeginTransaction();
+            var addEventDialog = new PickDataDialog();
+            addEventDialog.Show(transaction, "addnewevent");
+            addEventDialog.EventNextStep += AddEventDialog_EventNextStep1;
+        }
 
-        //    var response = await client.GetAsync(uri);
-        //    if (response.IsSuccessStatusCode)
-        //    {
-        //        var content = await response.Content.ReadAsStringAsync();
-        //        return content;
-        //    }
-        //    return "";
-        //}
+        private void AddEventDialog_EventNextStep1(object sender, AddNewEventDate e)
+        {
+            _event.DateOfOccurance = e.Date;
+            var transaction = FragmentManager.BeginTransaction();
+            var addEventDialog = new PickTimeDialog();
+            addEventDialog.Show(transaction, "addnewevent");
+            addEventDialog.EventNextStep += AddEventDialog_EventNextStep2;
+        }
 
-        //private TextView CreateText(int textSize, string text, Context context)
-        //{
-        //    var textView = new TextView(context)
-        //    {
-        //        Text = text,
-        //        TextSize = textSize
-        //    };
-        //    return textView;
-        //}
-        //private TableLayout AddEventToList(EventViewModel events)
-        //{
-        //    var row = new TableLayout(this);
-        //    row.AddView(CreateText(25, events.Title, this));
-        //    row.AddView(CreateText(20, events.Description, this));
-        //    row.AddView(CreateText(15, events.DateOfOccurance.ToString(), this));
-        //    return row;
-        //}
+        private void AddEventDialog_EventNextStep2(object sender, AddNewEventTime e)
+        {
+            var date = _event.DateOfOccurance.Add(e.Date);
+            _event.DateOfOccurance = date;
+            var transaction = FragmentManager.BeginTransaction();
+            var addEventDialog = new FinallAddEventDialog(_event);
+            addEventDialog.Show(transaction, "addnewevent");
+            addEventDialog.EventNextStep += AddEventDialog_EventNextStep3;
+        }
+
+        private void AddEventDialog_EventNextStep3(object sender, AddNewEventFinall e)
+        {
+            _events.Add(e.Event);
+            adabter.NotifyDataSetChanged();
+        }
+
+        public async Task UpdateEventList(ListView listView)
+        {
+            var json = await RefreshDataAsync("events");
+            _events = JsonConvert.DeserializeObject<List<EventViewModel>>(json);
+            if (_events != null)
+            {
+                adabter = new EventList(this, _events);
+                listView.Adapter = adabter;
+            }
+        }
+
+        public async Task<string> RefreshDataAsync(string api)
+        {
+            HttpClient client = new HttpClient
+            {
+                MaxResponseContentBufferSize = 256000
+            };
+            var apiurl = Resources.GetString(Resource.String.BackApiUrl) + api;
+            var uri = new System.Uri(apiurl);
+
+            var response = await client.GetAsync(uri);
+            if (response.IsSuccessStatusCode)
+            {
+                var content = await response.Content.ReadAsStringAsync();
+                return content;
+            }
+            return "";
+        }
     }
 }
 
