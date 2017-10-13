@@ -2,7 +2,7 @@
 
 namespace AndroidApp.Resources.Models
 {
-    public class EventViewModel
+    public class GetEventModel
     {
         public int EventId { get; set; }
         public string Title { get; set; }

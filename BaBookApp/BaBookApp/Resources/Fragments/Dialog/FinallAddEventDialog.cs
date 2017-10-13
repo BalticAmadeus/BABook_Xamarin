@@ -15,9 +15,9 @@ namespace BaBookApp.Resources.Fragments.Dialog
 {
     public class AddNewEventFinall : EventArgs
     {
-        public EventViewModel Event { get; set; }
+        public GetEventModel Event { get; set; }
 
-        public AddNewEventFinall(EventViewModel evn) : base()
+        public AddNewEventFinall(GetEventModel evn) : base()
         {
             Event = evn;
         }
@@ -30,23 +30,26 @@ namespace BaBookApp.Resources.Fragments.Dialog
         private EditText txtLocation;
         private EditText txtDate;
         private EditText txtTime;
-        private EventViewModel _event;
+        private GetEventModel _event;
         private Context context;
 
         public event EventHandler<AddNewEventFinall> EventNextStep;
 
-        public FinallAddEventDialog(EventViewModel even)
+        public FinallAddEventDialog(GetEventModel even)
         {
             _event = even;
         }
+
+        [Obsolete("deprecated")]
         public override void OnAttach(Activity activity)
         {
             base.OnAttach(activity);
             context = activity;
         }
-        public override void OnCreate(Bundle savedInstanceState)
+        public override void OnActivityCreated(Bundle savedInstanceState)
         {
-            base.OnCreate(savedInstanceState);
+            Dialog.Window.SetTitle("Edit New Event");
+            base.OnActivityCreated(savedInstanceState);
         }
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -74,10 +77,9 @@ namespace BaBookApp.Resources.Fragments.Dialog
             _event.Description = txtDescription.Text;
             _event.Location = txtLocation.Text;
             var dateAndTimeString = txtDate.Text +" "+ txtTime.Text;
-            DateTime dateAndTime;
 
             //TODO AddValidation
-            if (DateTime.TryParse(dateAndTimeString, out dateAndTime))
+            if (DateTime.TryParse(dateAndTimeString, out _))
             {
                 _event.DateOfOccurance = DateTime.Parse(dateAndTimeString);
                 EventNextStep.Invoke(this, new AddNewEventFinall(_event));

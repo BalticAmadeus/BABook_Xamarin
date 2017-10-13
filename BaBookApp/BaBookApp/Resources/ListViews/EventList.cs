@@ -25,22 +25,15 @@ namespace BaBookApp.Resources
     public class EventList : BaseAdapter
     {
         private Activity activity;
-        private List<EventViewModel> _events;
+        private List<GetEventModel> _events;
 
-
-        public EventList(Activity activity, List<EventViewModel> events)
+        public EventList(Activity activity, List<GetEventModel> events)
         {
             this.activity = activity;
             this._events = events;
         }
 
-        public override int Count
-        {
-            get
-            {
-                return _events.Count;
-            }
-        }
+        public override int Count => _events.Count;
 
         public override Java.Lang.Object GetItem(int position)
         {

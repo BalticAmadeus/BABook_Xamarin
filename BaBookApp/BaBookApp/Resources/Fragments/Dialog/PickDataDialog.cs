@@ -14,12 +14,7 @@ namespace BaBookApp.Resources.Fragments.Dialog
 {
    public class AddNewEventDate : EventArgs
     {
-        private DateTime tDate;
-        public DateTime Date
-        {
-            get { return tDate; }
-            set { tDate = value; }
-        }
+        public DateTime Date { get; set; }
 
         public AddNewEventDate(DateTime date) : base()
         {
@@ -31,6 +26,13 @@ namespace BaBookApp.Resources.Fragments.Dialog
     {
         private DatePicker txtData;
         public event EventHandler<AddNewEventDate> EventNextStep;
+
+        public override void OnActivityCreated(Bundle savedInstanceState)
+        {
+            Dialog.Window.SetTitle("Pick Event Date");
+            base.OnActivityCreated(savedInstanceState);
+        }
+
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
             var view = inflater.Inflate(Resource.Layout.DatePicerDialogView, container, false);

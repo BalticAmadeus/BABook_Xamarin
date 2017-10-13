@@ -17,8 +17,8 @@ namespace BaBookApp
     [Activity(Label = "BaBookApp", MainLauncher = true)]
     public class MainActivity : Activity
     {
-        private EventViewModel _event = new EventViewModel();
-        private List<EventViewModel> _events = new List<EventViewModel>();
+        private GetEventModel _event = new GetEventModel();
+        private List<GetEventModel> _events = new List<GetEventModel>();
         private EventList adabter;
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -85,7 +85,7 @@ namespace BaBookApp
         public async Task UpdateEventList(ListView listView)
         {
             var json = await RefreshDataAsync("events");
-            _events = JsonConvert.DeserializeObject<List<EventViewModel>>(json);
+            _events = JsonConvert.DeserializeObject<List<GetEventModel>>(json);
             if (_events != null)
             {
                 adabter = new EventList(this, _events);

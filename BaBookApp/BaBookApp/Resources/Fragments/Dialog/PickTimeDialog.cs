@@ -15,12 +15,7 @@ namespace BaBookApp.Resources.Fragments.Dialog
 {
     public class AddNewEventTime : EventArgs
     {
-        private TimeSpan tDate;
-        public TimeSpan Date
-        {
-            get { return tDate; }
-            set { tDate = value; }
-        }
+        public TimeSpan Date { get; set; }
 
         public AddNewEventTime(TimeSpan date) : base()
         {
@@ -34,6 +29,12 @@ namespace BaBookApp.Resources.Fragments.Dialog
         private TimeSpan time;
         public event EventHandler<AddNewEventTime> EventNextStep;
 
+        public override void OnActivityCreated(Bundle savedInstanceState)
+        {
+            Dialog.Window.SetTitle("Pick Event Time");
+            base.OnActivityCreated(savedInstanceState);
+        }
+
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
             var view = inflater.Inflate(Resource.Layout.TimePicerDialogView, container, false);
@@ -44,6 +45,7 @@ namespace BaBookApp.Resources.Fragments.Dialog
             nextButton.Click += NextStep;
             return view;
         }
+
         private void NextStep(object sender, EventArgs e)
         {
             time = new TimeSpan((int)txtTime.CurrentHour, (int)txtTime.CurrentMinute, 0);

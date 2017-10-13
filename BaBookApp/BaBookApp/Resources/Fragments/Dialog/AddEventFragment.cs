@@ -15,26 +15,10 @@ namespace BaBookApp.Resources.Fragments.Dialog
 {
     public class AddNewEventEvent : EventArgs
     {
-        private string tTitle;
-        private string tDesciption;
-        private string tLocation;
+        public string Title { get; set; }
+        public string Description { get; set; }
+        public string Location { get; set; }
 
-        public string Title
-        {
-            get { return tTitle; }
-            set { tTitle = value; }
-        }
-        public string Description
-        {
-            get { return tDesciption; }
-            set { tDesciption = value; }
-        }
-        public string Location
-        {
-            get { return tLocation; }
-            set { tLocation = value; }
-        }
-       
         public AddNewEventEvent(string title, string descrption, string location) : base()
         {
             Title = title;
@@ -51,9 +35,10 @@ namespace BaBookApp.Resources.Fragments.Dialog
 
         public event EventHandler<AddNewEventEvent> EventNextStep;
 
-        public override void OnCreate(Bundle savedInstanceState)
+        public override void OnActivityCreated(Bundle savedInstanceState)
         {
-            base.OnCreate(savedInstanceState);
+            Dialog.Window.SetTitle("Add New Event");
+            base.OnActivityCreated(savedInstanceState);
         }
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -70,7 +55,7 @@ namespace BaBookApp.Resources.Fragments.Dialog
 
         private void NextStep(object sender, EventArgs e)
         {
-            EventNextStep.Invoke(this, new AddNewEventEvent(txtTitle.Text, txtDescription.Text, txtDescription.Text));
+            EventNextStep.Invoke(this, new AddNewEventEvent(txtTitle.Text, txtDescription.Text, txtLocation.Text));
             this.Dismiss();
         }
     }
