@@ -84,7 +84,7 @@ namespace BaBookApp
 
         public async Task UpdateEventList(ListView listView)
         {
-            var json = await RefreshDataAsync("events");
+            var json = await GetDataAsync("events");
             _events = JsonConvert.DeserializeObject<List<GetEventModel>>(json);
             if (_events != null)
             {
@@ -93,7 +93,7 @@ namespace BaBookApp
             }
         }
 
-        public async Task<string> RefreshDataAsync(string api)
+        public async Task<string> GetDataAsync(string api)
         {
             HttpClient client = new HttpClient
             {
