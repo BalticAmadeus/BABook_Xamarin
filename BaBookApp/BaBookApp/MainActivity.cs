@@ -11,10 +11,11 @@ using AndroidApp.Resources.Models;
 using Newtonsoft.Json;
 using BaBookApp.Resources;
 using BaBookApp.Resources.Fragments.Dialog;
+using System.Text;
 
 namespace BaBookApp
 {
-    [Activity(Label = "BaBookApp", MainLauncher = true)]
+    [Activity(Label = "BaBookApp", MainLauncher = true, Icon = "@drawable/icon")]
     public class MainActivity : Activity
     {
         private GetEventModel _event = new GetEventModel();
@@ -35,18 +36,18 @@ namespace BaBookApp
             //    var toastText = new TextView(this){Text = "Connection Error !"};
             //    Toast.MakeText(this, toastText.Id, ToastLength.Long).Show();
             //}
-            
+
 
             AddEvent.Click += (object sender, EventArgs args) =>
             {
                 var transaction = FragmentManager.BeginTransaction();
                 var addEventDialog = new AddEventFragment();
                 addEventDialog.Show(transaction, "addnewevent");
-                addEventDialog.EventNextStep += AddEventDialog_EventNextStep;
+                addEventDialog.EventNextStep += GetEventData;
             };
         }
 
-        private void AddEventDialog_EventNextStep(object sender, AddNewEventEvent e)
+        private void GetEventData(object sender, AddNewEventEvent e)
         {
             _event.Title = e.Title;
             _event.Description = e.Description;
@@ -54,29 +55,29 @@ namespace BaBookApp
             var transaction = FragmentManager.BeginTransaction();
             var addEventDialog = new PickDataDialog();
             addEventDialog.Show(transaction, "addnewevent");
-            addEventDialog.EventNextStep += AddEventDialog_EventNextStep1;
+            addEventDialog.EventNextStep += GetEventDate;
         }
 
-        private void AddEventDialog_EventNextStep1(object sender, AddNewEventDate e)
+        private void GetEventDate(object sender, AddNewEventDate e)
         {
             _event.DateOfOccurance = e.Date;
             var transaction = FragmentManager.BeginTransaction();
             var addEventDialog = new PickTimeDialog();
             addEventDialog.Show(transaction, "addnewevent");
-            addEventDialog.EventNextStep += AddEventDialog_EventNextStep2;
+            addEventDialog.EventNextStep += GetEventTime;
         }
 
-        private void AddEventDialog_EventNextStep2(object sender, AddNewEventTime e)
+        private void GetEventTime(object sender, AddNewEventTime e)
         {
             var date = _event.DateOfOccurance.Add(e.Date);
             _event.DateOfOccurance = date;
             var transaction = FragmentManager.BeginTransaction();
             var addEventDialog = new FinallAddEventDialog(_event);
             addEventDialog.Show(transaction, "addnewevent");
-            addEventDialog.EventNextStep += AddEventDialog_EventNextStep3;
+            addEventDialog.EventNextStep += GetAllEventDate;
         }
 
-        private void AddEventDialog_EventNextStep3(object sender, AddNewEventFinall e)
+        private void GetAllEventDate(object sender, AddNewEventFinall e)
         {
             _events.Add(e.Event);
             adabter.NotifyDataSetChanged();
@@ -109,6 +110,19 @@ namespace BaBookApp
                 return content;
             }
             return "";
+        }
+
+        public async Task<HttpResponseMessage> PostDataAsync(string api, object o)
+        {
+            HttpClient client = new HttpClient
+            {
+                MaxResponseContentBufferSize = 256000
+            };
+            var apiurl = Resources.GetString(Resource.String.BackApiUrl) + api;
+            var uri = new System.Uri(apiurl);
+
+            var result = await client.PostAsync(uri.ToString(), new StringContent(JsonConvert.SerializeObject(o), Encoding.UTF8, "application/json"));
+            return result;
         }
     }
 }
