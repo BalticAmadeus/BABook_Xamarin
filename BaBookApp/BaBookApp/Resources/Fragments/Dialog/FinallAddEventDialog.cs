@@ -10,14 +10,15 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using AndroidApp.Resources.Models;
+using BaBookApp.Resources.Models;
 
 namespace BaBookApp.Resources.Fragments.Dialog
 {
     public class AddNewEventFinall : EventArgs
     {
-        public GetEventModel Event { get; set; }
+        public PostEventModel Event { get; set; }
 
-        public AddNewEventFinall(GetEventModel evn) : base()
+        public AddNewEventFinall(PostEventModel evn) : base()
         {
             Event = evn;
         }
@@ -30,12 +31,12 @@ namespace BaBookApp.Resources.Fragments.Dialog
         private EditText txtLocation;
         private EditText txtDate;
         private EditText txtTime;
-        private GetEventModel _event;
+        private PostEventModel _event;
         private Context context;
 
         public event EventHandler<AddNewEventFinall> EventNextStep;
 
-        public FinallAddEventDialog(GetEventModel even)
+        public FinallAddEventDialog(PostEventModel even)
         {
             _event = even;
         }
@@ -54,7 +55,7 @@ namespace BaBookApp.Resources.Fragments.Dialog
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
-            var view = inflater.Inflate(Resource.Layout.AddEventFinalView, container, false);
+            var view = inflater.Inflate(Resource.Layout.AddEventFinalDialogView, container, false);
             var nextButton = view.FindViewById<Button>(Resource.Id.FinalAddEventButton);
             txtTitle = view.FindViewById<EditText>(Resource.Id.FinallTitle);
             txtDescription = view.FindViewById<EditText>(Resource.Id.FinallDescription);

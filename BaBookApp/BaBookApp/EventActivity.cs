@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Android.App;
-using Android.Content;
 using Android.Widget;
 using Android.OS;
 using Android.Views;
@@ -12,22 +11,25 @@ using Newtonsoft.Json;
 using BaBookApp.Resources;
 using BaBookApp.Resources.Fragments.Dialog;
 using System.Text;
+using BaBookApp.Resources.Models;
 
 namespace BaBookApp
 {
-    [Activity(Label = "BaBookApp", MainLauncher = true, Icon = "@drawable/icon")]
-    public class MainActivity : Activity
+    [Activity(Label = "BaBook.Event")]
+    public class EventActivity : Activity
     {
-        private GetEventModel _event = new GetEventModel();
+        private PostEventModel newEvent = new PostEventModel();
         private List<GetEventModel> _events = new List<GetEventModel>();
         private EventList adabter;
+        private ListView EventListView;
+
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
             Window.RequestFeature(WindowFeatures.NoTitle);
-            SetContentView(Resource.Layout.Main);
+            SetContentView(Resource.Layout.EventMainView);
 
-            var EventListView = FindViewById<ListView>(Resource.Id.listView1);
+            EventListView = FindViewById<ListView>(Resource.Id.listView1);
             var AddEvent = FindViewById<Button>(Resource.Id.addEventButton);
             var EventListConectionTask = UpdateEventList(EventListView);
 
@@ -49,9 +51,9 @@ namespace BaBookApp
 
         private void GetEventData(object sender, AddNewEventEvent e)
         {
-            _event.Title = e.Title;
-            _event.Description = e.Description;
-            _event.Location = e.Location;
+            newEvent.Title = e.Title;
+            newEvent.Description = e.Description;
+            newEvent.Location = e.Location;
             var transaction = FragmentManager.BeginTransaction();
             var addEventDialog = new PickDataDialog();
             addEventDialog.Show(transaction, "addnewevent");
@@ -60,7 +62,7 @@ namespace BaBookApp
 
         private void GetEventDate(object sender, AddNewEventDate e)
         {
-            _event.DateOfOccurance = e.Date;
+            newEvent.DateOfOccurance = e.Date;
             var transaction = FragmentManager.BeginTransaction();
             var addEventDialog = new PickTimeDialog();
             addEventDialog.Show(transaction, "addnewevent");
@@ -69,18 +71,20 @@ namespace BaBookApp
 
         private void GetEventTime(object sender, AddNewEventTime e)
         {
-            var date = _event.DateOfOccurance.Add(e.Date);
-            _event.DateOfOccurance = date;
+            var date = newEvent.DateOfOccurance.Add(e.Date);
+            newEvent.DateOfOccurance = date;
             var transaction = FragmentManager.BeginTransaction();
-            var addEventDialog = new FinallAddEventDialog(_event);
+            var addEventDialog = new FinallAddEventDialog(newEvent);
             addEventDialog.Show(transaction, "addnewevent");
             addEventDialog.EventNextStep += GetAllEventDate;
         }
 
         private void GetAllEventDate(object sender, AddNewEventFinall e)
         {
-            _events.Add(e.Event);
-            adabter.NotifyDataSetChanged();
+            newEvent.OwnerId = 1;
+            newEvent.GroupId = 1;
+            var taskPost = PostDataAsync("events", newEvent);
+            //var taskGet = UpdateEventList(EventListView);
         }
 
         public async Task UpdateEventList(ListView listView)
@@ -114,14 +118,12 @@ namespace BaBookApp
 
         public async Task<HttpResponseMessage> PostDataAsync(string api, object o)
         {
-            HttpClient client = new HttpClient
-            {
-                MaxResponseContentBufferSize = 256000
-            };
+            HttpClient client = new HttpClient();
             var apiurl = Resources.GetString(Resource.String.BackApiUrl) + api;
             var uri = new System.Uri(apiurl);
 
-            var result = await client.PostAsync(uri.ToString(), new StringContent(JsonConvert.SerializeObject(o), Encoding.UTF8, "application/json"));
+            var result = await client.PostAsync(uri.ToString(),
+                new StringContent(JsonConvert.SerializeObject(o), Encoding.UTF8, "application/json"));
             return result;
         }
     }

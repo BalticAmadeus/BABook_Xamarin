@@ -62,7 +62,8 @@
     <Reference Include="Mono.Android" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MainActivity.cs" />
+    <Compile Include="LoginActivity.cs" />
+    <Compile Include="EventActivity.cs" />
     <Compile Include="Resources\Fragments\Dialog\FinallAddEventDialog.cs" />
     <Compile Include="Resources\Fragments\Dialog\PickDataDialog.cs" />
     <Compile Include="Resources\Fragments\Dialog\PickTimeDialog.cs" />
@@ -81,7 +82,7 @@
     <AndroidResource Include="Resources\layout\EventListView.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
-    <AndroidResource Include="Resources\layout\AddEventFragmentView.axml">
+    <AndroidResource Include="Resources\layout\AddEventFragmentDialogView.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\DatePicerDialogView.axml">
@@ -90,12 +91,15 @@
     <AndroidResource Include="Resources\layout\TimePicerDialogView.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
-    <AndroidResource Include="Resources\layout\AddEventFinalView.axml">
+    <AndroidResource Include="Resources\layout\AddEventFinalDialogView.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\LoginMainView.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\layout\Main.axml">
+    <AndroidResource Include="Resources\layout\EventMainView.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\values\Strings.xml" />
