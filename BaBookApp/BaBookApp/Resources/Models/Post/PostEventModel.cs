@@ -12,7 +12,7 @@ using Android.Widget;
 
 namespace BaBookApp.Resources.Models
 {
-    class PostEventModel
+    public class PostEventModel
     {
         public int GroupId { get; set; }
         public int OwnerId { get; set; }
