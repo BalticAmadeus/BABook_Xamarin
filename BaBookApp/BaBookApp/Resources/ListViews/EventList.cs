@@ -58,5 +58,6 @@ namespace BaBookApp.Resources
             txtLocation.Text = _events[position].Location;
             return view;
         }
+
     }
 }

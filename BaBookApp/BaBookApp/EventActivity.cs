@@ -12,10 +12,11 @@ using BaBookApp.Resources;
 using BaBookApp.Resources.Fragments.Dialog;
 using System.Text;
 using BaBookApp.Resources.Models;
+using Android.Content;
 
 namespace BaBookApp
 {
-    [Activity(Label = "BaBook.Event")]
+    [Activity(Label = "BaBook.Event", MainLauncher = true)]
     public class EventActivity : Activity
     {
         private PostEventModel newEvent = new PostEventModel();
@@ -95,7 +96,15 @@ namespace BaBookApp
             {
                 adabter = new EventList(this, _events);
                 listView.Adapter = adabter;
+                listView.ItemClick += EventClicked;
             }
+        }
+
+        private void EventClicked(object sender, AdapterView.ItemClickEventArgs e)
+        {
+            var eventDetail = new Intent(this, typeof(EventDetailActivity));
+            eventDetail.PutExtra("Event", e.Id);
+            StartActivity(eventDetail);
         }
 
         public async Task<string> GetDataAsync(string api)
