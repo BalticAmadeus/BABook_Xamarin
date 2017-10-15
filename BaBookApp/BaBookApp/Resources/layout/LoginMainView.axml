@@ -3,6 +3,13 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <Toolbar
+        android:minHeight="?android:attr/actionBarSize"
+        android:background="?android:attr/colorPrimary"
+        android:minWidth="25px"
+        android:id="@+id/LoginToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
     <GridLayout
         android:layout_height="wrap_content"
         android:layout_width="match_parent"

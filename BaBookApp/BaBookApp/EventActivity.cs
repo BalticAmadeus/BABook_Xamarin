@@ -16,7 +16,7 @@ using Android.Content;
 
 namespace BaBookApp
 {
-    [Activity(Label = "BaBook.Event", MainLauncher = true)]
+    [Activity(Label = "BaBook.Event", ParentActivity = typeof(MainActivity))]
     public class EventActivity : Activity
     {
         private PostEventModel newEvent = new PostEventModel();
@@ -27,8 +27,12 @@ namespace BaBookApp
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-            Window.RequestFeature(WindowFeatures.NoTitle);
             SetContentView(Resource.Layout.EventMainView);
+            var toolbar = FindViewById<Toolbar>(Resource.Id.EventToolBar);
+            SetActionBar(toolbar);
+            ActionBar.Title = "Events";
+            ActionBar.SetDisplayHomeAsUpEnabled(true);
+            ActionBar.SetHomeButtonEnabled(true);
 
             EventListView = FindViewById<ListView>(Resource.Id.listView1);
             var AddEvent = FindViewById<Button>(Resource.Id.addEventButton);

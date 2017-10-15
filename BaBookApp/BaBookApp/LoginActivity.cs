@@ -13,14 +13,16 @@ using Android.Widget;
 
 namespace BaBookApp
 {
-    [Activity(Label = "BaBook.Login", Icon = "@drawable/icon")]
+    [Activity(Label = "BaBook.Login", MainLauncher = true, Icon = "@drawable/icon")]
     public class LoginActivity : Activity
     {
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.LoginMainView);
-            this.Title = "Login";
+            var toolbar = FindViewById<Toolbar>(Resource.Id.LoginToolbar);
+            SetActionBar(toolbar);
+            ActionBar.Title = "Login";
             var email = FindViewById<EditText>(Resource.Id.LoginEmail);
             var password = FindViewById<EditText>(Resource.Id.LoginPassword);
             var loginButton = FindViewById<Button>(Resource.Id.LoginButton);
@@ -29,7 +31,7 @@ namespace BaBookApp
             {
                 if (email.Text == "test" && password.Text == "test")
                 {
-                    StartActivity(typeof(EventActivity));
+                    StartActivity(typeof(MainActivity));
                 }
                 else
                 {
