@@ -84,13 +84,13 @@ namespace BaBookApp
         {
             newEvent.OwnerId = 1;
             newEvent.GroupId = 1;
-            var taskPost = PostDataAsync("events", newEvent);
-            //var taskGet = UpdateEventList(EventListView);
+            var taskPost = PostNewEvent("events", newEvent);
+            var taskGet = UpdateEventList(EventListView);
         }
 
         public async Task UpdateEventList(ListView listView)
         {
-            var json = await GetDataAsync("events");
+            var json = await GetEventList("events");
             _events = JsonConvert.DeserializeObject<List<GetEventModel>>(json);
             if (_events != null)
             {
@@ -103,11 +103,11 @@ namespace BaBookApp
         private void EventClicked(object sender, AdapterView.ItemClickEventArgs e)
         {
             var eventDetail = new Intent(this, typeof(EventDetailActivity));
-            eventDetail.PutExtra("Event", e.Id);
+            eventDetail.PutExtra("Value", e.Id.ToString());
             StartActivity(eventDetail);
         }
 
-        public async Task<string> GetDataAsync(string api)
+        public async Task<string> GetEventList(string api)
         {
             HttpClient client = new HttpClient
             {
@@ -125,12 +125,10 @@ namespace BaBookApp
             return "";
         }
 
-        public async Task<HttpResponseMessage> PostDataAsync(string api, object o)
+        public async Task<HttpResponseMessage> PostNewEvent(string api, object o)
         {
             HttpClient client = new HttpClient();
-            var apiurl = Resources.GetString(Resource.String.BackApiUrl) + api;
-            var uri = new System.Uri(apiurl);
-
+            var uri = Resources.GetString(Resource.String.BackApiUrl) + api;
             var result = await client.PostAsync(uri.ToString(),
                 new StringContent(JsonConvert.SerializeObject(o), Encoding.UTF8, "application/json"));
             return result;

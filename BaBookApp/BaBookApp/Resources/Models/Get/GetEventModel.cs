@@ -1,22 +1,25 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 
 namespace AndroidApp.Resources.Models
 {
     public class GetEventModel
     {
-        //public int EventId { get; set; }
-        //public string OwnerName { get; set; }
-        //public string GroupName { get; set; }
-        //public DateTime Date { get; set; }
-        //public string Title { get; set; }
-        //public string Description { get; set; }
-        //public string Location { get; set; }
-        //public Enums.EventResponse AttendanceStatus { get; set; }
-
+        [JsonProperty("eventId")]
         public int EventId { get; set; }
-        public string Title { get; set; }
+        [JsonProperty("creatorName")]
+        public string OwnerName { get; set; }
+        [JsonProperty("groupName")]
+        public string GroupName { get; set; }
+        [JsonProperty("date")]
         public DateTime DateOfOccurance { get; set; }
-        public string Location { get; set; }
+        [JsonProperty("title")]
+        public string Title { get; set; }
+        [JsonProperty("comment")]
         public string Description { get; set; }
+        [JsonProperty("location")]
+        public string Location { get; set; }
+        [JsonProperty("status")]
+        public int AttendanceStatus { get; set; }
     }
 }
