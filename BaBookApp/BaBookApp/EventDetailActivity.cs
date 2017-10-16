@@ -11,7 +11,9 @@ using Android.Widget;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Net.Http;
+using Android.Views.InputMethods;
 using AndroidApp.Resources.Models;
+using BaBookApp.Resources.Functions;
 using BaBookApp.Resources.ListViews;
 using BaBookApp.Resources.Models.Get;
 using BaBookApp.Resources.Models.Post;
@@ -19,33 +21,33 @@ using Newtonsoft.Json;
 
 namespace BaBookApp
 {
-    [Activity(Label = "BaBook.Event.Detail", ParentActivity = typeof(EventActivity))]
-    public class EventDetailActivity : Activity
+    [Activity(Label = "BaBook.Event.Detail" ,ParentActivity = typeof(EventActivity))]
+    public class EventDetailActivity : Activity, GestureDetector.IOnGestureListener
     {
         private int EventId;
         private GetEventModel _event;
-        private bool ActivityShown;
+        private ApiRequest ApiRequest = new ApiRequest();
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.EventDetailMainView);
-            ActivityShown = true;
-            var toolBar = FindViewById<Toolbar>(Resource.Id.toolbar1);
-            var addCommentBtn = FindViewById<Button>(Resource.Id.EventDetail_CommentButton);
-            addCommentBtn.Click += AddNewComment;
-            string eventIdstring = Intent.GetStringExtra("Value") ?? "0";
-            EventId = Int32.Parse(eventIdstring);
-            SetActionBar(toolBar);
-            Task commentTask;
-            var task = GetEvent();
-            //commentTask = GetCommentsAsync();
 
+            SetActionBar(FindViewById<Toolbar>(Resource.Id.toolbar1));
             ActionBar.SetDisplayHomeAsUpEnabled(true);
             ActionBar.SetHomeButtonEnabled(true);
+
+            var addCommentBtn = FindViewById<Button>(Resource.Id.EventDetail_CommentButton);
+            addCommentBtn.Click += AddNewComment;
+
+            var imm = (InputMethodManager)GetSystemService(InputMethodService);
+            imm.HideSoftInputFromWindow(FindViewById<EditText>(Resource.Id.EventDetail_CommentTxt).WindowToken, 0);
+
+            EventId = Int32.Parse(Intent.GetStringExtra("Value") ?? "0");
+            LoadEvent();
         }
 
-        private void AddNewComment(object sender, EventArgs e)
+        private async void AddNewComment(object sender, EventArgs e)
         {
             var txtcomment = FindViewById<EditText>(Resource.Id.EventDetail_CommentTxt);
             var comment = new PostNewComment
@@ -53,27 +55,19 @@ namespace BaBookApp
                 UserId = 1,
                 CommentText = txtcomment.Text
             };
+
             txtcomment.Text = "";
-            var task = PostNewComment("comments/" + EventId, comment);
-            var tasks = GetComments();
+            var imm = (InputMethodManager)GetSystemService(InputMethodService);
+            imm.HideSoftInputFromWindow(txtcomment.WindowToken, 0);
+
+            await ApiRequest.PostObjectByApi("comments/" + EventId, comment);
+            await GetComments();
         }
 
-        protected override void OnStop()
-        {
-            base.OnStop();
-            ActivityShown = false;
-        }
-
-        protected override void OnResume()
-        {
-            base.OnResume();
-            ActivityShown = true;
-        }
-        
-        public async Task GetEvent()
+        public async Task LoadEvent()
         {
             string api = @"events/" + EventId;
-            var json = await GetById(api);
+            var json = await ApiRequest.GetJsonByApi(api);
             _event = JsonConvert.DeserializeObject<GetEventModel>(json);
             if (_event != null)
             {
@@ -84,29 +78,12 @@ namespace BaBookApp
                 FindViewById<TextView>(Resource.Id.EventDetail_Date).Text = _event.DateOfOccurance.ToShortDateString();
                 FindViewById<TextView>(Resource.Id.EventDetail_Time).Text = _event.DateOfOccurance.ToShortTimeString();
             }
+            await GetComments();
         }
-
-        //public async Task GetCommentsAsync()
-        //{
-        //    while (ActivityShown)
-        //    {
-        //        string api = @"comments/" + EventId;
-        //        var json = await GetById(api);
-        //        var commentListview = FindViewById<ListView>(Resource.Id.EventDetail_CommentsList);
-        //        var eventComments = JsonConvert.DeserializeObject<List<GetEventComments>>(json);
-        //        if (eventComments != null)
-        //        {
-        //            var commentAdabter = new CommentsList(this, eventComments);
-        //            commentListview.Adapter = commentAdabter;
-        //        }
-        //        await Task.Delay(30000);
-        //    }
-        //}
 
         public async Task GetComments()
         {
-            string api = @"comments/" + EventId;
-            var json = await GetById(api);
+            var json = await ApiRequest.GetJsonByApi(@"comments/" + EventId);
             var commentListview = FindViewById<ListView>(Resource.Id.EventDetail_CommentsList);
             var eventComments = JsonConvert.DeserializeObject<List<GetEventComments>>(json);
             if (eventComments != null)
@@ -116,29 +93,56 @@ namespace BaBookApp
             }
         }
 
-        public async Task<string> GetById(string api)
+
+        private float PressBegining;
+        public bool OnTouch(View v, MotionEvent e)
         {
-            var client = new HttpClient();
-
-            var apiurl = Resources.GetString(Resource.String.BackApiUrl) + api;
-            var uri = new System.Uri(apiurl);
-
-            var response = await client.GetAsync(uri);
-            if (response.IsSuccessStatusCode)
+            switch (e.Action)
             {
-                var content = await response.Content.ReadAsStringAsync();
-                return content;
+                case MotionEventActions.Down:
+                {
+                    PressBegining = e.GetY();
+                    break;
+                }
+                case MotionEventActions.Up:
+                {
+                    if (PressBegining > e.GetY())
+                    {
+                        var sa = true;
+                    }
+                    break;
+                }
             }
-            return "";
+            return false;
         }
-       
-        public async Task<HttpResponseMessage> PostNewComment(string api, object o)
+
+        public bool OnDown(MotionEvent e)
         {
-            HttpClient client = new HttpClient();
-            var uri = Resources.GetString(Resource.String.BackApiUrl) + api;
-            var result = await client.PostAsync(uri,
-                new StringContent(JsonConvert.SerializeObject(o), Encoding.UTF8, "application/json"));
-            return result;
+            return true;
+        }
+
+        public bool OnFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY)
+        {
+            return true;
+        }
+
+        public void OnLongPress(MotionEvent e)
+        {
+        }
+
+        public bool OnScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY)
+        {
+            return true;
+        }
+
+        public void OnShowPress(MotionEvent e)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool OnSingleTapUp(MotionEvent e)
+        {
+            throw new NotImplementedException();
         }
     }
 }

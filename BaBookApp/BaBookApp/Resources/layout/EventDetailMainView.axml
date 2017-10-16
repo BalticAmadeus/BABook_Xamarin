@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/toolbar1" />
     <TextView
-        android:text="Description"
+        android:text=""
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="20dp"
@@ -31,7 +31,7 @@
             android:layout_column="0"
             android:layout_row="0" />
         <TextView
-            android:text="Group"
+            android:text=""
             android:textSize="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -52,7 +52,7 @@
             android:layout_column="0"
             android:layout_row="0" />
         <TextView
-            android:text="Location"
+            android:text=""
             android:textSize="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -73,7 +73,7 @@
             android:layout_column="0"
             android:layout_row="0" />
         <TextView
-            android:text="Date"
+            android:text=""
             android:textSize="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -106,19 +106,22 @@
         android:text="Comments"
         android:textSize="25dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" 
-        android:gravity="center"/>
+        android:layout_height="wrap_content"
+        android:gravity="center" />
     <ListView
         android:minWidth="25px"
         android:minHeight="25px"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:stackFromBottom="true"
+        IsPullToRefreshEnabled="True"
         android:id="@+id/EventDetail_CommentsList"
         android:layout_weight="1" />
     <EditText
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:id="@+id/EventDetail_CommentTxt"
+        android:hint="Comment"
         android:layout_marginRight="10dp"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="5dp" />
