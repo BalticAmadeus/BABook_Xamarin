@@ -13,7 +13,7 @@ using Android.Widget;
 
 namespace BaBookApp
 {
-    [Activity(Label = "BaBook.Login", Icon = "@drawable/icon")]
+    [Activity(Label = "BaBook.Login",MainLauncher = true, Icon = "@drawable/icon")]
     public class LoginActivity : Activity
     {
         protected override void OnCreate(Bundle savedInstanceState)

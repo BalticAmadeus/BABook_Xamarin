@@ -104,9 +104,10 @@
     </GridLayout>
     <TextView
         android:text="Comments"
-        android:textSize="20dp"
+        android:textSize="25dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content" 
+        android:gravity="center"/>
     <ListView
         android:minWidth="25px"
         android:minHeight="25px"

@@ -44,7 +44,7 @@ namespace BaBookApp.Resources.ListViews
         public override View GetView(int position, View convertView, ViewGroup parent)
         {
             var view = convertView ?? activity.LayoutInflater.Inflate(Resource.Layout.ComentListView, parent, false);
-            view.FindViewById<TextView>(Resource.Id.CommentList_Name).Text = comments[position].OwnerUser + ":";
+            view.FindViewById<TextView>(Resource.Id.CommentList_Name).Text = comments[position].OwnerUser;
             view.FindViewById<TextView>(Resource.Id.CommentList_Text).Text = comments[position].Text;
             return view;
         }
