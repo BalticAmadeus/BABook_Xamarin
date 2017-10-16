@@ -69,8 +69,10 @@
     <Compile Include="Resources\Fragments\Dialog\FinallAddEventDialog.cs" />
     <Compile Include="Resources\Fragments\Dialog\PickDataDialog.cs" />
     <Compile Include="Resources\Fragments\Dialog\PickTimeDialog.cs" />
+    <Compile Include="Resources\ListViews\CommentsList.cs" />
     <Compile Include="Resources\ListViews\EventList.cs" />
     <Compile Include="Resources\Fragments\Dialog\AddEventFragment.cs" />
+    <Compile Include="Resources\Models\Get\GetEventComments.cs" />
     <Compile Include="Resources\Models\Get\GetEventModel.cs" />
     <Compile Include="Resources\Models\Post\PostEventModel.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
@@ -103,6 +105,9 @@
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\MainActivityMainView.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\ComentListView.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>

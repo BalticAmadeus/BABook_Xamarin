@@ -60,8 +60,8 @@ namespace BaBookApp
 		public partial class Id
 		{
 			
-			// aapt resource value: 0x7f07000b
-			public const int AddDateButton = 2131165195;
+			// aapt resource value: 0x7f07000d
+			public const int AddDateButton = 2131165197;
 			
 			// aapt resource value: 0x7f070007
 			public const int AddDescriptionTxt = 2131165191;
@@ -72,23 +72,44 @@ namespace BaBookApp
 			// aapt resource value: 0x7f070006
 			public const int AddTitleTxt = 2131165190;
 			
-			// aapt resource value: 0x7f070012
-			public const int Date = 2131165202;
+			// aapt resource value: 0x7f07000a
+			public const int CommentList_Name = 2131165194;
 			
-			// aapt resource value: 0x7f070011
-			public const int Description = 2131165201;
+			// aapt resource value: 0x7f07000b
+			public const int CommentList_Text = 2131165195;
 			
-			// aapt resource value: 0x7f07000f
-			public const int EventDetail_CommentButton = 2131165199;
+			// aapt resource value: 0x7f070019
+			public const int Date = 2131165209;
 			
-			// aapt resource value: 0x7f07000e
-			public const int EventDetail_CommentTxt = 2131165198;
+			// aapt resource value: 0x7f070018
+			public const int Description = 2131165208;
 			
-			// aapt resource value: 0x7f07000d
-			public const int EventDetail_CommentsList = 2131165197;
+			// aapt resource value: 0x7f070016
+			public const int EventDetail_CommentButton = 2131165206;
 			
 			// aapt resource value: 0x7f070015
-			public const int EventToolBar = 2131165205;
+			public const int EventDetail_CommentTxt = 2131165205;
+			
+			// aapt resource value: 0x7f070014
+			public const int EventDetail_CommentsList = 2131165204;
+			
+			// aapt resource value: 0x7f070012
+			public const int EventDetail_Date = 2131165202;
+			
+			// aapt resource value: 0x7f07000f
+			public const int EventDetail_Desc = 2131165199;
+			
+			// aapt resource value: 0x7f070010
+			public const int EventDetail_Group = 2131165200;
+			
+			// aapt resource value: 0x7f070011
+			public const int EventDetail_Loc = 2131165201;
+			
+			// aapt resource value: 0x7f070013
+			public const int EventDetail_Time = 2131165203;
+			
+			// aapt resource value: 0x7f07001c
+			public const int EventToolBar = 2131165212;
 			
 			// aapt resource value: 0x7f070005
 			public const int FinalAddEventButton = 2131165189;
@@ -108,50 +129,50 @@ namespace BaBookApp
 			// aapt resource value: 0x7f070000
 			public const int FinallTitle = 2131165184;
 			
-			// aapt resource value: 0x7f070013
-			public const int Location = 2131165203;
-			
-			// aapt resource value: 0x7f07001b
-			public const int LoginButton = 2131165211;
-			
-			// aapt resource value: 0x7f070019
-			public const int LoginEmail = 2131165209;
-			
 			// aapt resource value: 0x7f07001a
-			public const int LoginPassword = 2131165210;
+			public const int Location = 2131165210;
 			
-			// aapt resource value: 0x7f070018
-			public const int LoginToolbar = 2131165208;
+			// aapt resource value: 0x7f070022
+			public const int LoginButton = 2131165218;
 			
-			// aapt resource value: 0x7f07001c
-			public const int MainToolbar = 2131165212;
+			// aapt resource value: 0x7f070020
+			public const int LoginEmail = 2131165216;
 			
-			// aapt resource value: 0x7f07000a
-			public const int NewEventDate = 2131165194;
+			// aapt resource value: 0x7f070021
+			public const int LoginPassword = 2131165217;
+			
+			// aapt resource value: 0x7f07001f
+			public const int LoginToolbar = 2131165215;
+			
+			// aapt resource value: 0x7f070023
+			public const int MainToolbar = 2131165219;
+			
+			// aapt resource value: 0x7f07000c
+			public const int NewEventDate = 2131165196;
 			
 			// aapt resource value: 0x7f070009
 			public const int NewEventDatePick = 2131165193;
 			
-			// aapt resource value: 0x7f07001d
-			public const int NewEventTime = 2131165213;
-			
-			// aapt resource value: 0x7f070010
-			public const int Title = 2131165200;
+			// aapt resource value: 0x7f070024
+			public const int NewEventTime = 2131165220;
 			
 			// aapt resource value: 0x7f070017
-			public const int addEventButton = 2131165207;
-			
-			// aapt resource value: 0x7f070016
-			public const int listView1 = 2131165206;
-			
-			// aapt resource value: 0x7f070014
-			public const int mainFrame = 2131165204;
+			public const int Title = 2131165207;
 			
 			// aapt resource value: 0x7f07001e
-			public const int mainmenu_events = 2131165214;
+			public const int addEventButton = 2131165214;
 			
-			// aapt resource value: 0x7f07000c
-			public const int toolbar1 = 2131165196;
+			// aapt resource value: 0x7f07001d
+			public const int listView1 = 2131165213;
+			
+			// aapt resource value: 0x7f07001b
+			public const int mainFrame = 2131165211;
+			
+			// aapt resource value: 0x7f070025
+			public const int mainmenu_events = 2131165221;
+			
+			// aapt resource value: 0x7f07000e
+			public const int toolbar1 = 2131165198;
 			
 			static Id()
 			{
@@ -173,25 +194,28 @@ namespace BaBookApp
 			public const int AddEventFragmentDialogView = 2130903041;
 			
 			// aapt resource value: 0x7f030002
-			public const int DatePicerDialogView = 2130903042;
+			public const int ComentListView = 2130903042;
 			
 			// aapt resource value: 0x7f030003
-			public const int EventDetailMainView = 2130903043;
+			public const int DatePicerDialogView = 2130903043;
 			
 			// aapt resource value: 0x7f030004
-			public const int EventListView = 2130903044;
+			public const int EventDetailMainView = 2130903044;
 			
 			// aapt resource value: 0x7f030005
-			public const int EventMainView = 2130903045;
+			public const int EventListView = 2130903045;
 			
 			// aapt resource value: 0x7f030006
-			public const int LoginMainView = 2130903046;
+			public const int EventMainView = 2130903046;
 			
 			// aapt resource value: 0x7f030007
-			public const int MainActivityMainView = 2130903047;
+			public const int LoginMainView = 2130903047;
 			
 			// aapt resource value: 0x7f030008
-			public const int TimePicerDialogView = 2130903048;
+			public const int MainActivityMainView = 2130903048;
+			
+			// aapt resource value: 0x7f030009
+			public const int TimePicerDialogView = 2130903049;
 			
 			static Layout()
 			{

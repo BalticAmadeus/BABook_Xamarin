@@ -16,7 +16,7 @@ using Android.Content;
 
 namespace BaBookApp
 {
-    [Activity(Label = "BaBook.Event", ParentActivity = typeof(MainActivity))]
+    [Activity(Label = "BaBook.Event", MainLauncher = true, ParentActivity = typeof(MainActivity))]
     public class EventActivity : Activity
     {
         private PostEventModel newEvent = new PostEventModel();
