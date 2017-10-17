@@ -13,8 +13,10 @@ using System.Threading.Tasks;
 using System.Net.Http;
 using Android.Views.InputMethods;
 using AndroidApp.Resources.Models;
+using BaBookApp.Resources.Fragments.Dialog;
 using BaBookApp.Resources.Functions;
 using BaBookApp.Resources.ListViews;
+using BaBookApp.Resources.Models;
 using BaBookApp.Resources.Models.Get;
 using BaBookApp.Resources.Models.Post;
 using Newtonsoft.Json;
@@ -22,29 +24,82 @@ using Newtonsoft.Json;
 namespace BaBookApp
 {
     [Activity(Label = "BaBook.Event.Detail" ,ParentActivity = typeof(EventActivity))]
-    public class EventDetailActivity : Activity, GestureDetector.IOnGestureListener
+    public class EventDetailActivity : Activity
     {
         private int EventId;
         private GetEventModel _event;
         private ApiRequest ApiRequest = new ApiRequest();
+        private IMenu EventDetailMenu;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
+            Window.RequestFeature(WindowFeatures.NoTitle);
+            Window.RequestFeature(WindowFeatures.ActionBar);
             SetContentView(Resource.Layout.EventDetailMainView);
 
             SetActionBar(FindViewById<Toolbar>(Resource.Id.toolbar1));
             ActionBar.SetDisplayHomeAsUpEnabled(true);
             ActionBar.SetHomeButtonEnabled(true);
 
-            var addCommentBtn = FindViewById<Button>(Resource.Id.EventDetail_CommentButton);
-            addCommentBtn.Click += AddNewComment;
+            FindViewById<Button>(Resource.Id.EventDetail_CommentButton).Click += AddNewComment; 
+            FindViewById<Button>(Resource.Id.EventDetail_RefreshButton).Click += RefreshComments; 
 
             var imm = (InputMethodManager)GetSystemService(InputMethodService);
             imm.HideSoftInputFromWindow(FindViewById<EditText>(Resource.Id.EventDetail_CommentTxt).WindowToken, 0);
 
             EventId = Int32.Parse(Intent.GetStringExtra("Value") ?? "0");
             LoadEvent();
+        }
+
+        public override bool OnCreateOptionsMenu(IMenu menu)
+        {
+            MenuInflater.Inflate(Resource.Menu.EventDetailMenu, menu);
+            EventDetailMenu = menu;
+            return base.OnCreateOptionsMenu(menu);
+        }
+
+        public override bool OnOptionsItemSelected(IMenuItem item)
+        {
+            switch (item.ItemId)
+            {
+                case Resource.Id.EventDetailMenu_Invite:
+                {
+                    var transaction = FragmentManager.BeginTransaction();
+                    var addEventDialog = new EventInviteDialog();
+                    addEventDialog.Show(transaction, "eventinvite");
+                    break;
+                }
+                case Resource.Id.EventDetailMenu_Edit:
+                {
+                    var transaction = FragmentManager.BeginTransaction();
+                    var addEventDialog = new FinallAddEventDialog(new PostEventModel
+                    {
+                        Title = _event.Title,
+                        Description = _event.Description,
+                        DateOfOccurance = _event.DateOfOccurance,
+                        Location = _event.Location
+
+                    }, false);
+                    addEventDialog.Show(transaction, "EditEvent");
+                    addEventDialog.EventNextStep += UpdateEvent;
+                        break;
+                }
+            }
+            return base.OnOptionsItemSelected(item);
+        }
+
+        private async void UpdateEvent(object sender, AddNewEventFinall e)
+        {
+            e.Event.GroupId = 1;
+            e.Event.OwnerId = 1;
+            await ApiRequest.PutObjectByApi("events/"+ EventId, e.Event);
+            await LoadEvent();
+        }
+
+        private async void RefreshComments(object sender, EventArgs e)
+        {
+            await GetComments();
         }
 
         private async void AddNewComment(object sender, EventArgs e)
@@ -77,6 +132,33 @@ namespace BaBookApp
                 FindViewById<TextView>(Resource.Id.EventDetail_Loc).Text = _event.Location;
                 FindViewById<TextView>(Resource.Id.EventDetail_Date).Text = _event.DateOfOccurance.ToShortDateString();
                 FindViewById<TextView>(Resource.Id.EventDetail_Time).Text = _event.DateOfOccurance.ToShortTimeString();
+
+                //ToDo Edit event by eventowner
+                if (_event.OwnerName == "guest")
+                {
+
+                }
+                else
+                {
+                    EventDetailMenu.FindItem(Resource.Id.EventDetailMenu_Edit).SetVisible(false);
+                }
+                //2 not going, 1 going, 3 not ansver.
+                var statusItem = EventDetailMenu.FindItem(Resource.Id.EventDetailMenu_Status);
+                switch (_event.AttendanceStatus)
+                {
+                    case 1:
+                        statusItem.SetTitle("Not Going");
+                        break;
+                    case 2:
+                        statusItem.SetTitle("Going");
+                        break;
+                    case 3:
+                        statusItem.SetTitle("Request");
+                        break;
+                    default:
+                        statusItem.SetVisible(false);
+                        break;
+                }
             }
             await GetComments();
         }
@@ -91,58 +173,6 @@ namespace BaBookApp
                 var commentAdabter = new CommentsList(this, eventComments);
                 commentListview.Adapter = commentAdabter;
             }
-        }
-
-
-        private float PressBegining;
-        public bool OnTouch(View v, MotionEvent e)
-        {
-            switch (e.Action)
-            {
-                case MotionEventActions.Down:
-                {
-                    PressBegining = e.GetY();
-                    break;
-                }
-                case MotionEventActions.Up:
-                {
-                    if (PressBegining > e.GetY())
-                    {
-                        var sa = true;
-                    }
-                    break;
-                }
-            }
-            return false;
-        }
-
-        public bool OnDown(MotionEvent e)
-        {
-            return true;
-        }
-
-        public bool OnFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY)
-        {
-            return true;
-        }
-
-        public void OnLongPress(MotionEvent e)
-        {
-        }
-
-        public bool OnScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY)
-        {
-            return true;
-        }
-
-        public void OnShowPress(MotionEvent e)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool OnSingleTapUp(MotionEvent e)
-        {
-            throw new NotImplementedException();
         }
     }
 }

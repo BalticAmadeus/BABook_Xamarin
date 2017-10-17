@@ -35,5 +35,13 @@ namespace BaBookApp.Resources.Functions
                 new StringContent(JsonConvert.SerializeObject(o), Encoding.UTF8, "application/json"));
             return result;
         }
+
+        public async Task<HttpResponseMessage> PutObjectByApi(string api, object o)
+        {
+            HttpClient client = new HttpClient();
+            var result = await client.PutAsync(Url + api,
+                new StringContent(JsonConvert.SerializeObject(o), Encoding.UTF8, "application/json"));
+            return result;
+        }
     }
 }

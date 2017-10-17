@@ -17,7 +17,7 @@
     <AndroidResgenClass>Resource</AndroidResgenClass>
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
     <AndroidUseLatestPlatformSdk>True</AndroidUseLatestPlatformSdk>
-    <TargetFrameworkVersion>v8.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v7.1</TargetFrameworkVersion>
     <AndroidManifest>Properties\AndroidManifest.xml</AndroidManifest>
     <MonoAndroidResourcePrefix>Resources</MonoAndroidResourcePrefix>
     <MonoAndroidAssetsPrefix>Assets</MonoAndroidAssetsPrefix>
@@ -69,6 +69,7 @@
     <Compile Include="Resources\Fragments\Dialog\FinallAddEventDialog.cs" />
     <Compile Include="Resources\Fragments\Dialog\PickDataDialog.cs" />
     <Compile Include="Resources\Fragments\Dialog\PickTimeDialog.cs" />
+    <Compile Include="Resources\Functions\ApiRequest.cs" />
     <Compile Include="Resources\ListViews\CommentsList.cs" />
     <Compile Include="Resources\ListViews\EventList.cs" />
     <Compile Include="Resources\Fragments\Dialog\AddEventFragment.cs" />

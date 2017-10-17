@@ -33,11 +33,13 @@ namespace BaBookApp.Resources.Fragments.Dialog
         private EditText txtTime;
         private PostEventModel _event;
         private Context context;
+        private bool IsEventNew;
 
         public event EventHandler<AddNewEventFinall> EventNextStep;
 
-        public FinallAddEventDialog(PostEventModel even)
+        public FinallAddEventDialog(PostEventModel even, bool isnewevent)
         {
+            IsEventNew = isnewevent;
             _event = even;
         }
 
@@ -49,7 +51,7 @@ namespace BaBookApp.Resources.Fragments.Dialog
         }
         public override void OnActivityCreated(Bundle savedInstanceState)
         {
-            Dialog.Window.SetTitle("Edit New Event");
+            Dialog.Window.SetTitle(IsEventNew ? "New Event" : "Edit Event");
             base.OnActivityCreated(savedInstanceState);
         }
 
@@ -57,6 +59,7 @@ namespace BaBookApp.Resources.Fragments.Dialog
         {
             var view = inflater.Inflate(Resource.Layout.AddEventFinalDialogView, container, false);
             var nextButton = view.FindViewById<Button>(Resource.Id.FinalAddEventButton);
+            nextButton.Text = IsEventNew ? "Add" : "Save";
             txtTitle = view.FindViewById<EditText>(Resource.Id.FinallTitle);
             txtDescription = view.FindViewById<EditText>(Resource.Id.FinallDescription);
             txtLocation = view.FindViewById<EditText>(Resource.Id.FinallLocation);

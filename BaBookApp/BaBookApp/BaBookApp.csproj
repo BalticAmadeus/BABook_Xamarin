@@ -17,7 +17,7 @@
     <AndroidResgenClass>Resource</AndroidResgenClass>
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
     <AndroidUseLatestPlatformSdk>True</AndroidUseLatestPlatformSdk>
-    <TargetFrameworkVersion>v7.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v8.0</TargetFrameworkVersion>
     <AndroidManifest>Properties\AndroidManifest.xml</AndroidManifest>
     <MonoAndroidResourcePrefix>Resources</MonoAndroidResourcePrefix>
     <MonoAndroidAssetsPrefix>Assets</MonoAndroidAssetsPrefix>
@@ -66,6 +66,7 @@
     <Compile Include="LoginActivity.cs" />
     <Compile Include="EventActivity.cs" />
     <Compile Include="MainActivity.cs" />
+    <Compile Include="Resources\Fragments\Dialog\EventInviteDialog.cs" />
     <Compile Include="Resources\Fragments\Dialog\FinallAddEventDialog.cs" />
     <Compile Include="Resources\Fragments\Dialog\PickDataDialog.cs" />
     <Compile Include="Resources\Fragments\Dialog\PickTimeDialog.cs" />
@@ -112,6 +113,9 @@
     <AndroidResource Include="Resources\layout\ComentListView.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
+    <AndroidResource Include="Resources\layout\EventInviteUserDialogView.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\EventMainView.axml">
@@ -127,6 +131,12 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\icon.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\menu\EventDetailMenu.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\InviteListItemView.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

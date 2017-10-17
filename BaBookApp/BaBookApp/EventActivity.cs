@@ -27,7 +27,10 @@ namespace BaBookApp
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
+            Window.RequestFeature(WindowFeatures.NoTitle);
+            Window.RequestFeature(WindowFeatures.ActionBar);
             SetContentView(Resource.Layout.EventMainView);
+
             var toolbar = FindViewById<Toolbar>(Resource.Id.EventToolBar);
             SetActionBar(toolbar);
             ActionBar.Title = "Events";
@@ -79,7 +82,7 @@ namespace BaBookApp
             var date = newEvent.DateOfOccurance.Add(e.Date);
             newEvent.DateOfOccurance = date;
             var transaction = FragmentManager.BeginTransaction();
-            var addEventDialog = new FinallAddEventDialog(newEvent);
+            var addEventDialog = new FinallAddEventDialog(newEvent, true);
             addEventDialog.Show(transaction, "addnewevent");
             addEventDialog.EventNextStep += GetAllEventDate;
         }

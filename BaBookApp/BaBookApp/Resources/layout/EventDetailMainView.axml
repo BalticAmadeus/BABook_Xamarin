@@ -114,7 +114,6 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:stackFromBottom="true"
-        IsPullToRefreshEnabled="True"
         android:id="@+id/EventDetail_CommentsList"
         android:layout_weight="1" />
     <EditText
@@ -125,9 +124,25 @@
         android:layout_marginRight="10dp"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="5dp" />
-    <Button
-        android:text="Comment"
+    <GridLayout
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:id="@+id/EventDetail_CommentButton" />
+        android:columnCount="2"
+        android:rowCount="1">
+        <Button
+            android:text="Comment"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:id="@+id/EventDetail_CommentButton"
+            android:layout_column="0"
+            android:layout_row="0" />
+        <Button
+            android:text="Refresh"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_gravity="end"
+            android:id="@+id/EventDetail_RefreshButton"
+            android:layout_column="1"
+            android:layout_row="0" />
+    </GridLayout>
 </LinearLayout>

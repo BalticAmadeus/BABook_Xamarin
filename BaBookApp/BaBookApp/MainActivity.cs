@@ -18,6 +18,8 @@ namespace BaBookApp
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
+            Window.RequestFeature(WindowFeatures.NoTitle);
+            Window.RequestFeature(WindowFeatures.ActionBar);
             SetContentView(Resource.Layout.MainActivityMainView);
             var mainToolbar = FindViewById<Toolbar>(Resource.Id.MainToolbar);
             SetActionBar(mainToolbar);
