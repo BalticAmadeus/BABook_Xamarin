@@ -10,7 +10,8 @@
         android:id="@+id/NewEventDate" />
     <Button
         android:text="Next"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/AddDateButton" />
+        android:layout_gravity="end"
+        android:id="@+id/AddEvent_NextButton2" />
 </LinearLayout>

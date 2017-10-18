@@ -40,9 +40,8 @@ namespace BaBookApp.Resources.Fragments.Dialog
             var view = inflater.Inflate(Resource.Layout.TimePicerDialogView, container, false);
             txtTime = view.FindViewById<TimePicker>(Resource.Id.NewEventTime);
             txtTime.SetIs24HourView(Java.Lang.Boolean.True);
-            var nextButton = view.FindViewById<Button>(Resource.Id.AddDateButton);
+            view.FindViewById<Button>(Resource.Id.AddEvent_NextButton3).Click += NextStep;
 
-            nextButton.Click += NextStep;
             return view;
         }
 

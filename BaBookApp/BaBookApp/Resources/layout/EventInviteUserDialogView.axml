@@ -3,30 +3,30 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-  <MultiAutoCompleteTextView
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:hint="Users Names"
-      android:id="@+id/EventInvite_UsersSelection" />
-  <GridLayout
-      android:layout_height="wrap_content"
-      android:layout_width="wrap_content"
-      android:columnCount="2"
-      android:rowCount="1"
-      android:layout_gravity="end">
-    <Button
-        android:text="Cancel"
-        android:layout_width="wrap_content"
+    <MultiAutoCompleteTextView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_column="0"
-        android:layout_row="0"
-        android:id="@+id/EventInvite_CancelButton" />
-    <Button
-        android:text="Invite"
-        android:layout_width="wrap_content"
+        android:hint="Users Names"
+        android:id="@+id/EventInvite_UsersSelection" />
+    <GridLayout
         android:layout_height="wrap_content"
-        android:layout_column="1"
-        android:layout_row="0"
-        android:id="@+id/EventInvite_InviteButton" />
-  </GridLayout>
+        android:layout_width="wrap_content"
+        android:columnCount="2"
+        android:rowCount="1"
+        android:layout_gravity="end">
+        <Button
+            android:text="Cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="0"
+            android:layout_row="0"
+            android:id="@+id/EventInvite_CancelButton" />
+        <Button
+            android:text="Invite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="1"
+            android:layout_row="0"
+            android:id="@+id/EventInvite_InviteButton" />
+    </GridLayout>
 </LinearLayout>

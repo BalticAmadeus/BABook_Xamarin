@@ -58,7 +58,8 @@ namespace BaBookApp.Resources.Fragments.Dialog
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
             var view = inflater.Inflate(Resource.Layout.AddEventFinalDialogView, container, false);
-            var nextButton = view.FindViewById<Button>(Resource.Id.FinalAddEventButton);
+            var nextButton = view.FindViewById<Button>(Resource.Id.AddEvent_AddEventButton);
+            view.FindViewById<Button>(Resource.Id.AddEvent_CancelButton4).Click += Cancel;
             nextButton.Text = IsEventNew ? "Add" : "Save";
             txtTitle = view.FindViewById<EditText>(Resource.Id.FinallTitle);
             txtDescription = view.FindViewById<EditText>(Resource.Id.FinallDescription);
@@ -93,6 +94,11 @@ namespace BaBookApp.Resources.Fragments.Dialog
             { 
                 Toast.MakeText(context, "Invalid Data !", ToastLength.Long).Show();
             }
+        }
+
+        private void Cancel(object sender, EventArgs e)
+        {
+            this.Dismiss();
         }
     }
 }

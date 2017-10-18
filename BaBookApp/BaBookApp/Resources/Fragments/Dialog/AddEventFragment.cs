@@ -44,18 +44,23 @@ namespace BaBookApp.Resources.Fragments.Dialog
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
             var view = inflater.Inflate(Resource.Layout.AddEventFragmentDialogView, container, false);
-            var nextButton = view.FindViewById<Button>(Resource.Id.NewEventDatePick);
+            view.FindViewById<Button>(Resource.Id.AddEvent_NextButton1).Click += NextStep;
+            view.FindViewById<Button>(Resource.Id.AddEvent_CancelButton1).Click += Cancel;
             txtTitle = view.FindViewById<EditText>(Resource.Id.AddTitleTxt);
             txtDescription = view.FindViewById<EditText>(Resource.Id.AddDescriptionTxt);
             txtLocation = view.FindViewById<EditText>(Resource.Id.AddLocationTxt);
 
-            nextButton.Click += NextStep;
             return view;
         }
 
         private void NextStep(object sender, EventArgs e)
         {
             EventNextStep.Invoke(this, new AddNewEventEvent(txtTitle.Text, txtDescription.Text, txtLocation.Text));
+            this.Dismiss();
+        }
+
+        private void Cancel(object sender, EventArgs e)
+        {
             this.Dismiss();
         }
     }

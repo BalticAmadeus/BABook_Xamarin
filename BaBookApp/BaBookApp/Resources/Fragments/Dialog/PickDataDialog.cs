@@ -37,9 +37,8 @@ namespace BaBookApp.Resources.Fragments.Dialog
         {
             var view = inflater.Inflate(Resource.Layout.DatePicerDialogView, container, false);
             txtData = view.FindViewById<DatePicker>(Resource.Id.NewEventDate);
-            var nextButton = view.FindViewById<Button>(Resource.Id.AddDateButton);
+            view.FindViewById<Button>(Resource.Id.AddEvent_NextButton2).Click += NextStep;
 
-            nextButton.Click += NextStep;
             return view;
         }
 
