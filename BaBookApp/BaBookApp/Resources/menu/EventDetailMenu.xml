@@ -3,13 +3,15 @@
   <item
     android:id="@+id/EventDetailMenu_Edit"
     android:showAsAction="ifRoom"
-    android:title="Edit" />
+    android:title="Edit"
+    android:visible="false"/>
   <item
     android:id="@+id/EventDetailMenu_Status"
     android:showAsAction="ifRoom"
-    android:title="" />
+    android:title=""
+    android:visible="false"/>
   <item
     android:id="@+id/EventDetailMenu_Invite"
     android:showAsAction="ifRoom"
-    android:title="Invite" />
+    android:title="Invite"/>
 </menu>

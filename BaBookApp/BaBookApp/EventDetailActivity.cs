@@ -31,12 +31,16 @@ namespace BaBookApp
         private ApiRequest ApiRequest = new ApiRequest();
         private IMenu EventDetailMenu;
 
-        protected override void OnCreate(Bundle savedInstanceState)
+        protected override async void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
             Window.RequestFeature(WindowFeatures.NoTitle);
             Window.RequestFeature(WindowFeatures.ActionBar);
             SetContentView(Resource.Layout.EventDetailMainView);
+
+            var loadingDialog = new Dialog(this, Android.Resource.Style.ThemeOverlayMaterial);
+            loadingDialog.SetContentView(Resource.Layout.LoadingScreenView);
+            loadingDialog.Show();
 
             SetActionBar(FindViewById<Toolbar>(Resource.Id.toolbar1));
             ActionBar.SetDisplayHomeAsUpEnabled(true);
@@ -49,12 +53,8 @@ namespace BaBookApp
             imm.HideSoftInputFromWindow(FindViewById<EditText>(Resource.Id.EventDetail_CommentTxt).WindowToken, 0);
 
             EventId = Int32.Parse(Intent.GetStringExtra("Value") ?? "0");
-        }
-
-        protected override void OnStart()
-        {
-            LoadEvent();
-            base.OnStart();
+            await LoadEvent();
+            loadingDialog.Hide();
         }
 
         public override bool OnCreateOptionsMenu(IMenu menu)
@@ -124,7 +124,7 @@ namespace BaBookApp
             await GetComments();
         }
 
-        public async Task LoadEvent()
+        public async Task<bool> LoadEvent()
         {
             string api = @"events/" + EventId;
             var json = await ApiRequest.GetJsonByApi(api);
@@ -141,11 +141,11 @@ namespace BaBookApp
                 //ToDo Edit event by eventowner
                 if (_event.OwnerName == "guest")
                 {
-
+                    EventDetailMenu.FindItem(Resource.Id.EventDetailMenu_Edit).SetVisible(true);
                 }
                 else
                 {
-                    EventDetailMenu.FindItem(Resource.Id.EventDetailMenu_Edit).SetVisible(false);
+
                 }
                 //2 not going, 1 going, 3 not ansver.
                 var statusItem = EventDetailMenu.FindItem(Resource.Id.EventDetailMenu_Status);
@@ -160,12 +160,10 @@ namespace BaBookApp
                     case 3:
                         statusItem.SetTitle("Request");
                         break;
-                    default:
-                        statusItem.SetVisible(false);
-                        break;
                 }
             }
             await GetComments();
+            return true;
         }
 
         public async Task GetComments()

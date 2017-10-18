@@ -13,6 +13,7 @@ using BaBookApp.Resources.Fragments.Dialog;
 using System.Text;
 using BaBookApp.Resources.Models;
 using Android.Content;
+using BaBookApp.Resources.Functions;
 using Void = Java.Lang.Void;
 
 namespace BaBookApp
@@ -24,44 +25,37 @@ namespace BaBookApp
         private List<GetEventModel> _events = new List<GetEventModel>();
         private EventList adabter;
         private ListView EventListView;
+        private ApiRequest ApiRequest = new ApiRequest();
 
-        protected override void OnCreate(Bundle savedInstanceState)
+        protected override async void OnCreate(Bundle savedInstanceState)
         {
+
             base.OnCreate(savedInstanceState);
             Window.RequestFeature(WindowFeatures.NoTitle);
             Window.RequestFeature(WindowFeatures.ActionBar);
             SetContentView(Resource.Layout.EventMainView);
-
-            var toolbar = FindViewById<Toolbar>(Resource.Id.EventToolBar);
-            SetActionBar(toolbar);
+            var loadingDialog = new Dialog(this, Android.Resource.Style.ThemeOverlayMaterial);
+            loadingDialog.SetContentView(Resource.Layout.LoadingScreenView);
+            loadingDialog.Show();
+            
+            SetActionBar(FindViewById<Toolbar>(Resource.Id.EventToolBar));
             ActionBar.Title = "Events";
             ActionBar.SetDisplayHomeAsUpEnabled(true);
             ActionBar.SetHomeButtonEnabled(true);
 
             EventListView = FindViewById<ListView>(Resource.Id.listView1);
-            var AddEvent = FindViewById<Button>(Resource.Id.addEventButton);
-            var EventListConectionTask = UpdateEventList(EventListView);
+            await UpdateEventList(EventListView);
 
-            //if(EventListConectionTask.IsCompleted)
-            //{
-            //    var toastText = new TextView(this){Text = "Connection Error !"};
-            //    Toast.MakeText(this, toastText.Id, ToastLength.Long).Show();
-            //}
+            FindViewById<Button>(Resource.Id.addEventButton)
+                .Click += (object sender, EventArgs args) =>
+                {
+                    var transaction = FragmentManager.BeginTransaction();
+                    var addEventDialog = new AddEventFragment();
+                    addEventDialog.Show(transaction, "addnewevent");
+                    addEventDialog.EventNextStep += GetEventData;
+                };
 
-
-            AddEvent.Click += (object sender, EventArgs args) =>
-            {
-                var transaction = FragmentManager.BeginTransaction();
-                var addEventDialog = new AddEventFragment();
-                addEventDialog.Show(transaction, "addnewevent");
-                addEventDialog.EventNextStep += GetEventData;
-            };
-        }
-
-        protected override void OnStart()
-        {
-
-            base.OnStart();
+            loadingDialog.Hide();
         }
 
         private void GetEventData(object sender, AddNewEventEvent e)
@@ -94,17 +88,17 @@ namespace BaBookApp
             addEventDialog.EventNextStep += GetAllEventDate;
         }
 
-        private void GetAllEventDate(object sender, AddNewEventFinall e)
+        private async void GetAllEventDate(object sender, AddNewEventFinall e)
         {
             newEvent.OwnerId = 1;
             newEvent.GroupId = 1;
-            var taskPost = PostNewEvent("events", newEvent);
-            var taskGet = UpdateEventList(EventListView);
+            await ApiRequest.PostObjectByApi("events", newEvent);
+            await UpdateEventList(EventListView);
         }
 
         public async Task UpdateEventList(ListView listView)
         {
-            var json = await GetEventList("events");
+            var json = await ApiRequest.GetJsonByApi("events");
             _events = JsonConvert.DeserializeObject<List<GetEventModel>>(json);
             if (_events != null)
             {
@@ -119,33 +113,6 @@ namespace BaBookApp
             var eventDetail = new Intent(this, typeof(EventDetailActivity));
             eventDetail.PutExtra("Value", e.Id.ToString());
             StartActivity(eventDetail);
-        }
-
-        public async Task<string> GetEventList(string api)
-        {
-            HttpClient client = new HttpClient
-            {
-                MaxResponseContentBufferSize = 256000
-            };
-            var apiurl = Resources.GetString(Resource.String.BackApiUrl) + api;
-            var uri = new System.Uri(apiurl);
-
-            var response = await client.GetAsync(uri);
-            if (response.IsSuccessStatusCode)
-            {
-                var content = await response.Content.ReadAsStringAsync();
-                return content;
-            }
-            return "";
-        }
-
-        public async Task<HttpResponseMessage> PostNewEvent(string api, object o)
-        {
-            HttpClient client = new HttpClient();
-            var uri = Resources.GetString(Resource.String.BackApiUrl) + api;
-            var result = await client.PostAsync(uri.ToString(),
-                new StringContent(JsonConvert.SerializeObject(o), Encoding.UTF8, "application/json"));
-            return result;
         }
     }
 }
