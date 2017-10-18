@@ -49,7 +49,12 @@ namespace BaBookApp
             imm.HideSoftInputFromWindow(FindViewById<EditText>(Resource.Id.EventDetail_CommentTxt).WindowToken, 0);
 
             EventId = Int32.Parse(Intent.GetStringExtra("Value") ?? "0");
+        }
+
+        protected override void OnStart()
+        {
             LoadEvent();
+            base.OnStart();
         }
 
         public override bool OnCreateOptionsMenu(IMenu menu)

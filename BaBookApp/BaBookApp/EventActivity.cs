@@ -13,6 +13,7 @@ using BaBookApp.Resources.Fragments.Dialog;
 using System.Text;
 using BaBookApp.Resources.Models;
 using Android.Content;
+using Void = Java.Lang.Void;
 
 namespace BaBookApp
 {
@@ -55,6 +56,12 @@ namespace BaBookApp
                 addEventDialog.Show(transaction, "addnewevent");
                 addEventDialog.EventNextStep += GetEventData;
             };
+        }
+
+        protected override void OnStart()
+        {
+
+            base.OnStart();
         }
 
         private void GetEventData(object sender, AddNewEventEvent e)

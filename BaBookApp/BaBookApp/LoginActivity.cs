@@ -31,6 +31,7 @@ namespace BaBookApp
 
             loginButton.Click += (sender, args) =>
             {
+
                 if (email.Text == "test" && password.Text == "test")
                 {
                     StartActivity(typeof(MainActivity));
