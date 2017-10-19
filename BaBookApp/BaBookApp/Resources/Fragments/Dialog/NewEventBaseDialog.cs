@@ -27,12 +27,9 @@ namespace BaBookApp.Resources.Fragments.Dialog
         }
     }
 
-    public class AddEventFragment : DialogFragment
+    public class NewEventBaseDialog : DialogFragment
     {
-        private EditText txtTitle;
-        private EditText txtDescription;
-        private EditText txtLocation;
-
+        private EditText txtTitle, txtDescription, txtLocation;
         public event EventHandler<AddNewEventEvent> EventNextStep;
 
         public override void OnActivityCreated(Bundle savedInstanceState)
@@ -45,7 +42,7 @@ namespace BaBookApp.Resources.Fragments.Dialog
         {
             var view = inflater.Inflate(Resource.Layout.AddEventFragmentDialogView, container, false);
             view.FindViewById<Button>(Resource.Id.AddEvent_NextButton1).Click += NextStep;
-            view.FindViewById<Button>(Resource.Id.AddEvent_CancelButton1).Click += Cancel;
+            view.FindViewById<Button>(Resource.Id.AddEvent_CancelButton1).Click +=(sender, args) => Dismiss();
             txtTitle = view.FindViewById<EditText>(Resource.Id.AddTitleTxt);
             txtDescription = view.FindViewById<EditText>(Resource.Id.AddDescriptionTxt);
             txtLocation = view.FindViewById<EditText>(Resource.Id.AddLocationTxt);
@@ -56,12 +53,7 @@ namespace BaBookApp.Resources.Fragments.Dialog
         private void NextStep(object sender, EventArgs e)
         {
             EventNextStep.Invoke(this, new AddNewEventEvent(txtTitle.Text, txtDescription.Text, txtLocation.Text));
-            this.Dismiss();
-        }
-
-        private void Cancel(object sender, EventArgs e)
-        {
-            this.Dismiss();
+            Dismiss();
         }
     }
 }

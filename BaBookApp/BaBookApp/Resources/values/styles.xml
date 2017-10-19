@@ -3,4 +3,7 @@
   <style name="MyTheme" parent="@android:style/Theme.Material.Light.DarkActionBar">
     <item name = "android:colorPrimary" >#5A8622</item>
   </style>
+  <style name="Toolbar">
+    <item name="android:colorPrimary">#ffffff</item>
+  </style>
 </resources>

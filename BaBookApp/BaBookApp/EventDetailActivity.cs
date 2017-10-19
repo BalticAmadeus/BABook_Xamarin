@@ -42,7 +42,7 @@ namespace BaBookApp
             loadingDialog.SetContentView(Resource.Layout.LoadingScreenView);
             loadingDialog.Show();
 
-            SetActionBar(FindViewById<Toolbar>(Resource.Id.toolbar1));
+            SetActionBar(FindViewById<Toolbar>(Resource.Id.EventDetail_Toolbar));
             ActionBar.SetDisplayHomeAsUpEnabled(true);
             ActionBar.SetHomeButtonEnabled(true);
 
@@ -78,7 +78,7 @@ namespace BaBookApp
                 case Resource.Id.EventDetailMenu_Edit:
                 {
                     var transaction = FragmentManager.BeginTransaction();
-                    var addEventDialog = new FinallAddEventDialog(new PostEventModel
+                    var addEventDialog = new NewEventSummaryDialog(new PostEventModel
                     {
                         Title = _event.Title,
                         Description = _event.Description,

@@ -33,16 +33,17 @@ namespace BaBookApp.Resources.Fragments.Dialog
         {
             var view = inflater.Inflate(Resource.Layout.EventInviteUserDialogView, container, false);
             view.FindViewById<Button>(Resource.Id.EventInvite_InviteButton).Click += InviteSelectedUsers;
-            view.FindViewById<Button>(Resource.Id.EventInvite_CancelButton).Click += (sender, args) => { Dismiss(); };
+            view.FindViewById<Button>(Resource.Id.EventInvite_CancelButton).Click += (sender, args) =>Dismiss();
             //var adapter = new ArrayAdapter<String>(context,Resource.Layout.InviteListItemView, AtendetUserList);
             //var textView =view.FindViewById<MultiAutoCompleteTextView>(Resource.Id.EventInvite_UsersSelection);
             //textView.Adapter = adapter;
             //textView.SetTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
             return view;
         }
-
+        //TODO Send request for user invite
         private void InviteSelectedUsers(object sender, EventArgs e)
         {
+
         }
     }
 }

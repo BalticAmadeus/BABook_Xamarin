@@ -22,7 +22,7 @@ namespace BaBookApp.Resources.Fragments.Dialog
         }
     }
 
-    class PickDataDialog : DialogFragment
+    class NewEventPickDataDialog : DialogFragment
     {
         private DatePicker txtData;
         public event EventHandler<AddNewEventDate> EventNextStep;

@@ -24,20 +24,16 @@ namespace BaBookApp.Resources.Fragments.Dialog
         }
     }
 
-    public class FinallAddEventDialog : DialogFragment
+    public class NewEventSummaryDialog : DialogFragment
     {
-        private EditText txtTitle;
-        private EditText txtDescription;
-        private EditText txtLocation;
-        private EditText txtDate;
-        private EditText txtTime;
+        private EditText txtTitle, txtDescription, txtLocation, txtDate, txtTime;
         private PostEventModel _event;
         private Context context;
         private bool IsEventNew;
 
         public event EventHandler<AddNewEventFinall> EventNextStep;
 
-        public FinallAddEventDialog(PostEventModel even, bool isnewevent)
+        public NewEventSummaryDialog(PostEventModel even, bool isnewevent)
         {
             IsEventNew = isnewevent;
             _event = even;
@@ -59,8 +55,9 @@ namespace BaBookApp.Resources.Fragments.Dialog
         {
             var view = inflater.Inflate(Resource.Layout.AddEventFinalDialogView, container, false);
             var nextButton = view.FindViewById<Button>(Resource.Id.AddEvent_AddEventButton);
-            view.FindViewById<Button>(Resource.Id.AddEvent_CancelButton4).Click += Cancel;
+            view.FindViewById<Button>(Resource.Id.AddEvent_CancelButton4).Click +=(sender, args) => Dismiss();
             nextButton.Text = IsEventNew ? "Add" : "Save";
+
             txtTitle = view.FindViewById<EditText>(Resource.Id.FinallTitle);
             txtDescription = view.FindViewById<EditText>(Resource.Id.FinallDescription);
             txtLocation = view.FindViewById<EditText>(Resource.Id.FinallLocation);
@@ -84,21 +81,21 @@ namespace BaBookApp.Resources.Fragments.Dialog
             var dateAndTimeString = txtDate.Text +" "+ txtTime.Text;
 
             //TODO AddValidation
-            if (DateTime.TryParse(dateAndTimeString, out _))
+            if (txtTitle.Text.Length <= 0 || txtLocation.Text.Length <= 0)
+            {
+                Toast.MakeText(context, "Missing felds !", ToastLength.Long).Show();
+            }
+            else if (DateTime.TryParse(dateAndTimeString, out _))
             {
                 _event.DateOfOccurance = DateTime.Parse(dateAndTimeString);
                 EventNextStep.Invoke(this, new AddNewEventFinall(_event));
-                this.Dismiss();
+                Dismiss();
             }
             else
-            { 
-                Toast.MakeText(context, "Invalid Data !", ToastLength.Long).Show();
+            {
+                Toast.MakeText(context, "Missing felds !", ToastLength.Long).Show();
             }
-        }
 
-        private void Cancel(object sender, EventArgs e)
-        {
-            this.Dismiss();
         }
     }
 }

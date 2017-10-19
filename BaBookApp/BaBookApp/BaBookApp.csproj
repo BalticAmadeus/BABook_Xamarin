@@ -103,13 +103,13 @@
     <Compile Include="EventActivity.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="Resources\Fragments\Dialog\EventInviteDialog.cs" />
-    <Compile Include="Resources\Fragments\Dialog\FinallAddEventDialog.cs" />
-    <Compile Include="Resources\Fragments\Dialog\PickDataDialog.cs" />
-    <Compile Include="Resources\Fragments\Dialog\PickTimeDialog.cs" />
+    <Compile Include="Resources\Fragments\Dialog\NewEventSummaryDialog.cs" />
+    <Compile Include="Resources\Fragments\Dialog\NewEventPickDataDialog.cs" />
+    <Compile Include="Resources\Fragments\Dialog\NewEventPickTimeDialog.cs" />
     <Compile Include="Resources\Functions\ApiRequest.cs" />
     <Compile Include="Resources\ListViews\CommentsList.cs" />
     <Compile Include="Resources\ListViews\EventList.cs" />
-    <Compile Include="Resources\Fragments\Dialog\AddEventFragment.cs" />
+    <Compile Include="Resources\Fragments\Dialog\NewEventBaseDialog.cs" />
     <Compile Include="Resources\Models\Get\GetEventComments.cs" />
     <Compile Include="Resources\Models\Get\GetEventModel.cs" />
     <Compile Include="Resources\Models\Post\PostEventModel.cs" />
@@ -177,8 +177,21 @@
   <ItemGroup>
     <AndroidResource Include="Resources\layout\InviteListItemView.xml" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\load.jpg" />
+    <AndroidResource Include="Resources\drawable\drawable-hdpi\Menu_Add.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\drawable-mdpi\ic_add_circle_outline_black_24dp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\drawable-xhdpi\ic_add_circle_outline_black_24dp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\drawable-xxhdpi\ic_add_circle_outline_black_24dp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\drawable-xxxhdpi\ic_add_circle_outline_black_24dp.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Import Project="..\packages\Xamarin.Android.Support.Annotations.26.0.2\build\MonoAndroid80\Xamarin.Android.Support.Annotations.targets" Condition="Exists('..\packages\Xamarin.Android.Support.Annotations.26.0.2\build\MonoAndroid80\Xamarin.Android.Support.Annotations.targets')" />

@@ -21,9 +21,9 @@ namespace BaBookApp
     [Activity(Label = "BaBook.Event", MainLauncher = true, ParentActivity = typeof(MainActivity))]
     public class EventActivity : Activity
     {
-        private PostEventModel newEvent = new PostEventModel();
-        private List<GetEventModel> _events = new List<GetEventModel>();
-        private EventList adabter;
+        private PostEventModel NewEvent = new PostEventModel();
+        private List<GetEventModel> Events = new List<GetEventModel>();
+        private EventList EventListViewAdabter;
         private ListView EventListView;
         private ApiRequest ApiRequest = new ApiRequest();
 
@@ -38,72 +38,72 @@ namespace BaBookApp
             loadingDialog.SetContentView(Resource.Layout.LoadingScreenView);
             loadingDialog.Show();
             
-            SetActionBar(FindViewById<Toolbar>(Resource.Id.EventToolBar));
+            SetActionBar(FindViewById<Toolbar>(Resource.Id.Events_Toolbar));
             ActionBar.Title = "Events";
             ActionBar.SetDisplayHomeAsUpEnabled(true);
             ActionBar.SetHomeButtonEnabled(true);
 
-            EventListView = FindViewById<ListView>(Resource.Id.listView1);
+            EventListView = FindViewById<ListView>(Resource.Id.Events_EventsList);
             await UpdateEventList(EventListView);
 
-            FindViewById<Button>(Resource.Id.addEventButton)
-                .Click += (object sender, EventArgs args) =>
-                {
-                    var transaction = FragmentManager.BeginTransaction();
-                    var addEventDialog = new AddEventFragment();
-                    addEventDialog.Show(transaction, "addnewevent");
-                    addEventDialog.EventNextStep += GetEventData;
-                };
-
+            FindViewById<Button>(Resource.Id.Events_AddNewEventButton).Click += GetNewEventBase; ;
             loadingDialog.Hide();
         }
 
-        private void GetEventData(object sender, AddNewEventEvent e)
+        private void GetNewEventBase(object sender, EventArgs e)
         {
-            newEvent.Title = e.Title;
-            newEvent.Description = e.Description;
-            newEvent.Location = e.Location;
             var transaction = FragmentManager.BeginTransaction();
-            var addEventDialog = new PickDataDialog();
-            addEventDialog.Show(transaction, "addnewevent");
-            addEventDialog.EventNextStep += GetEventDate;
+            var addEventDialog = new NewEventBaseDialog();
+            addEventDialog.Show(transaction, "NewEventBase");
+            addEventDialog.EventNextStep += GetNewEventDate;
         }
 
-        private void GetEventDate(object sender, AddNewEventDate e)
+        private void GetNewEventDate(object sender, AddNewEventEvent e)
         {
-            newEvent.DateOfOccurance = e.Date;
+            NewEvent.Title = e.Title;
+            NewEvent.Description = e.Description;
+            NewEvent.Location = e.Location;
+
             var transaction = FragmentManager.BeginTransaction();
-            var addEventDialog = new PickTimeDialog();
-            addEventDialog.Show(transaction, "addnewevent");
-            addEventDialog.EventNextStep += GetEventTime;
+            var pickDataDialog = new NewEventPickDataDialog();
+            pickDataDialog.Show(transaction, "NewEventDate");
+            pickDataDialog.EventNextStep += GetNewEventTime;
         }
 
-        private void GetEventTime(object sender, AddNewEventTime e)
+        private void GetNewEventTime(object sender, AddNewEventDate e)
         {
-            var date = newEvent.DateOfOccurance.Add(e.Date);
-            newEvent.DateOfOccurance = date;
+            NewEvent.DateOfOccurance = e.Date;
             var transaction = FragmentManager.BeginTransaction();
-            var addEventDialog = new FinallAddEventDialog(newEvent, true);
-            addEventDialog.Show(transaction, "addnewevent");
-            addEventDialog.EventNextStep += GetAllEventDate;
+            var pickTimeDialog = new NewEventPickTimeDialog();
+            pickTimeDialog.Show(transaction, "NewEventTime");
+            pickTimeDialog.EventNextStep += GetNewEventComfirm;
         }
 
-        private async void GetAllEventDate(object sender, AddNewEventFinall e)
+        private void GetNewEventComfirm(object sender, AddNewEventTime e)
         {
-            newEvent.OwnerId = 1;
-            newEvent.GroupId = 1;
-            await ApiRequest.PostObjectByApi("events", newEvent);
+            NewEvent.DateOfOccurance = NewEvent.DateOfOccurance.Add(e.Date);
+            var transaction = FragmentManager.BeginTransaction();
+            var NewEventSummaryDialog = new NewEventSummaryDialog(NewEvent, true);
+            NewEventSummaryDialog.Show(transaction, "NewEventSummary");
+            NewEventSummaryDialog.EventNextStep += GetAllNewEventData;
+        }
+
+        private async void GetAllNewEventData(object sender, AddNewEventFinall e)
+        {
+            NewEvent.OwnerId = 1;
+            NewEvent.GroupId = 1;
+            await ApiRequest.PostObjectByApi("events", NewEvent);
             await UpdateEventList(EventListView);
         }
 
         public async Task UpdateEventList(ListView listView)
         {
             var json = await ApiRequest.GetJsonByApi("events");
-            _events = JsonConvert.DeserializeObject<List<GetEventModel>>(json);
-            if (_events != null)
+            Events = JsonConvert.DeserializeObject<List<GetEventModel>>(json);
+            if (Events != null)
             {
-                adabter = new EventList(this, _events);
-                listView.Adapter = adabter;
+                EventListViewAdabter = new EventList(this, Events);
+                listView.Adapter = EventListViewAdabter;
                 listView.ItemClick += EventClicked;
             }
         }

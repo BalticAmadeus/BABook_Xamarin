@@ -1828,8 +1828,8 @@ namespace BaBookApp
 			// aapt resource value: 0x7f0a0074
 			public const int AddEvent_NextButton2 = 2131361908;
 			
-			// aapt resource value: 0x7f0a00a3
-			public const int AddEvent_NextButton3 = 2131361955;
+			// aapt resource value: 0x7f0a00a2
+			public const int AddEvent_NextButton3 = 2131361954;
 			
 			// aapt resource value: 0x7f0a006e
 			public const int AddLocationTxt = 2131361902;
@@ -1852,14 +1852,14 @@ namespace BaBookApp
 			// aapt resource value: 0x7f0a0083
 			public const int Description = 2131361923;
 			
-			// aapt resource value: 0x7f0a00a5
-			public const int EventDetailMenu_Edit = 2131361957;
-			
-			// aapt resource value: 0x7f0a00a7
-			public const int EventDetailMenu_Invite = 2131361959;
+			// aapt resource value: 0x7f0a00a4
+			public const int EventDetailMenu_Edit = 2131361956;
 			
 			// aapt resource value: 0x7f0a00a6
-			public const int EventDetailMenu_Status = 2131361958;
+			public const int EventDetailMenu_Invite = 2131361958;
+			
+			// aapt resource value: 0x7f0a00a5
+			public const int EventDetailMenu_Status = 2131361957;
 			
 			// aapt resource value: 0x7f0a007d
 			public const int EventDetail_CommentButton = 2131361917;
@@ -1888,6 +1888,9 @@ namespace BaBookApp
 			// aapt resource value: 0x7f0a007a
 			public const int EventDetail_Time = 2131361914;
 			
+			// aapt resource value: 0x7f0a0075
+			public const int EventDetail_Toolbar = 2131361909;
+			
 			// aapt resource value: 0x7f0a0080
 			public const int EventInvite_CancelButton = 2131361920;
 			
@@ -1897,8 +1900,14 @@ namespace BaBookApp
 			// aapt resource value: 0x7f0a007f
 			public const int EventInvite_UsersSelection = 2131361919;
 			
+			// aapt resource value: 0x7f0a0088
+			public const int Events_AddNewEventButton = 2131361928;
+			
 			// aapt resource value: 0x7f0a0087
-			public const int EventToolBar = 2131361927;
+			public const int Events_EventsList = 2131361927;
+			
+			// aapt resource value: 0x7f0a0086
+			public const int Events_Toolbar = 2131361926;
 			
 			// aapt resource value: 0x7f0a0025
 			public const int FUNCTION = 2131361829;
@@ -1921,29 +1930,29 @@ namespace BaBookApp
 			// aapt resource value: 0x7f0a0085
 			public const int Location = 2131361925;
 			
-			// aapt resource value: 0x7f0a008d
-			public const int LoginButton = 2131361933;
-			
-			// aapt resource value: 0x7f0a008b
-			public const int LoginEmail = 2131361931;
-			
 			// aapt resource value: 0x7f0a008c
-			public const int LoginPassword = 2131361932;
+			public const int LoginButton = 2131361932;
 			
 			// aapt resource value: 0x7f0a008a
-			public const int LoginToolbar = 2131361930;
+			public const int LoginEmail = 2131361930;
+			
+			// aapt resource value: 0x7f0a008b
+			public const int LoginPassword = 2131361931;
+			
+			// aapt resource value: 0x7f0a0089
+			public const int LoginToolbar = 2131361929;
 			
 			// aapt resource value: 0x7f0a0026
 			public const int META = 2131361830;
 			
-			// aapt resource value: 0x7f0a008e
-			public const int MainToolbar = 2131361934;
+			// aapt resource value: 0x7f0a008d
+			public const int MainToolbar = 2131361933;
 			
 			// aapt resource value: 0x7f0a0073
 			public const int NewEventDate = 2131361907;
 			
-			// aapt resource value: 0x7f0a00a2
-			public const int NewEventTime = 2131361954;
+			// aapt resource value: 0x7f0a00a1
+			public const int NewEventTime = 2131361953;
 			
 			// aapt resource value: 0x7f0a0027
 			public const int SHIFT = 2131361831;
@@ -1954,8 +1963,8 @@ namespace BaBookApp
 			// aapt resource value: 0x7f0a0082
 			public const int Title = 2131361922;
 			
-			// aapt resource value: 0x7f0a0092
-			public const int action0 = 2131361938;
+			// aapt resource value: 0x7f0a0091
+			public const int action0 = 2131361937;
 			
 			// aapt resource value: 0x7f0a0056
 			public const int action_bar = 2131361878;
@@ -1978,17 +1987,17 @@ namespace BaBookApp
 			// aapt resource value: 0x7f0a0034
 			public const int action_bar_title = 2131361844;
 			
-			// aapt resource value: 0x7f0a008f
-			public const int action_container = 2131361935;
+			// aapt resource value: 0x7f0a008e
+			public const int action_container = 2131361934;
 			
 			// aapt resource value: 0x7f0a0057
 			public const int action_context_bar = 2131361879;
 			
-			// aapt resource value: 0x7f0a0096
-			public const int action_divider = 2131361942;
+			// aapt resource value: 0x7f0a0095
+			public const int action_divider = 2131361941;
 			
-			// aapt resource value: 0x7f0a0090
-			public const int action_image = 2131361936;
+			// aapt resource value: 0x7f0a008f
+			public const int action_image = 2131361935;
 			
 			// aapt resource value: 0x7f0a0002
 			public const int action_menu_divider = 2131361794;
@@ -2005,20 +2014,17 @@ namespace BaBookApp
 			// aapt resource value: 0x7f0a0036
 			public const int action_mode_close_button = 2131361846;
 			
-			// aapt resource value: 0x7f0a0091
-			public const int action_text = 2131361937;
+			// aapt resource value: 0x7f0a0090
+			public const int action_text = 2131361936;
 			
-			// aapt resource value: 0x7f0a009f
-			public const int actions = 2131361951;
+			// aapt resource value: 0x7f0a009e
+			public const int actions = 2131361950;
 			
 			// aapt resource value: 0x7f0a0037
 			public const int activity_chooser_view_content = 2131361847;
 			
 			// aapt resource value: 0x7f0a001d
 			public const int add = 2131361821;
-			
-			// aapt resource value: 0x7f0a0089
-			public const int addEventButton = 2131361929;
 			
 			// aapt resource value: 0x7f0a004a
 			public const int alertTitle = 2131361866;
@@ -2041,14 +2047,14 @@ namespace BaBookApp
 			// aapt resource value: 0x7f0a003d
 			public const int buttonPanel = 2131361853;
 			
-			// aapt resource value: 0x7f0a0093
-			public const int cancel_action = 2131361939;
+			// aapt resource value: 0x7f0a0092
+			public const int cancel_action = 2131361938;
 			
 			// aapt resource value: 0x7f0a004d
 			public const int checkbox = 2131361869;
 			
-			// aapt resource value: 0x7f0a009b
-			public const int chronometer = 2131361947;
+			// aapt resource value: 0x7f0a009a
+			public const int chronometer = 2131361946;
 			
 			// aapt resource value: 0x7f0a002a
 			public const int collapseActionView = 2131361834;
@@ -2077,8 +2083,8 @@ namespace BaBookApp
 			// aapt resource value: 0x7f0a0021
 			public const int end = 2131361825;
 			
-			// aapt resource value: 0x7f0a00a1
-			public const int end_padder = 2131361953;
+			// aapt resource value: 0x7f0a00a0
+			public const int end_padder = 2131361952;
 			
 			// aapt resource value: 0x7f0a0038
 			public const int expand_activities_button = 2131361848;
@@ -2098,8 +2104,8 @@ namespace BaBookApp
 			// aapt resource value: 0x7f0a003c
 			public const int icon = 2131361852;
 			
-			// aapt resource value: 0x7f0a00a0
-			public const int icon_group = 2131361952;
+			// aapt resource value: 0x7f0a009f
+			public const int icon_group = 2131361951;
 			
 			// aapt resource value: 0x7f0a002b
 			public const int ifRoom = 2131361835;
@@ -2107,8 +2113,8 @@ namespace BaBookApp
 			// aapt resource value: 0x7f0a0039
 			public const int image = 2131361849;
 			
-			// aapt resource value: 0x7f0a009c
-			public const int info = 2131361948;
+			// aapt resource value: 0x7f0a009b
+			public const int info = 2131361947;
 			
 			// aapt resource value: 0x7f0a0033
 			public const int italic = 2131361843;
@@ -2122,23 +2128,17 @@ namespace BaBookApp
 			// aapt resource value: 0x7f0a000e
 			public const int listMode = 2131361806;
 			
-			// aapt resource value: 0x7f0a0088
-			public const int listView1 = 2131361928;
-			
 			// aapt resource value: 0x7f0a003b
 			public const int list_item = 2131361851;
 			
-			// aapt resource value: 0x7f0a0086
-			public const int mainFrame = 2131361926;
+			// aapt resource value: 0x7f0a00a7
+			public const int mainmenu_events = 2131361959;
 			
-			// aapt resource value: 0x7f0a00a8
-			public const int mainmenu_events = 2131361960;
+			// aapt resource value: 0x7f0a0094
+			public const int media_actions = 2131361940;
 			
-			// aapt resource value: 0x7f0a0095
-			public const int media_actions = 2131361941;
-			
-			// aapt resource value: 0x7f0a00a4
-			public const int message = 2131361956;
+			// aapt resource value: 0x7f0a00a3
+			public const int message = 2131361955;
 			
 			// aapt resource value: 0x7f0a0022
 			public const int middle = 2131361826;
@@ -2155,14 +2155,14 @@ namespace BaBookApp
 			// aapt resource value: 0x7f0a000f
 			public const int normal = 2131361807;
 			
-			// aapt resource value: 0x7f0a009e
-			public const int notification_background = 2131361950;
-			
-			// aapt resource value: 0x7f0a0098
-			public const int notification_main_column = 2131361944;
+			// aapt resource value: 0x7f0a009d
+			public const int notification_background = 2131361949;
 			
 			// aapt resource value: 0x7f0a0097
-			public const int notification_main_column_container = 2131361943;
+			public const int notification_main_column = 2131361943;
+			
+			// aapt resource value: 0x7f0a0096
+			public const int notification_main_column_container = 2131361942;
 			
 			// aapt resource value: 0x7f0a003f
 			public const int parentPanel = 2131361855;
@@ -2176,11 +2176,11 @@ namespace BaBookApp
 			// aapt resource value: 0x7f0a004f
 			public const int radio = 2131361871;
 			
-			// aapt resource value: 0x7f0a009d
-			public const int right_icon = 2131361949;
+			// aapt resource value: 0x7f0a009c
+			public const int right_icon = 2131361948;
 			
-			// aapt resource value: 0x7f0a0099
-			public const int right_side = 2131361945;
+			// aapt resource value: 0x7f0a0098
+			public const int right_side = 2131361944;
 			
 			// aapt resource value: 0x7f0a0019
 			public const int screen = 2131361817;
@@ -2254,8 +2254,8 @@ namespace BaBookApp
 			// aapt resource value: 0x7f0a001c
 			public const int src_over = 2131361820;
 			
-			// aapt resource value: 0x7f0a0094
-			public const int status_bar_latest_event_content = 2131361940;
+			// aapt resource value: 0x7f0a0093
+			public const int status_bar_latest_event_content = 2131361939;
 			
 			// aapt resource value: 0x7f0a0050
 			public const int submenuarrow = 2131361872;
@@ -2278,8 +2278,8 @@ namespace BaBookApp
 			// aapt resource value: 0x7f0a0043
 			public const int textSpacerNoTitle = 2131361859;
 			
-			// aapt resource value: 0x7f0a009a
-			public const int time = 2131361946;
+			// aapt resource value: 0x7f0a0099
+			public const int time = 2131361945;
 			
 			// aapt resource value: 0x7f0a000d
 			public const int title = 2131361805;
@@ -2289,9 +2289,6 @@ namespace BaBookApp
 			
 			// aapt resource value: 0x7f0a0049
 			public const int title_template = 2131361865;
-			
-			// aapt resource value: 0x7f0a0075
-			public const int toolbar1 = 2131361909;
 			
 			// aapt resource value: 0x7f0a002f
 			public const int top = 2131361839;
@@ -3557,6 +3554,9 @@ namespace BaBookApp
 			
 			// aapt resource value: 0x7f070117
 			public const int ThemeOverlay_AppCompat_Light = 2131165463;
+			
+			// aapt resource value: 0x7f07016d
+			public const int Toolbar = 2131165549;
 			
 			// aapt resource value: 0x7f070118
 			public const int Widget_AppCompat_ActionBar = 2131165464;

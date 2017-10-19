@@ -23,7 +23,7 @@ namespace BaBookApp.Resources.Fragments.Dialog
         }
     }
 
-    class PickTimeDialog : DialogFragment
+    class NewEventPickTimeDialog : DialogFragment
     {
         private TimePicker txtTime;
         private TimeSpan time;
@@ -49,7 +49,7 @@ namespace BaBookApp.Resources.Fragments.Dialog
         {
             time = new TimeSpan((int)txtTime.CurrentHour, (int)txtTime.CurrentMinute, 0);
             EventNextStep.Invoke(this, new AddNewEventTime(time));
-            this.Dismiss();
+            Dismiss();
         }
     }
 }
