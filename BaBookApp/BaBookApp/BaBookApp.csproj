@@ -177,21 +177,23 @@
   <ItemGroup>
     <AndroidResource Include="Resources\layout\InviteListItemView.xml" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\drawable-hdpi\Menu_Add.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\ic_add_circle_outline_black_24dp.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\drawable-mdpi\ic_add_circle_outline_black_24dp.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\ic_add_circle_outline_black_24dp.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\drawable-xhdpi\ic_add_circle_outline_black_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_add_circle_outline_black_24dp.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\drawable-xxhdpi\ic_add_circle_outline_black_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\ic_add_circle_outline_black_24dp.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\drawable-xxxhdpi\ic_add_circle_outline_black_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\ic_add_circle_outline_black_24dp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\menu\EventsMenu.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Import Project="..\packages\Xamarin.Android.Support.Annotations.26.0.2\build\MonoAndroid80\Xamarin.Android.Support.Annotations.targets" Condition="Exists('..\packages\Xamarin.Android.Support.Annotations.26.0.2\build\MonoAndroid80\Xamarin.Android.Support.Annotations.targets')" />

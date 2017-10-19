@@ -6,9 +6,8 @@
     android:minWidth="25px"
     android:minHeight="25px">
   <Toolbar
-        android:theme="@style/Toolbar"
+        android:background="#8A02FA"
         android:minHeight="?android:attr/actionBarSize"
-        android:background="?android:attr/colorPrimary"
         android:minWidth="25px"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -16,14 +15,12 @@
     <ListView
         android:minWidth="25px"
         android:minHeight="25px"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:id="@+id/Events_EventsList"
+        android:divider="#F80AAF"
+        android:dividerHeight="4px"
         android:layout_weight="1" />
-    <Button
-        android:text="Add Event"
-        android:gravity="center"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/Events_AddNewEventButton" />
 </LinearLayout>

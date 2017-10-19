@@ -46,16 +46,29 @@ namespace BaBookApp
             EventListView = FindViewById<ListView>(Resource.Id.Events_EventsList);
             await UpdateEventList(EventListView);
 
-            FindViewById<Button>(Resource.Id.Events_AddNewEventButton).Click += GetNewEventBase; ;
             loadingDialog.Hide();
         }
 
-        private void GetNewEventBase(object sender, EventArgs e)
+        public override bool OnCreateOptionsMenu(IMenu menu)
         {
-            var transaction = FragmentManager.BeginTransaction();
-            var addEventDialog = new NewEventBaseDialog();
-            addEventDialog.Show(transaction, "NewEventBase");
-            addEventDialog.EventNextStep += GetNewEventDate;
+            MenuInflater.Inflate(Resource.Menu.EventsMenu, menu);
+            return base.OnCreateOptionsMenu(menu);
+        }
+
+        public override bool OnOptionsItemSelected(IMenuItem item)
+        {
+            switch (item.ItemId)
+            {
+                case Resource.Id.EventsMenu_AddNewEvent:
+                {
+                    var transaction = FragmentManager.BeginTransaction();
+                    var addEventDialog = new NewEventBaseDialog();
+                    addEventDialog.Show(transaction, "NewEventBase");
+                    addEventDialog.EventNextStep += GetNewEventDate;
+                        break;
+                }
+            }
+            return base.OnOptionsItemSelected(item);
         }
 
         private void GetNewEventDate(object sender, AddNewEventEvent e)

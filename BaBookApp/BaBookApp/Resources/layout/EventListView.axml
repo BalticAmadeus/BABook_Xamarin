@@ -2,59 +2,69 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:layout_margin="20dp">
+  <GridLayout
+      android:layout_height="wrap_content"
+      android:layout_width="match_parent"
+      android:columnCount="2"
+      android:rowCount="1">
     <TextView
-        android:text="Title"
-        android:textSize="25sp"
+        android:text="Kas ? "
+        android:theme="@style/EventListViewItem_Text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/Title" />
+        android:layout_row="0"
+        android:layout_column="0" />
     <TextView
-        android:text="Description"
-        android:textSize="15sp"
-        android:layout_width="match_parent"
+        android:text="Title"
+        android:theme="@style/EventListViewItem_FilledText"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/Description" />
-    <GridLayout
+        android:id="@+id/Title"
+        android:layout_row="0"
+        android:layout_column="1" />
+  </GridLayout>
+  <GridLayout
+      android:layout_height="wrap_content"
+      android:layout_width="match_parent"
+      android:columnCount="2"
+      android:rowCount="1">
+    <TextView
+        android:text="Kur ? "
+        android:theme="@style/EventListViewItem_Text"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:columnCount="2"
-        android:rowCount="1">
-        <TextView
-            android:text="Date:"
-            android:textSize="10sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_row="0"
-            android:layout_column="0" />
-        <TextView
-            android:text="Date"
-            android:textSize="10sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/Date"
-            android:layout_row="0"
-            android:layout_column="1" />
-    </GridLayout>
-    <GridLayout
+        android:layout_row="0"
+        android:layout_column="0" />
+    <TextView
+        android:text="Location"
+        android:theme="@style/EventListViewItem_FilledText"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:columnCount="2"
-        android:rowCount="1">
-        <TextView
-            android:text="Location:"
-            android:textSize="10sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_row="0"
-            android:layout_column="0" />
-        <TextView
-            android:text="Location"
-            android:textSize="10sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/Location"
-            android:layout_row="0"
-            android:layout_column="1" />
-    </GridLayout>
+        android:id="@+id/Location"
+        android:layout_row="0"
+        android:layout_column="1"/>
+  </GridLayout>
+  <GridLayout
+      android:layout_height="wrap_content"
+      android:layout_width="match_parent"
+      android:columnCount="2"
+      android:rowCount="1">
+    <TextView
+        android:text="Kada ? "
+        android:theme="@style/EventListViewItem_Text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_row="0"
+        android:layout_column="0" />
+    <TextView
+        android:text="Date"
+        android:theme="@style/EventListViewItem_FilledText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/Date"
+        android:layout_row="0"
+        android:layout_column="1" />
+  </GridLayout>
 </LinearLayout>
