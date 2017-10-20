@@ -43,7 +43,8 @@
     </GridLayout>
     <Button
         android:text="Login"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="end"
         android:id="@+id/LoginButton" />
 </LinearLayout>

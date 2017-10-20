@@ -17,7 +17,6 @@ namespace BaBookApp.Resources
     public class ViewHolder :Java.Lang.Object
     {
         public TextView Title { get; set; }
-        public TextView Description { get; set; }
         public TextView Date { get; set; }
         public TextView Location { get; set; }
     }

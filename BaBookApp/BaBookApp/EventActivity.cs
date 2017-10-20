@@ -33,11 +33,13 @@ namespace BaBookApp
             base.OnCreate(savedInstanceState);
             Window.RequestFeature(WindowFeatures.NoTitle);
             Window.RequestFeature(WindowFeatures.ActionBar);
+
             SetContentView(Resource.Layout.EventMainView);
+
             var loadingDialog = new Dialog(this, Android.Resource.Style.ThemeOverlayMaterial);
             loadingDialog.SetContentView(Resource.Layout.LoadingScreenView);
             loadingDialog.Show();
-            
+
             SetActionBar(FindViewById<Toolbar>(Resource.Id.Events_Toolbar));
             ActionBar.Title = "Events";
             ActionBar.SetDisplayHomeAsUpEnabled(true);
