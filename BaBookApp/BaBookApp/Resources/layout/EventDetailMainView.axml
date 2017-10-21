@@ -6,9 +6,6 @@
     android:minWidth="25px"
     android:minHeight="25px">
     <Toolbar
-        android:minHeight="?android:attr/actionBarSize"
-        android:background="?android:attr/colorPrimary"
-        android:minWidth="25px"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/EventDetail_Toolbar" />
@@ -18,93 +15,56 @@
         android:layout_height="wrap_content"
         android:textSize="20dp"
         android:id="@+id/EventDetail_Desc" />
-    <GridLayout
-        android:layout_height="wrap_content"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:columnCount="2"
-        android:rowCount="1">
-        <TextView
-            android:text="Group:"
-            android:textSize="20dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_column="0"
-            android:layout_row="0" />
-        <TextView
-            android:text=""
-            android:textSize="20dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/EventDetail_Group"
-            android:layout_column="1"
-            android:layout_row="0" />
-    </GridLayout>
-    <GridLayout
         android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:columnCount="2"
-        android:rowCount="1">
+        android:layout_below="@id/EventDetail_Desc">
         <TextView
             android:text="Location:"
-            android:textSize="20dp"
+            android:id="@+id/EventDetail_Loc1"
+            android:textStyle="bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_column="0"
-            android:layout_row="0" />
+            android:layout_alignParentLeft="true" />
         <TextView
             android:text=""
-            android:textSize="20dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:id="@+id/EventDetail_Loc"
-            android:layout_column="1"
-            android:layout_row="0" />
-    </GridLayout>
-    <GridLayout
-        android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_toRightOf="@+id/EventDetail_Loc1"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:columnCount="2"
-        android:rowCount="1">
+        android:layout_height="wrap_content">
         <TextView
             android:text="Date:"
-            android:textSize="20dp"
+            android:textStyle="bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_column="0"
-            android:layout_row="0" />
+            android:layout_alignParentLeft="true"
+            android:id="@+id/EventDetail_Date1" />
         <TextView
             android:text=""
-            android:textSize="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/EventDetail_Date"
-            android:layout_column="1"
-            android:layout_row="0" />
-    </GridLayout>
-    <GridLayout
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:columnCount="2"
-        android:rowCount="1">
+            android:layout_toRightOf="@+id/EventDetail_Date1"
+            android:id="@+id/EventDetail_Date" />
         <TextView
             android:text="Time:"
-            android:textSize="20dp"
+            android:textStyle="bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_column="0"
-            android:layout_row="0" />
+            android:layout_toRightOf="@+id/EventDetail_Date"
+            android:id="@+id/EventDetail_Time1" />
         <TextView
-            android:text="Time"
-            android:textSize="20dp"
+            android:text=""
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/EventDetail_Time"
-            android:layout_column="1"
-            android:layout_row="0" />
-    </GridLayout>
+            android:layout_toRightOf="@+id/EventDetail_Time1"
+            android:id="@+id/EventDetail_Time" />
+    </RelativeLayout>
     <TextView
         android:text="Comments"
-        android:textSize="25dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center" />
@@ -116,33 +76,35 @@
         android:stackFromBottom="true"
         android:id="@+id/EventDetail_CommentsList"
         android:layout_weight="1" />
-    <EditText
-        android:layout_height="wrap_content"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:id="@+id/EventDetail_CommentTxt"
-        android:hint="Comment"
-        android:layout_marginRight="10dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="5dp" />
-    <GridLayout
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:columnCount="2"
-        android:rowCount="1"
-        android:layout_gravity="end">
-        <Button
-            android:text="Comment"
+        android:layout_height="wrap_content">
+        <EditText
+            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:maxLines="1"
+            android:id="@+id/EventDetail_CommentTxt"
+            android:hint="Comment"
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_alignParentLeft="true"
+            android:layout_toLeftOf="@+id/EventDetail_CommentButton" />
+        <ImageButton
+            android:src="@drawable/ic_send_black_24dp"
+            android:background="?android:selectableItemBackground"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
+            android:layout_margin="10dp"
             android:id="@+id/EventDetail_CommentButton"
-            android:layout_column="0"
-            android:layout_row="0" />
-        <Button
-            android:text="Refresh"
+            android:layout_toLeftOf="@+id/EventDetail_RefreshButton" />
+        <ImageButton
+            android:src="@drawable/ic_refresh_black_24dp"
+            android:background="?android:selectableItemBackground"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:id="@+id/EventDetail_RefreshButton"
-            android:layout_column="1"
-            android:layout_row="0" />
-    </GridLayout>
+            android:layout_margin="10dp"
+            android:layout_alignParentRight="true"
+            android:id="@+id/EventDetail_RefreshButton" />
+    </RelativeLayout>
 </LinearLayout>

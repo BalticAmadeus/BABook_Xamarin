@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@drawable/EventListViewItemBackground">
     <GridLayout
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
@@ -10,6 +11,7 @@
         android:rowCount="1">
         <TextView
             android:text="Kas ? "
+            style="@style/TextEventListItem"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_row="0"
@@ -29,6 +31,7 @@
         android:rowCount="1">
         <TextView
             android:text="Kur ? "
+            style="@style/TextEventListItem"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_row="0"
@@ -48,6 +51,7 @@
         android:rowCount="1">
         <TextView
             android:text="Kada ? "
+            style="@style/TextEventListItem"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_row="0"

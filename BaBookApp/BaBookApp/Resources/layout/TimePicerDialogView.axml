@@ -13,5 +13,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
+        android:layout_margin="5dp"
         android:id="@+id/AddEvent_NextButton3" />
 </LinearLayout>

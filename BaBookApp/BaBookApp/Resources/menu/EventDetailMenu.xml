@@ -3,6 +3,7 @@
   <item
     android:id="@+id/EventDetailMenu_Edit"
     android:showAsAction="ifRoom"
+    android:icon="@drawable/ic_edit_white_24dp"
     android:title="Edit"
     android:visible="false"/>
   <item
@@ -12,6 +13,7 @@
     android:visible="false"/>
   <item
     android:id="@+id/EventDetailMenu_Invite"
+    android:icon="@drawable/ic_group_add_white_24dp"
     android:showAsAction="ifRoom"
     android:title="Invite"/>
 </menu>

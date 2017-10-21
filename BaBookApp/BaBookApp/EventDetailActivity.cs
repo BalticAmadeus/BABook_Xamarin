@@ -46,8 +46,8 @@ namespace BaBookApp
             ActionBar.SetDisplayHomeAsUpEnabled(true);
             ActionBar.SetHomeButtonEnabled(true);
 
-            FindViewById<Button>(Resource.Id.EventDetail_CommentButton).Click += AddNewComment; 
-            FindViewById<Button>(Resource.Id.EventDetail_RefreshButton).Click += RefreshComments; 
+            FindViewById<ImageButton>(Resource.Id.EventDetail_CommentButton).Click += AddNewComment; 
+            FindViewById<ImageButton>(Resource.Id.EventDetail_RefreshButton).Click += RefreshComments; 
 
             var imm = (InputMethodManager)GetSystemService(InputMethodService);
             imm.HideSoftInputFromWindow(FindViewById<EditText>(Resource.Id.EventDetail_CommentTxt).WindowToken, 0);
@@ -105,6 +105,7 @@ namespace BaBookApp
         private async void RefreshComments(object sender, EventArgs e)
         {
             await GetComments();
+            Toast.MakeText(this, "Refreshed !", ToastLength.Short);
         }
 
         private async void AddNewComment(object sender, EventArgs e)
@@ -122,6 +123,7 @@ namespace BaBookApp
 
             await ApiRequest.PostObjectByApi("comments/" + EventId, comment);
             await GetComments();
+            Toast.MakeText(this, "Sended!", ToastLength.Short);
         }
 
         public async Task<bool> LoadEvent()
@@ -133,7 +135,6 @@ namespace BaBookApp
             {
                 ActionBar.Title = _event.Title;
                 FindViewById<TextView>(Resource.Id.EventDetail_Desc).Text = _event.Description;
-                FindViewById<TextView>(Resource.Id.EventDetail_Group).Text = _event.GroupName;
                 FindViewById<TextView>(Resource.Id.EventDetail_Loc).Text = _event.Location;
                 FindViewById<TextView>(Resource.Id.EventDetail_Date).Text = _event.DateOfOccurance.ToShortDateString();
                 FindViewById<TextView>(Resource.Id.EventDetail_Time).Text = _event.DateOfOccurance.ToShortTimeString();
@@ -152,13 +153,19 @@ namespace BaBookApp
                 switch (_event.AttendanceStatus)
                 {
                     case 1:
+                        statusItem.SetIcon(Resource.Drawable.ic_cancel_white_24dp);
                         statusItem.SetTitle("Not Going");
+                        statusItem.SetVisible(true);
                         break;
                     case 2:
                         statusItem.SetTitle("Going");
+                        statusItem.SetIcon(Resource.Drawable.ic_check_circle_white_24dp);
+                        statusItem.SetVisible(true);
                         break;
                     case 3:
                         statusItem.SetTitle("Request");
+                        statusItem.SetIcon(Resource.Drawable.ic_person_white_24dp);
+                        statusItem.SetVisible(true);
                         break;
                 }
             }

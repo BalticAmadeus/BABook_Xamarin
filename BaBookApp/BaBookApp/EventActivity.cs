@@ -13,6 +13,7 @@ using BaBookApp.Resources.Fragments.Dialog;
 using System.Text;
 using BaBookApp.Resources.Models;
 using Android.Content;
+using Android.Runtime;
 using BaBookApp.Resources.Functions;
 using Void = Java.Lang.Void;
 
@@ -29,7 +30,6 @@ namespace BaBookApp
 
         protected override async void OnCreate(Bundle savedInstanceState)
         {
-
             base.OnCreate(savedInstanceState);
             Window.RequestFeature(WindowFeatures.NoTitle);
             Window.RequestFeature(WindowFeatures.ActionBar);
@@ -65,6 +65,7 @@ namespace BaBookApp
                 {
                     var transaction = FragmentManager.BeginTransaction();
                     var addEventDialog = new NewEventBaseDialog();
+                    addEventDialog.SetStyle(DialogFragmentStyle.Normal,Resource.Style.DialogFragment);
                     addEventDialog.Show(transaction, "NewEventBase");
                     addEventDialog.EventNextStep += GetNewEventDate;
                         break;
@@ -81,6 +82,7 @@ namespace BaBookApp
 
             var transaction = FragmentManager.BeginTransaction();
             var pickDataDialog = new NewEventPickDataDialog();
+            pickDataDialog.SetStyle(DialogFragmentStyle.Normal, Resource.Style.DialogFragment);
             pickDataDialog.Show(transaction, "NewEventDate");
             pickDataDialog.EventNextStep += GetNewEventTime;
         }
@@ -90,6 +92,7 @@ namespace BaBookApp
             NewEvent.DateOfOccurance = e.Date;
             var transaction = FragmentManager.BeginTransaction();
             var pickTimeDialog = new NewEventPickTimeDialog();
+            pickTimeDialog.SetStyle(DialogFragmentStyle.Normal, Resource.Style.DialogFragment);
             pickTimeDialog.Show(transaction, "NewEventTime");
             pickTimeDialog.EventNextStep += GetNewEventComfirm;
         }
@@ -98,9 +101,10 @@ namespace BaBookApp
         {
             NewEvent.DateOfOccurance = NewEvent.DateOfOccurance.Add(e.Date);
             var transaction = FragmentManager.BeginTransaction();
-            var NewEventSummaryDialog = new NewEventSummaryDialog(NewEvent, true);
-            NewEventSummaryDialog.Show(transaction, "NewEventSummary");
-            NewEventSummaryDialog.EventNextStep += GetAllNewEventData;
+            var newEventSummaryDialog = new NewEventSummaryDialog(NewEvent, true);
+            newEventSummaryDialog.SetStyle(DialogFragmentStyle.Normal, Resource.Style.DialogFragment);
+            newEventSummaryDialog.Show(transaction, "NewEventSummary");
+            newEventSummaryDialog.EventNextStep += GetAllNewEventData;
         }
 
         private async void GetAllNewEventData(object sender, AddNewEventFinall e)
@@ -108,6 +112,7 @@ namespace BaBookApp
             NewEvent.OwnerId = 1;
             NewEvent.GroupId = 1;
             await ApiRequest.PostObjectByApi("events", NewEvent);
+            Toast.MakeText(this, "New event added !", ToastLength.Short);
             await UpdateEventList(EventListView);
         }
 
