@@ -28,12 +28,13 @@ namespace BaBookApp
     {
         private int EventId;
         private GetEventModel _event;
-        private ApiRequest ApiRequest = new ApiRequest();
+        private ApiRequest ApiRequest;
         private IMenu EventDetailMenu;
 
         protected override async void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
+            ApiRequest = new ApiRequest(this);
             Window.RequestFeature(WindowFeatures.NoTitle);
             Window.RequestFeature(WindowFeatures.ActionBar);
             SetContentView(Resource.Layout.EventDetailMainView);

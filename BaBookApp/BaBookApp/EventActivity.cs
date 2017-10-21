@@ -26,11 +26,12 @@ namespace BaBookApp
         private List<GetEventModel> Events = new List<GetEventModel>();
         private EventList EventListViewAdabter;
         private ListView EventListView;
-        private ApiRequest ApiRequest = new ApiRequest();
+        private ApiRequest ApiRequest;
 
         protected override async void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
+            ApiRequest = new ApiRequest(this);
             Window.RequestFeature(WindowFeatures.NoTitle);
             Window.RequestFeature(WindowFeatures.ActionBar);
 
@@ -47,7 +48,6 @@ namespace BaBookApp
 
             EventListView = FindViewById<ListView>(Resource.Id.Events_EventsList);
             await UpdateEventList(EventListView);
-
             loadingDialog.Hide();
         }
 
