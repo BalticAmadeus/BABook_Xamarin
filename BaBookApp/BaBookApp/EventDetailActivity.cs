@@ -72,14 +72,15 @@ namespace BaBookApp
                 case Resource.Id.EventDetailMenu_Invite:
                 {
                     var transaction = FragmentManager.BeginTransaction();
-                    var addEventDialog = new EventInviteDialog();
-                    addEventDialog.Show(transaction, "eventinvite");
+                    var inviteDialog = new EventInviteDialog();
+                    inviteDialog.SetStyle(DialogFragmentStyle.Normal, Resource.Style.DialogFragment);
+                    inviteDialog.Show(transaction, "eventinvite");
                     break;
                 }
                 case Resource.Id.EventDetailMenu_Edit:
                 {
                     var transaction = FragmentManager.BeginTransaction();
-                    var addEventDialog = new NewEventSummaryDialog(new PostEventModel
+                    var editEventDialog = new NewEventSummaryDialog(new PostEventModel
                     {
                         Title = _event.Title,
                         Description = _event.Description,
@@ -87,8 +88,9 @@ namespace BaBookApp
                         Location = _event.Location
 
                     }, false);
-                    addEventDialog.Show(transaction, "EditEvent");
-                    addEventDialog.EventNextStep += UpdateEvent;
+                    editEventDialog.SetStyle(DialogFragmentStyle.Normal, Resource.Style.DialogFragment);
+                    editEventDialog.Show(transaction, "EditEvent");
+                    editEventDialog.EventNextStep += UpdateEvent;
                         break;
                 }
             }
@@ -106,7 +108,7 @@ namespace BaBookApp
         private async void RefreshComments(object sender, EventArgs e)
         {
             await GetComments();
-            Toast.MakeText(this, "Refreshed !", ToastLength.Short);
+            Toast.MakeText(this, "Refreshed !", ToastLength.Short).Show();
         }
 
         private async void AddNewComment(object sender, EventArgs e)
@@ -124,7 +126,7 @@ namespace BaBookApp
 
             await ApiRequest.PostObjectByApi("comments/" + EventId, comment);
             await GetComments();
-            Toast.MakeText(this, "Sended!", ToastLength.Short);
+            Toast.MakeText(this, "Sended!", ToastLength.Short).Show();
         }
 
         public async Task<bool> LoadEvent()

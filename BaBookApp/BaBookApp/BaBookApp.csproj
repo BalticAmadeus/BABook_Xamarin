@@ -64,6 +64,7 @@
     <Reference Include="Mono.Android" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GroupActivity.cs" />
     <Compile Include="EventDetailActivity.cs" />
     <Compile Include="LoginActivity.cs" />
     <Compile Include="EventActivity.cs" />
@@ -77,10 +78,12 @@
     <Compile Include="Resources\Functions\Chat.cs" />
     <Compile Include="Resources\ListViews\ChatMessageList.cs" />
     <Compile Include="Resources\ListViews\CommentsList.cs" />
+    <Compile Include="Resources\ListViews\GroupList.cs" />
     <Compile Include="Resources\ListViews\EventList.cs" />
     <Compile Include="Resources\Fragments\Dialog\NewEventBaseDialog.cs" />
     <Compile Include="Resources\Models\Get\GetEventComments.cs" />
     <Compile Include="Resources\Models\Get\GetEventModel.cs" />
+    <Compile Include="Resources\Models\Get\GetGroupModel.cs" />
     <Compile Include="Resources\Models\Post\PostEventModel.cs" />
     <Compile Include="Resources\Models\Post\PostNewComment.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
@@ -129,6 +132,12 @@
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\QueueChatMainView.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\GroupListItemView.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\GroupMainView.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>

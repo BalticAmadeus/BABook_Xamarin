@@ -54,7 +54,7 @@ namespace BaBookApp.Resources.Functions
             }
             catch
             {
-                Toast.MakeText(Context, "Error has ocure !", ToastLength.Long);
+                Toast.MakeText(Context, "Error has ocure !", ToastLength.Long).Show();
                 return null;
             }
         }
@@ -70,7 +70,7 @@ namespace BaBookApp.Resources.Functions
             }
             catch
             {
-                Toast.MakeText(Context, "Error has ocure !", ToastLength.Long);
+                Toast.MakeText(Context, "Error has ocure !", ToastLength.Long).Show();
                 return null;
             }
         }
@@ -101,7 +101,7 @@ namespace BaBookApp.Resources.Functions
             }
             catch
             {
-                Toast.MakeText(Context, "Error has ocure !", ToastLength.Long);
+                Toast.MakeText(Context, "Error has ocure !", ToastLength.Long).Show();
                 return null;
             }
         }

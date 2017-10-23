@@ -19,7 +19,7 @@ using Void = Java.Lang.Void;
 
 namespace BaBookApp
 {
-    [Activity(Label = "BaBook.Event", MainLauncher = true, ParentActivity = typeof(MainActivity))]
+    [Activity(Label = "BaBook.Event", ParentActivity = typeof(GroupActivity))]
     public class EventActivity : Activity
     {
         private PostEventModel NewEvent = new PostEventModel();
@@ -116,15 +116,22 @@ namespace BaBookApp
             await UpdateEventList(EventListView);
         }
 
-        public async Task UpdateEventList(ListView listView)
+        private async Task UpdateEventList(ListView listView)
         {
             var json = await ApiRequest.GetJsonByApi("events");
-            Events = JsonConvert.DeserializeObject<List<GetEventModel>>(json);
-            if (Events != null)
+            //TODO No internet and refresh
+            if (json.Length <= 0)
             {
-                EventListViewAdabter = new EventList(this, Events);
-                listView.Adapter = EventListViewAdabter;
-                listView.ItemClick += EventClicked;
+            }
+            else
+            {
+                Events = JsonConvert.DeserializeObject<List<GetEventModel>>(json);
+                if (Events != null)
+                {
+                    EventListViewAdabter = new EventList(this, Events);
+                    listView.Adapter = EventListViewAdabter;
+                    listView.ItemClick += EventClicked;
+                }
             }
         }
 
