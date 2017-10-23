@@ -9,6 +9,7 @@ namespace AndroidApp.Resources.Models
         public int EventId { get; set; }
         [JsonProperty("creatorName")]
         public string OwnerName { get; set; }
+        //Todo Not groupName but groupId
         [JsonProperty("groupName")]
         public string GroupName { get; set; }
         [JsonProperty("date")]

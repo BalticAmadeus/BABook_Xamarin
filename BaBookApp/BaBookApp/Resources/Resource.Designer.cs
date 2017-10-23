@@ -450,11 +450,14 @@ namespace BaBookApp
 			// aapt resource value: 0x7f070005
 			public const int DialogFragment = 2131165189;
 			
-			// aapt resource value: 0x7f070008
-			public const int DialogTitle = 2131165192;
+			// aapt resource value: 0x7f070009
+			public const int DialogTitle = 2131165193;
 			
 			// aapt resource value: 0x7f070007
 			public const int EditText = 2131165191;
+			
+			// aapt resource value: 0x7f070008
+			public const int InviteUsers = 2131165192;
 			
 			// aapt resource value: 0x7f070000
 			public const int MyTheme = 2131165184;

@@ -53,7 +53,7 @@ namespace BaBookApp
             var imm = (InputMethodManager)GetSystemService(InputMethodService);
             imm.HideSoftInputFromWindow(FindViewById<EditText>(Resource.Id.EventDetail_CommentTxt).WindowToken, 0);
 
-            EventId = Int32.Parse(Intent.GetStringExtra("Value") ?? "0");
+            EventId = Int32.Parse(Intent.GetStringExtra("EventId") ?? "0");
             await LoadEvent();
 
             loadingDialog.Hide();
@@ -104,7 +104,8 @@ namespace BaBookApp
             List<PostAttendenceModel> invitedUserList = new List<PostAttendenceModel>();
             foreach (var user in e.InvitedUsers)
             {
-                invitedUserList.Add(new PostAttendenceModel{EventId = EventId, Status = 3, UserId = user.UserId});
+                if(user != null)
+                    invitedUserList.Add(new PostAttendenceModel{EventId = EventId, Status = 3, UserId = user.UserId});
             }
             invitedUserList.ForEach(async x=> await ApiRequest.PostObjectByApi("userevent", x));
         }

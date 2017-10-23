@@ -47,7 +47,8 @@ namespace BaBookApp
             ActionBar.SetHomeButtonEnabled(true);
 
             EventListView = FindViewById<ListView>(Resource.Id.Events_EventsList);
-            GroupId = Int32.Parse(Intent.GetStringExtra("Value") ?? "0");
+            //Todo Get GroupId by event Id
+
             await UpdateEventList(EventListView);
             loadingDialog.Hide();
         }
@@ -138,7 +139,7 @@ namespace BaBookApp
         private void EventClicked(object sender, AdapterView.ItemClickEventArgs e)
         {
             var eventDetail = new Intent(this, typeof(EventDetailActivity));
-            eventDetail.PutExtra("Value", e.Id.ToString());
+            eventDetail.PutExtra("EventId", e.Id.ToString());
             StartActivity(eventDetail);
         }
     }

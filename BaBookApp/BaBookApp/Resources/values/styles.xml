@@ -5,24 +5,22 @@
   <color name="White">#FFFFFF</color>
   <color name="Black">#000000</color>
   <color name="Grey">#696969</color>
-  
+
   <dimen name="Normal">15dp</dimen>
   <dimen name="Big">23dp</dimen>
   <dimen name="ButtonTextSize">18dp</dimen>
-  
-  <style name="MyTheme" parent="@android:style/Theme.Material.Light">
+
+  <style name="MyTheme" parent="@android:style/Theme.Material">
     <item name="android:colorPrimary">@color/MainColor</item>
     <item name="android:windowBackground">@color/White</item>
     <item name="android:toolbarStyle">@style/Toolbar</item>
     <item name="android:buttonStyle">@style/Button</item>
     <item name="android:textViewStyle">@style/TextView</item>
     <item name="android:editTextStyle">@style/EditText</item>
-    <item name="android:homeAsUpIndicator">@color/White</item>
-    <item name="android:actionOverflowButton">@color/White</item>
+    <item name="android:itemBackground">@color/White</item>
   </style>
 
   <style name="Toolbar" parent="@android:style/Widget.Toolbar">
-    <item name="android:textColor">@color/White</item>
     <item name="android:background">@color/MainColor</item>
   </style>
 
@@ -52,6 +50,8 @@
     <item name="android:textViewStyle">@style/TextView</item>
     <item name="android:editTextStyle">@style/EditText</item>
     <item name="android:datePickerStyle">@style/DatePicker</item>
+    <item name="android:autoCompleteTextViewStyle">@style/InviteUsers</item>
+    <item name="android:itemBackground">@color/White</item>
   </style>
 
   <style name="DatePicker" parent="@android:style/Widget.DatePicker">
@@ -61,6 +61,10 @@
   <style name="EditText" parent="@android:style/Widget.EditText">
     <item name="android:backgroundTint">@color/Black</item>
     <item name="android:textColor">@color/Black</item>
+  </style>
+
+  <style name="InviteUsers" parent="@android:style/Widget.AutoCompleteTextView">
+    <item name="android:popupBackground">@color/White</item>
   </style>
 
   <style name="DialogTitle" parent="@android:style/Widget.TextView">

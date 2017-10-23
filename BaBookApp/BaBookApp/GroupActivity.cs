@@ -71,7 +71,7 @@ namespace BaBookApp
         private void GroupClicked(object sender, AdapterView.ItemClickEventArgs e)
         {
             var events = new Intent(this, typeof(EventActivity));
-            events.PutExtra("Value", e.Id.ToString());
+            events.PutExtra("GroupId", e.Id.ToString());
             StartActivity(events);
         }
     }
