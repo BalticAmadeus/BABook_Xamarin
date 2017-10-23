@@ -53,6 +53,9 @@
     <EmbedAssembliesIntoApk>True</EmbedAssembliesIntoApk>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.AspNet.SignalR.Client, Version=2.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.SignalR.Client.2.2.2\lib\netstandard1.3\Microsoft.AspNet.SignalR.Client.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\netstandard1.3\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -64,6 +67,7 @@
     <Reference Include="Mono.Android" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ChatActivity.cs" />
     <Compile Include="GroupActivity.cs" />
     <Compile Include="EventDetailActivity.cs" />
     <Compile Include="LoginActivity.cs" />
@@ -84,8 +88,11 @@
     <Compile Include="Resources\Models\Get\GetEventComments.cs" />
     <Compile Include="Resources\Models\Get\GetEventModel.cs" />
     <Compile Include="Resources\Models\Get\GetGroupModel.cs" />
+    <Compile Include="Resources\Models\Get\GetInvitableUsers.cs" />
+    <Compile Include="Resources\Models\Get\GetUserTokenModel.cs" />
+    <Compile Include="Resources\Models\Post\PostAttendenceModel.cs" />
     <Compile Include="Resources\Models\Post\PostEventModel.cs" />
-    <Compile Include="Resources\Models\Post\PostNewComment.cs" />
+    <Compile Include="Resources\Models\Post\PostNewCommentModel.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -320,6 +320,9 @@ namespace BaBookApp
 			// aapt resource value: 0x7f09003a
 			public const int mainmenu_events = 2131296314;
 			
+			// aapt resource value: 0x7f09003b
+			public const int mainmenu_groups = 2131296315;
+			
 			static Id()
 			{
 				global::Android.Runtime.ResourceIdManager.UpdateIdValues();

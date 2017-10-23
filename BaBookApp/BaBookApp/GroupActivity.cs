@@ -21,21 +21,19 @@ using Void = Java.Lang.Void;
 
 namespace BaBookApp
 {
-    [Activity(Label = "BaBook.Group", MainLauncher = true, ParentActivity = typeof(MainActivity))]
+    [Activity(Label = "BaBook.Group", ParentActivity = typeof(MainActivity))]
     public class GroupActivity : Activity
     {
         private List<GetGroupModel> Groups = new List<GetGroupModel>();
         private GroupList GroupListViewAdabter;
         private ListView GroupListView;
-        private ApiRequest ApiRequest;
+        private ApiRequest ApiRequest = new ApiRequest();
 
         protected override async void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-            ApiRequest = new ApiRequest(this);
             Window.RequestFeature(WindowFeatures.NoTitle);
             Window.RequestFeature(WindowFeatures.ActionBar);
-
             SetContentView(Resource.Layout.EventMainView);
 
             var loadingDialog = new Dialog(this, Android.Resource.Style.ThemeOverlayMaterial);
@@ -53,7 +51,7 @@ namespace BaBookApp
         }
         private async Task UpdateGroupList(ListView listView)
         {
-            var json = await ApiRequest.GetJsonByApi("events");
+            var json = await ApiRequest.GetJsonByApi("groups");
             //TODO No internet and refresh
             if (json.Length <= 0)
             {

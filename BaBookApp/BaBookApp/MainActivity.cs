@@ -12,7 +12,7 @@ using Android.Widget;
 
 namespace BaBookApp
 {
-    [Activity(Label = "BaBook", ParentActivity = typeof(LoginActivity))]
+    [Activity(Label = "BaBook")]
     public class MainActivity : Activity
     {
         protected override void OnCreate(Bundle savedInstanceState)
@@ -23,7 +23,7 @@ namespace BaBookApp
             SetContentView(Resource.Layout.MainActivityMainView);
             var mainToolbar = FindViewById<Toolbar>(Resource.Id.MainToolbar);
             SetActionBar(mainToolbar);
-            ActionBar.Title = "Welcome Back name!";
+            ActionBar.Title = "Welcome Back !";
         }
 
         public override bool OnCreateOptionsMenu(IMenu menu)
@@ -34,9 +34,15 @@ namespace BaBookApp
 
         public override bool OnOptionsItemSelected(IMenuItem item)
         {
-            if (item.ItemId == Resource.Id.mainmenu_events)
+            switch (item.ItemId)
             {
-                StartActivity(typeof(EventActivity));
+                case Resource.Id.mainmenu_events:
+
+                    StartActivity(typeof(EventActivity));
+                    break;
+                case Resource.Id.mainmenu_groups:
+                    StartActivity(typeof(GroupActivity));
+                    break;
             }
             return base.OnOptionsItemSelected(item);
         }

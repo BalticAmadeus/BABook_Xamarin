@@ -23,15 +23,15 @@ namespace BaBookApp
     public class EventActivity : Activity
     {
         private PostEventModel NewEvent = new PostEventModel();
+        private int GroupId;
         private List<GetEventModel> Events = new List<GetEventModel>();
         private EventList EventListViewAdabter;
         private ListView EventListView;
-        private ApiRequest ApiRequest;
+        private ApiRequest ApiRequest = new ApiRequest();
 
         protected override async void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-            ApiRequest = new ApiRequest(this);
             Window.RequestFeature(WindowFeatures.NoTitle);
             Window.RequestFeature(WindowFeatures.ActionBar);
 
@@ -47,6 +47,7 @@ namespace BaBookApp
             ActionBar.SetHomeButtonEnabled(true);
 
             EventListView = FindViewById<ListView>(Resource.Id.Events_EventsList);
+            GroupId = Int32.Parse(Intent.GetStringExtra("Value") ?? "0");
             await UpdateEventList(EventListView);
             loadingDialog.Hide();
         }
@@ -109,16 +110,15 @@ namespace BaBookApp
 
         private async void GetAllNewEventData(object sender, AddNewEventFinall e)
         {
-            NewEvent.OwnerId = 1;
-            NewEvent.GroupId = 1;
+            NewEvent.GroupId = GroupId;
             await ApiRequest.PostObjectByApi("events", NewEvent);
-            Toast.MakeText(this, "New event added !", ToastLength.Short);
+            Toast.MakeText(this, "New event added !", ToastLength.Short).Show();
             await UpdateEventList(EventListView);
         }
 
         private async Task UpdateEventList(ListView listView)
         {
-            var json = await ApiRequest.GetJsonByApi("events");
+            var json = await ApiRequest.GetJsonByApi("events/group/"+ GroupId);
             //TODO No internet and refresh
             if (json.Length <= 0)
             {

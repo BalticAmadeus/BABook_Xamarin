@@ -10,16 +10,19 @@
   <dimen name="Big">23dp</dimen>
   <dimen name="ButtonTextSize">18dp</dimen>
   
-  <style name="MyTheme" parent="@android:style/Theme.Material">
+  <style name="MyTheme" parent="@android:style/Theme.Material.Light">
     <item name="android:colorPrimary">@color/MainColor</item>
     <item name="android:windowBackground">@color/White</item>
     <item name="android:toolbarStyle">@style/Toolbar</item>
     <item name="android:buttonStyle">@style/Button</item>
     <item name="android:textViewStyle">@style/TextView</item>
     <item name="android:editTextStyle">@style/EditText</item>
+    <item name="android:homeAsUpIndicator">@color/White</item>
+    <item name="android:actionOverflowButton">@color/White</item>
   </style>
 
   <style name="Toolbar" parent="@android:style/Widget.Toolbar">
+    <item name="android:textColor">@color/White</item>
     <item name="android:background">@color/MainColor</item>
   </style>
 

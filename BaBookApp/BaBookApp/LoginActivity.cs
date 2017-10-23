@@ -10,12 +10,14 @@ using Android.Runtime;
 using Android.Service.QuickSettings;
 using Android.Views;
 using Android.Widget;
+using BaBookApp.Resources.Functions;
 
 namespace BaBookApp
 {
-    [Activity(Label = "BaBook.Login", Icon = "@drawable/icon")]
+    [Activity(Label = "BaBook.Login", MainLauncher = true, NoHistory = true, Icon = "@drawable/icon")]
     public class LoginActivity : Activity
     {
+        public ApiRequest ApiReguests = new ApiRequest();
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -29,16 +31,17 @@ namespace BaBookApp
             var password = FindViewById<EditText>(Resource.Id.LoginPassword);
             var loginButton = FindViewById<Button>(Resource.Id.LoginButton);
 
-            loginButton.Click += (sender, args) =>
+            loginButton.Click += async (sender, args) =>
             {
-
-                if (email.Text == "test" && password.Text == "test")
+                var responce = await ApiReguests.UserLogin(email.Text, password.Text);
+                if (responce.IsSuccessStatusCode)
                 {
-                    StartActivity(typeof(MainActivity));
+                    var mainActivity = new Intent(this, typeof(MainActivity));
+                    StartActivity(mainActivity);
                 }
                 else
                 {
-                    Toast.MakeText(this, "Invalid login data !", ToastLength.Long);
+                    Toast.MakeText(this, "Invalid data !", ToastLength.Long).Show();
                 }
             };
         }

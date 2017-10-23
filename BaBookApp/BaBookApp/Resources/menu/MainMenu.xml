@@ -4,4 +4,8 @@
        android:id="@+id/mainmenu_events"
        android:showAsAction="never"
        android:title="Events" />
+  <item
+    android:id="@+id/mainmenu_groups"
+    android:showAsAction="never"
+    android:title="Groups" />
 </menu>

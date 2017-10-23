@@ -27,14 +27,14 @@ namespace BaBookApp
     public class EventDetailActivity : Activity
     {
         private int EventId;
+        private List<GetInvitableUsers> InvitableUsers = new List<GetInvitableUsers>();
         private GetEventModel _event;
-        private ApiRequest ApiRequest;
+        private ApiRequest ApiRequest = new ApiRequest();
         private IMenu EventDetailMenu;
 
         protected override async void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-            ApiRequest = new ApiRequest(this);
             Window.RequestFeature(WindowFeatures.NoTitle);
             Window.RequestFeature(WindowFeatures.ActionBar);
             SetContentView(Resource.Layout.EventDetailMainView);
@@ -55,6 +55,7 @@ namespace BaBookApp
 
             EventId = Int32.Parse(Intent.GetStringExtra("Value") ?? "0");
             await LoadEvent();
+
             loadingDialog.Hide();
         }
 
@@ -72,9 +73,10 @@ namespace BaBookApp
                 case Resource.Id.EventDetailMenu_Invite:
                 {
                     var transaction = FragmentManager.BeginTransaction();
-                    var inviteDialog = new EventInviteDialog();
+                    var inviteDialog = new EventInviteDialog(InvitableUsers);
                     inviteDialog.SetStyle(DialogFragmentStyle.Normal, Resource.Style.DialogFragment);
                     inviteDialog.Show(transaction, "eventinvite");
+                    inviteDialog.InvitedUsers += InviteUsers;
                     break;
                 }
                 case Resource.Id.EventDetailMenu_Edit:
@@ -97,10 +99,18 @@ namespace BaBookApp
             return base.OnOptionsItemSelected(item);
         }
 
+        private void InviteUsers(object sender, EventInviteDialogArgs e)
+        {
+            List<PostAttendenceModel> invitedUserList = new List<PostAttendenceModel>();
+            foreach (var user in e.InvitedUsers)
+            {
+                invitedUserList.Add(new PostAttendenceModel{EventId = EventId, Status = 3, UserId = user.UserId});
+            }
+            invitedUserList.ForEach(async x=> await ApiRequest.PostObjectByApi("userevent", x));
+        }
+
         private async void UpdateEvent(object sender, AddNewEventFinall e)
         {
-            e.Event.GroupId = 1;
-            e.Event.OwnerId = 1;
             await ApiRequest.PutObjectByApi("events/"+ EventId, e.Event);
             await LoadEvent();
         }
@@ -114,7 +124,7 @@ namespace BaBookApp
         private async void AddNewComment(object sender, EventArgs e)
         {
             var txtcomment = FindViewById<EditText>(Resource.Id.EventDetail_CommentTxt);
-            var comment = new PostNewComment
+            var comment = new PostNewCommentModel
             {
                 UserId = 1,
                 CommentText = txtcomment.Text
@@ -129,7 +139,7 @@ namespace BaBookApp
             Toast.MakeText(this, "Sended!", ToastLength.Short).Show();
         }
 
-        public async Task<bool> LoadEvent()
+        public async Task LoadEvent()
         {
             string api = @"events/" + EventId;
             var json = await ApiRequest.GetJsonByApi(api);
@@ -151,29 +161,40 @@ namespace BaBookApp
                 {
 
                 }
-                //2 not going, 1 going, 3 not ansver.
+                //2 not going, 1 going, 3 ivite.
                 var statusItem = EventDetailMenu.FindItem(Resource.Id.EventDetailMenu_Status);
                 switch (_event.AttendanceStatus)
                 {
                     case 1:
                         statusItem.SetIcon(Resource.Drawable.ic_cancel_white_24dp);
                         statusItem.SetTitle("Not Going");
+                        await ApiRequest.PostObjectByApi("", new PostAttendenceModel { EventId = EventId, Status = 1 });
+                        Toast.MakeText(this, "You are going !", ToastLength.Short).Show();
                         statusItem.SetVisible(true);
                         break;
                     case 2:
                         statusItem.SetTitle("Going");
                         statusItem.SetIcon(Resource.Drawable.ic_check_circle_white_24dp);
+                        await ApiRequest.PostObjectByApi("", new PostAttendenceModel { EventId = EventId, Status = 2 });
                         statusItem.SetVisible(true);
                         break;
                     case 3:
                         statusItem.SetTitle("Request");
                         statusItem.SetIcon(Resource.Drawable.ic_person_white_24dp);
+                        //TODO Accet or not invitation
+                        //await ApiRequest.PostObjectByApi("", new PostAttendenceModel { EventId = EventId, Status = 1});
                         statusItem.SetVisible(true);
                         break;
                 }
+                await GetComments();
+                await GetInvitableUsers();
             }
-            await GetComments();
-            return true;
+        }
+
+        public async Task GetInvitableUsers()
+        {
+            var json = await ApiRequest.GetJsonByApi(@"userevent/invitable/" + EventId);
+            InvitableUsers = JsonConvert.DeserializeObject<List<GetInvitableUsers>>(json);
         }
 
         public async Task GetComments()

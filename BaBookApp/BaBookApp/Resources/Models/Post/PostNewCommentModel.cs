@@ -13,7 +13,7 @@ using Newtonsoft.Json;
 
 namespace BaBookApp.Resources.Models.Post
 {
-    class PostNewComment
+    class PostNewCommentModel
     {
         [JsonProperty("userId")]
         public int UserId { get; set; }

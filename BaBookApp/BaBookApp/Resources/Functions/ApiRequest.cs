@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using Android.App;
 using Android.Widget;
+using BaBookApp.Resources.Models.Get;
 using Newtonsoft.Json;
 
 namespace BaBookApp.Resources.Functions
@@ -12,15 +14,7 @@ namespace BaBookApp.Resources.Functions
     public class ApiRequest
     {
         private const string Url = @"http://trycatch2017.azurewebsites.net/api/";
-        private string UserAccesToken;
-        public string UserName;
-        public string UserId;
-        private Activity Context;
-
-        public ApiRequest(Activity context)
-        {
-            Context = context;
-        }
+        public static GetUserTokenModel User = new GetUserTokenModel();
 
         public async Task<string> GetJsonByApi(string api)
         {
@@ -28,8 +22,8 @@ namespace BaBookApp.Resources.Functions
             {
                 var client = new HttpClient();
                 var uri = new Uri(Url + api);
-                //client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer ", UserAccesToken);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + User.UserAccessToken);
                 var response = await client.GetAsync(uri);
                 if (!response.IsSuccessStatusCode) return "";
                 var content = await response.Content.ReadAsStringAsync();
@@ -37,7 +31,7 @@ namespace BaBookApp.Resources.Functions
             }
             catch
             {
-                Toast.MakeText(Context, "Error has ocure !", ToastLength.Long);
+                //Toast.MakeText(Context, "Error has ocure !", ToastLength.Long);
                 return "";
             }
         }
@@ -47,14 +41,14 @@ namespace BaBookApp.Resources.Functions
             try
             {
                 HttpClient client = new HttpClient();
-                //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer ", UserAccesToken);
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + User.UserAccessToken);
                 var result = await client.PostAsync(Url + api,
                     new StringContent(JsonConvert.SerializeObject(o), Encoding.UTF8, "application/json"));
                 return result;
             }
             catch
             {
-                Toast.MakeText(Context, "Error has ocure !", ToastLength.Long).Show();
+                //Toast.MakeText(Context, "Error has ocure !", ToastLength.Long).Show();
                 return null;
             }
         }
@@ -64,13 +58,14 @@ namespace BaBookApp.Resources.Functions
             try
             {
                 HttpClient client = new HttpClient();
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + User.UserAccessToken);
                 var result = await client.PutAsync(Url + api,
                     new StringContent(JsonConvert.SerializeObject(o), Encoding.UTF8, "application/json"));
                 return result;
             }
             catch
             {
-                Toast.MakeText(Context, "Error has ocure !", ToastLength.Long).Show();
+                //Toast.MakeText(Context, "Error has ocure !", ToastLength.Long).Show();
                 return null;
             }
         }
@@ -85,23 +80,22 @@ namespace BaBookApp.Resources.Functions
                 var headerValues = new List<KeyValuePair<string, string>>
                 {
                     new KeyValuePair<string, string>("grant_type", "password"),
-                    new KeyValuePair<string, string>("Username", userName),
+                    new KeyValuePair<string, string>("username", userName),
                     new KeyValuePair<string, string>("password", password)
                 };
 
                 request.Content = new FormUrlEncodedContent(headerValues);
                 var response = await client.SendAsync(request);
-                //if (response.IsSuccessStatusCode)
-                //{
-                //    var responceContent = await response.Content.ReadAsStringAsync();
-                //    var content = JsonConvert.DeserializeObject<dynamic>(responceContent);
-                //    UserAccesToken = content.access_token;
-                //}
+                if (response.IsSuccessStatusCode)
+                {
+                    var responceContent = await response.Content.ReadAsStringAsync();
+                    User = JsonConvert.DeserializeObject<GetUserTokenModel>(responceContent);
+                }
                 return response;
             }
-            catch
+            catch(Exception ex)
             {
-                Toast.MakeText(Context, "Error has ocure !", ToastLength.Long).Show();
+                //Toast.MakeText(Context, "Error has ocure !", ToastLength.Long).Show();
                 return null;
             }
         }
