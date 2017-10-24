@@ -175,7 +175,15 @@ namespace BaBookApp
 
         private async void UpdateEvent(object sender, AddNewEventFinall e)
         {
-            await PutObjectByApi("events/" + EventId, e.Event);
+            
+            await PutObjectByApi("events", new PutEventModel
+            {
+                EventId = EventId,
+                Title = e.Event.Title,
+                Description = e.Event.Description,
+                DateOfOccurance = e.Event.DateOfOccurance,
+                Location = e.Event.Location
+            });
             await LoadEvent();
         }
 

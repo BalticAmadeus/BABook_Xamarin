@@ -95,6 +95,7 @@
     <Compile Include="Resources\Models\Post\PostAttendenceModel.cs" />
     <Compile Include="Resources\Models\Post\PostEventModel.cs" />
     <Compile Include="Resources\Models\Post\PostNewCommentModel.cs" />
+    <Compile Include="Resources\Models\Put\PutEventModel.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
