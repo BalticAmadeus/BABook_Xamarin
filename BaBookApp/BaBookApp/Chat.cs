@@ -6,9 +6,10 @@ namespace BaBookApp.Resources.Functions.Chat
 {
     public class Chat
     {
-        public void a()
+        public void BeginChat()
         {
-            var a = new HubConnection("http://www.contoso.com/");
+            var Chat = new HubConnection("http://www.contoso.com/");
+
         }
     }
 }

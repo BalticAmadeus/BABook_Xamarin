@@ -68,12 +68,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ChatActivity.cs" />
+    <Compile Include="ParticipateEventsActivity.cs" />
+    <Compile Include="MyEventsActivity.cs" />
     <Compile Include="GroupActivity.cs" />
     <Compile Include="EventDetailActivity.cs" />
     <Compile Include="EventActivity.cs" />
     <Compile Include="MainActivity.cs" />
-    <Compile Include="QueueChatActivity.cs" />
     <Compile Include="Resources\Fragments\Dialog\EventInviteDialog.cs" />
+    <Compile Include="Resources\Fragments\Dialog\LoginDialog.cs" />
     <Compile Include="Resources\Fragments\Dialog\NewEventSummaryDialog.cs" />
     <Compile Include="Resources\Fragments\Dialog\NewEventPickDataDialog.cs" />
     <Compile Include="Resources\Fragments\Dialog\NewEventPickTimeDialog.cs" />
@@ -88,6 +90,7 @@
     <Compile Include="Resources\Models\Get\GetEventModel.cs" />
     <Compile Include="Resources\Models\Get\GetGroupModel.cs" />
     <Compile Include="Resources\Models\Get\GetInvitableUsers.cs" />
+    <Compile Include="Resources\Models\Get\GetUserModel.cs" />
     <Compile Include="Resources\Models\Get\GetUserTokenModel.cs" />
     <Compile Include="Resources\Models\Post\PostAttendenceModel.cs" />
     <Compile Include="Resources\Models\Post\PostEventModel.cs" />
@@ -134,7 +137,7 @@
     <AndroidResource Include="Resources\layout\ChatListItemView.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
-    <AndroidResource Include="Resources\layout\QueueChatMainView.axml">
+    <AndroidResource Include="Resources\layout\ChatMainView.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\GroupListItemView.axml">
@@ -314,6 +317,42 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\LoginDialog.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-hdpi\ic_refresh_white_24dp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-mdpi\ic_refresh_white_24dp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_refresh_white_24dp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xxhdpi\ic_refresh_white_24dp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xxxhdpi\ic_refresh_white_24dp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-hdpi\ic_exit_to_app_white_24dp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-mdpi\ic_exit_to_app_white_24dp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_exit_to_app_white_24dp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xxhdpi\ic_exit_to_app_white_24dp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xxxhdpi\ic_exit_to_app_white_24dp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\menu\MyEventsMenu.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\menu\ParticipateEventsMenu.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

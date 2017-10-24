@@ -64,8 +64,16 @@ namespace BaBookApp
                     addEventDialog.EventNextStep += GetNewEventDate;
                         break;
                 }
+                case Resource.Id.EventsMenu_Refresh:
+                    UpdateAllItems();
+                    break;
             }
             return base.OnOptionsItemSelected(item);
+        }
+
+        public async void UpdateAllItems()
+        {
+            await UpdateEventList(_eventListView);
         }
 
         private void GetNewEventDate(object sender, AddNewEventEvent e)

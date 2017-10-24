@@ -9,10 +9,29 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/Main_Toolbar" />
+    <Button
+        android:text="Groups"
+        android:id="@+id/Main_GroupButton"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_margin="@dimen/Button.Margin" />
   <Button
-    android:text="Groups"
-    android:id="@+id/Main_GroupButton"
+    android:text="My events"
+    android:id="@+id/Main_MyEventsButton"
     android:layout_height="wrap_content"
     android:layout_width="match_parent"
-    android:layout_margin="@dimen/Button.Margin"/>
+    android:layout_margin="@dimen/Button.Margin" />
+
+  <Button
+    android:text="Participate events"
+    android:id="@+id/Main_PartEventsButton"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:layout_margin="@dimen/Button.Margin" />
+    <Button
+        android:text="Chat"
+        android:id="@+id/Main_ChatButton"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_margin="@dimen/Button.Margin" />
 </LinearLayout>

@@ -66,6 +66,7 @@
 
   <style name="Theme.EditText" parent="@android:style/Widget.EditText">
     <item name="android:backgroundTint">@color/Black</item>
+    <item name="android:textCursorDrawable">@null</item>
     <item name="android:textColor">@color/Black</item>
   </style>
 

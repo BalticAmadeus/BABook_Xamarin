@@ -41,11 +41,19 @@ namespace BaBookApp
             ActionBar.SetDisplayHomeAsUpEnabled(true);
             ActionBar.SetHomeButtonEnabled(true);
 
-            FindViewById<ImageButton>(Resource.Id.EventDetail_CommentButton).Click += AddNewComment;
+            FindViewById<ImageButton>(Resource.Id.EventDetail_CommentButton).Click += AddNewCommentClicked;
             FindViewById<ImageButton>(Resource.Id.EventDetail_RefreshButton).Click += RefreshComments;
 
-            var imm = (InputMethodManager) GetSystemService(InputMethodService);
-            imm.HideSoftInputFromWindow(FindViewById<EditText>(Resource.Id.EventDetail_CommentTxt).WindowToken, 0);
+            var commentTxt = FindViewById<EditText>(Resource.Id.EventDetail_CommentTxt);
+            commentTxt.EditorAction += (sender, args) =>
+            {
+                args.Handled = false;
+                if (args.ActionId == ImeAction.Done)
+                {
+                    AddNewComment();
+                    args.Handled = true;
+                }
+            };
 
             base.OnCreate(savedInstanceState);
             _eventId = GetEventId();
@@ -64,6 +72,10 @@ namespace BaBookApp
         {
             switch (item.ItemId)
             {
+                case Resource.Id.EventDetailMenu_Refresh:
+                    UpdateAllItems();
+                    break;
+
                 case Resource.Id.EventDetailMenu_Invite:
                 {
                     var transaction = FragmentManager.BeginTransaction();
@@ -115,6 +127,8 @@ namespace BaBookApp
             }
             return base.OnOptionsItemSelected(item);
         }
+
+
 
         private void ShowUserRequest()
         {
@@ -171,18 +185,35 @@ namespace BaBookApp
             Toast.MakeText(this, "Refreshed !", ToastLength.Short).Show();
         }
 
-        private async void AddNewComment(object sender, EventArgs e)
+        public async void AddNewComment()
         {
             var txtcomment = FindViewById<EditText>(Resource.Id.EventDetail_CommentTxt);
-            var comment = new PostNewCommentModel {CommentText = txtcomment.Text};
-            txtcomment.Text = "";
+            if (txtcomment.Text.Length > 0)
+            {
+                var comment = new PostNewCommentModel { CommentText = txtcomment.Text };
+                txtcomment.Text = "";
 
-            var imm = (InputMethodManager) GetSystemService(InputMethodService);
-            imm.HideSoftInputFromWindow(txtcomment.WindowToken, 0);
+                var imm = (InputMethodManager)GetSystemService(InputMethodService);
+                imm.HideSoftInputFromWindow(txtcomment.WindowToken, 0);
 
-            await PostObjectByApi("comments/" + EventId, comment);
-            await GetComments();
-            Toast.MakeText(this, "Sent!", ToastLength.Short).Show();
+                await PostObjectByApi("comments/" + EventId, comment);
+                await GetComments();
+                Toast.MakeText(this, "Sent!", ToastLength.Short).Show();
+            }
+            else
+            {
+                Toast.MakeText(this, "Comment is empty.", ToastLength.Short).Show();
+            }
+        }
+
+        private void AddNewCommentClicked(object sender, EventArgs e)
+        {
+            AddNewComment();
+        }
+
+        public async void UpdateAllItems()
+        {
+            await LoadEvent();
         }
 
         public async Task LoadEvent()
