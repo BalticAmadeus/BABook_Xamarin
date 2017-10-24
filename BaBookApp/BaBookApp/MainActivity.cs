@@ -5,46 +5,31 @@ using System.Text;
 
 using Android.App;
 using Android.Content;
+using Android.Net;
 using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
-
+using BaBookApp.Resources.Functions;
 namespace BaBookApp
 {
-    [Activity(Label = "BaBook")]
-    public class MainActivity : Activity
+    [Activity(Label = "BaBook", MainLauncher = true)]
+    public class MainActivity : MainActivityCalss
     {
         protected override void OnCreate(Bundle savedInstanceState)
         {
-            base.OnCreate(savedInstanceState);
             Window.RequestFeature(WindowFeatures.NoTitle);
             Window.RequestFeature(WindowFeatures.ActionBar);
             SetContentView(Resource.Layout.MainActivityMainView);
-            var mainToolbar = FindViewById<Toolbar>(Resource.Id.MainToolbar);
-            SetActionBar(mainToolbar);
+            SetActionBar(FindViewById<Toolbar>(Resource.Id.Main_Toolbar));
             ActionBar.Title = "Welcome Back !";
-        }
 
-        public override bool OnCreateOptionsMenu(IMenu menu)
-        {
-            MenuInflater.Inflate(Resource.Menu.MainMenu, menu);
-            return base.OnCreateOptionsMenu(menu);
-        }
-
-        public override bool OnOptionsItemSelected(IMenuItem item)
-        {
-            switch (item.ItemId)
+            FindViewById<Button>(Resource.Id.Main_GroupButton).Click += (sender, args) =>
             {
-                case Resource.Id.mainmenu_events:
-
-                    StartActivity(typeof(EventActivity));
-                    break;
-                case Resource.Id.mainmenu_groups:
-                    StartActivity(typeof(GroupActivity));
-                    break;
-            }
-            return base.OnOptionsItemSelected(item);
+                StartActivity(typeof(GroupActivity));
+            };
+            base.OnCreate(savedInstanceState);
+            LoadingDialog.Hide();
         }
     }
 }

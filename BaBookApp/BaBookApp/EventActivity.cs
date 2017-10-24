@@ -10,47 +10,39 @@ using AndroidApp.Resources.Models;
 using Newtonsoft.Json;
 using BaBookApp.Resources;
 using BaBookApp.Resources.Fragments.Dialog;
-using System.Text;
 using BaBookApp.Resources.Models;
 using Android.Content;
-using Android.Runtime;
 using BaBookApp.Resources.Functions;
-using Void = Java.Lang.Void;
 
 namespace BaBookApp
 {
     [Activity(Label = "BaBook.Event", ParentActivity = typeof(GroupActivity))]
-    public class EventActivity : Activity
+    public class EventActivity : MainActivityCalss
     {
-        private PostEventModel NewEvent = new PostEventModel();
-        private int GroupId;
-        private List<GetEventModel> Events = new List<GetEventModel>();
-        private EventList EventListViewAdabter;
-        private ListView EventListView;
-        private ApiRequest ApiRequest = new ApiRequest();
+        private PostEventModel _newEvent = new PostEventModel();
+        private List<GetEventModel> _events = new List<GetEventModel>();
+        private EventList _eventListViewAdabter;
+        private ListView _eventListView;
+        private int _groupId;
 
         protected override async void OnCreate(Bundle savedInstanceState)
         {
-            base.OnCreate(savedInstanceState);
             Window.RequestFeature(WindowFeatures.NoTitle);
             Window.RequestFeature(WindowFeatures.ActionBar);
 
             SetContentView(Resource.Layout.EventMainView);
-
-            var loadingDialog = new Dialog(this, Android.Resource.Style.ThemeOverlayMaterial);
-            loadingDialog.SetContentView(Resource.Layout.LoadingScreenView);
-            loadingDialog.Show();
 
             SetActionBar(FindViewById<Toolbar>(Resource.Id.Events_Toolbar));
             ActionBar.Title = "Events";
             ActionBar.SetDisplayHomeAsUpEnabled(true);
             ActionBar.SetHomeButtonEnabled(true);
 
-            EventListView = FindViewById<ListView>(Resource.Id.Events_EventsList);
-            //Todo Get GroupId by event Id
+            _eventListView = FindViewById<ListView>(Resource.Id.Events_EventsList);
 
-            await UpdateEventList(EventListView);
-            loadingDialog.Hide();
+            base.OnCreate(savedInstanceState);
+            _groupId = GetGroupId();
+            await UpdateEventList(_eventListView);
+            LoadingDialog.Hide();
         }
 
         public override bool OnCreateOptionsMenu(IMenu menu)
@@ -67,7 +59,7 @@ namespace BaBookApp
                 {
                     var transaction = FragmentManager.BeginTransaction();
                     var addEventDialog = new NewEventBaseDialog();
-                    addEventDialog.SetStyle(DialogFragmentStyle.Normal,Resource.Style.DialogFragment);
+                    addEventDialog.SetStyle(DialogFragmentStyle.Normal,Resource.Style.Theme_Dialog);
                     addEventDialog.Show(transaction, "NewEventBase");
                     addEventDialog.EventNextStep += GetNewEventDate;
                         break;
@@ -78,59 +70,55 @@ namespace BaBookApp
 
         private void GetNewEventDate(object sender, AddNewEventEvent e)
         {
-            NewEvent.Title = e.Title;
-            NewEvent.Description = e.Description;
-            NewEvent.Location = e.Location;
+            _newEvent.Title = e.Title;
+            _newEvent.Description = e.Description;
+            _newEvent.Location = e.Location;
 
             var transaction = FragmentManager.BeginTransaction();
             var pickDataDialog = new NewEventPickDataDialog();
-            pickDataDialog.SetStyle(DialogFragmentStyle.Normal, Resource.Style.DialogFragment);
+            pickDataDialog.SetStyle(DialogFragmentStyle.Normal, Resource.Style.Theme_Dialog);
             pickDataDialog.Show(transaction, "NewEventDate");
             pickDataDialog.EventNextStep += GetNewEventTime;
         }
 
         private void GetNewEventTime(object sender, AddNewEventDate e)
         {
-            NewEvent.DateOfOccurance = e.Date;
+            _newEvent.DateOfOccurance = e.Date;
             var transaction = FragmentManager.BeginTransaction();
             var pickTimeDialog = new NewEventPickTimeDialog();
-            pickTimeDialog.SetStyle(DialogFragmentStyle.Normal, Resource.Style.DialogFragment);
+            pickTimeDialog.SetStyle(DialogFragmentStyle.Normal, Resource.Style.Theme_Dialog);
             pickTimeDialog.Show(transaction, "NewEventTime");
             pickTimeDialog.EventNextStep += GetNewEventComfirm;
         }
 
         private void GetNewEventComfirm(object sender, AddNewEventTime e)
         {
-            NewEvent.DateOfOccurance = NewEvent.DateOfOccurance.Add(e.Date);
+            _newEvent.DateOfOccurance = _newEvent.DateOfOccurance.Add(e.Date);
             var transaction = FragmentManager.BeginTransaction();
-            var newEventSummaryDialog = new NewEventSummaryDialog(NewEvent, true);
-            newEventSummaryDialog.SetStyle(DialogFragmentStyle.Normal, Resource.Style.DialogFragment);
+            var newEventSummaryDialog = new NewEventSummaryDialog(_newEvent, true);
+            newEventSummaryDialog.SetStyle(DialogFragmentStyle.Normal, Resource.Style.Theme_Dialog);
             newEventSummaryDialog.Show(transaction, "NewEventSummary");
             newEventSummaryDialog.EventNextStep += GetAllNewEventData;
         }
 
         private async void GetAllNewEventData(object sender, AddNewEventFinall e)
         {
-            NewEvent.GroupId = GroupId;
-            await ApiRequest.PostObjectByApi("events", NewEvent);
+            _newEvent.GroupId = _groupId;
+            await PostObjectByApi("events", _newEvent);
             Toast.MakeText(this, "New event added !", ToastLength.Short).Show();
-            await UpdateEventList(EventListView);
+            await UpdateEventList(_eventListView);
         }
 
         private async Task UpdateEventList(ListView listView)
         {
-            var json = await ApiRequest.GetJsonByApi("events/group/"+ GroupId);
-            //TODO No internet and refresh
-            if (json.Length <= 0)
+            var json = await GetJsonByApi("events/group/" + _groupId);
+            if (json != null)
             {
-            }
-            else
-            {
-                Events = JsonConvert.DeserializeObject<List<GetEventModel>>(json);
-                if (Events != null)
+                _events = JsonConvert.DeserializeObject<List<GetEventModel>>(json);
+                if (_events != null)
                 {
-                    EventListViewAdabter = new EventList(this, Events);
-                    listView.Adapter = EventListViewAdabter;
+                    _eventListViewAdabter = new EventList(this, _events);
+                    listView.Adapter = _eventListViewAdabter;
                     listView.ItemClick += EventClicked;
                 }
             }
@@ -139,7 +127,7 @@ namespace BaBookApp
         private void EventClicked(object sender, AdapterView.ItemClickEventArgs e)
         {
             var eventDetail = new Intent(this, typeof(EventDetailActivity));
-            eventDetail.PutExtra("EventId", e.Id.ToString());
+            EventId = (int)e.Id;
             StartActivity(eventDetail);
         }
     }

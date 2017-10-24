@@ -22,56 +22,48 @@ using Void = Java.Lang.Void;
 namespace BaBookApp
 {
     [Activity(Label = "BaBook.Group", ParentActivity = typeof(MainActivity))]
-    public class GroupActivity : Activity
+    public class GroupActivity : MainActivityCalss
     {
-        private List<GetGroupModel> Groups = new List<GetGroupModel>();
-        private GroupList GroupListViewAdabter;
-        private ListView GroupListView;
-        private ApiRequest ApiRequest = new ApiRequest();
+        private List<GetGroupModel> _groups = new List<GetGroupModel>();
+        private GroupList _groupListViewAdabter;
+        private ListView _groupListView;
 
         protected override async void OnCreate(Bundle savedInstanceState)
         {
-            base.OnCreate(savedInstanceState);
             Window.RequestFeature(WindowFeatures.NoTitle);
             Window.RequestFeature(WindowFeatures.ActionBar);
             SetContentView(Resource.Layout.EventMainView);
-
-            var loadingDialog = new Dialog(this, Android.Resource.Style.ThemeOverlayMaterial);
-            loadingDialog.SetContentView(Resource.Layout.LoadingScreenView);
-            loadingDialog.Show();
 
             SetActionBar(FindViewById<Toolbar>(Resource.Id.Events_Toolbar));
             ActionBar.Title = "Groups";
             ActionBar.SetDisplayHomeAsUpEnabled(true);
             ActionBar.SetHomeButtonEnabled(true);
 
-            GroupListView = FindViewById<ListView>(Resource.Id.Events_EventsList);
-            await UpdateGroupList(GroupListView);
-            loadingDialog.Hide();
+            _groupListView = FindViewById<ListView>(Resource.Id.Events_EventsList);
+            base.OnCreate(savedInstanceState);
+            await UpdateGroupList(_groupListView);
+            LoadingDialog.Hide();
         }
+
         private async Task UpdateGroupList(ListView listView)
         {
-            var json = await ApiRequest.GetJsonByApi("groups");
-            //TODO No internet and refresh
-            if (json.Length <= 0)
+            var json = await GetJsonByApi("groups");
+            if (json != null)
             {
-            }
-            else
-            {
-                Groups = JsonConvert.DeserializeObject<List<GetGroupModel>>(json);
-                if (Groups != null)
+                _groups = JsonConvert.DeserializeObject<List<GetGroupModel>>(json);
+                if (_groups != null)
                 {
-                    GroupListViewAdabter = new GroupList(this, Groups);
-                    listView.Adapter = GroupListViewAdabter;
-                    listView.ItemClick += GroupClicked;
+                    _groupListViewAdabter = new GroupList(this, _groups);
+                    listView.Adapter = _groupListViewAdabter;
+                    listView.ItemClick += GroupListItemClicked;
                 }
             }
         }
 
-        private void GroupClicked(object sender, AdapterView.ItemClickEventArgs e)
+        private void GroupListItemClicked(object sender, AdapterView.ItemClickEventArgs e)
         {
             var events = new Intent(this, typeof(EventActivity));
-            events.PutExtra("GroupId", e.Id.ToString());
+            GroupId = (int)e.Id;
             StartActivity(events);
         }
     }

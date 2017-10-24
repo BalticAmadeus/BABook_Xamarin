@@ -9,22 +9,23 @@
   <dimen name="Normal">15dp</dimen>
   <dimen name="Big">23dp</dimen>
   <dimen name="ButtonTextSize">18dp</dimen>
+  <dimen name="Button.Margin">8dp</dimen>
 
-  <style name="MyTheme" parent="@android:style/Theme.Material">
+  <style name="Theme" parent="@android:style/Theme.Material">
     <item name="android:colorPrimary">@color/MainColor</item>
     <item name="android:windowBackground">@color/White</item>
-    <item name="android:toolbarStyle">@style/Toolbar</item>
-    <item name="android:buttonStyle">@style/Button</item>
-    <item name="android:textViewStyle">@style/TextView</item>
-    <item name="android:editTextStyle">@style/EditText</item>
+    <item name="android:toolbarStyle">@style/Theme.Toolbar</item>
+    <item name="android:buttonStyle">@style/Theme.Button</item>
+    <item name="android:textViewStyle">@style/Theme.TextView</item>
+    <item name="android:editTextStyle">@style/Theme.EditText</item>
     <item name="android:itemBackground">@color/White</item>
+    <item name="android:alertDialogTheme">@style/Theme.Dialog.Alert</item>
   </style>
-
-  <style name="Toolbar" parent="@android:style/Widget.Toolbar">
+  <style name="Theme.Toolbar" parent="@android:style/Widget.Toolbar">
     <item name="android:background">@color/MainColor</item>
   </style>
 
-  <style name="TextView" parent="android:style/Widget.TextView">
+  <style name="Theme.TextView" parent="android:style/Widget.TextView">
     <item name="android:textSize">@dimen/Normal</item>
     <item name="android:textColor">@color/Black</item>
   </style>
@@ -35,39 +36,44 @@
     <item name="android:textStyle">bold</item>
   </style>
 
-  <style name="Button" parent="android:style/Widget.Button">
+  <style name="Theme.Button" parent="android:style/Widget.Button">
     <item name="android:background">@drawable/Button</item>
     <item name="android:textColor">@color/White</item>
     <item name="android:textSize">@dimen/ButtonTextSize</item>
   </style>
+  
+  <style name="Theme.Dialog.Alert" parent="@android:style/Theme.Material.Light">
+    <item name="android:windowIsFloating">true</item>
+  </style>
+    
 
-  <style name="DialogFragment" parent="@android:style/Theme.Holo.Dialog">
-    <item name="android:windowTitleStyle">@style/DialogTitle</item>
+  <style name="Theme.Dialog" parent="@android:style/Theme.Holo.Dialog">
+    <item name="android:windowTitleStyle">@style/Theme.Dialog.Title</item>
     <item name="android:colorPrimary">@color/MainColor</item>
     <item name="android:windowBackground">@color/White</item>
     <item name="android:textColorPrimary">@color/Black</item>
-    <item name="android:buttonStyle">@style/Button</item>
-    <item name="android:textViewStyle">@style/TextView</item>
-    <item name="android:editTextStyle">@style/EditText</item>
-    <item name="android:datePickerStyle">@style/DatePicker</item>
-    <item name="android:autoCompleteTextViewStyle">@style/InviteUsers</item>
+    <item name="android:buttonStyle">@style/Theme.Button</item>
+    <item name="android:textViewStyle">@style/Theme.TextView</item>
+    <item name="android:editTextStyle">@style/Theme.EditText</item>
+    <item name="android:datePickerStyle">@style/Theme.Dialog.DatePicker</item>
+    <item name="android:autoCompleteTextViewStyle">@style/Theme.Dialog.InviteUsers</item>
     <item name="android:itemBackground">@color/White</item>
   </style>
 
-  <style name="DatePicker" parent="@android:style/Widget.DatePicker">
+  <style name="Theme.Dialog.DatePicker" parent="@android:style/Widget.DatePicker">
     <item name="android:theme">@android:style/Theme.Material.Light</item>
   </style>
 
-  <style name="EditText" parent="@android:style/Widget.EditText">
+  <style name="Theme.EditText" parent="@android:style/Widget.EditText">
     <item name="android:backgroundTint">@color/Black</item>
     <item name="android:textColor">@color/Black</item>
   </style>
 
-  <style name="InviteUsers" parent="@android:style/Widget.AutoCompleteTextView">
+  <style name="Theme.Dialog.InviteUsers" parent="@android:style/Widget.AutoCompleteTextView">
     <item name="android:popupBackground">@color/White</item>
   </style>
 
-  <style name="DialogTitle" parent="@android:style/Widget.TextView">
+  <style name="Theme.Dialog.Title" parent="@android:style/Widget.TextView">
     <item name="android:background">@color/MainColor</item>
     <item name="android:textColor">@color/White</item>
     <item name="android:textSize">@dimen/Big</item>

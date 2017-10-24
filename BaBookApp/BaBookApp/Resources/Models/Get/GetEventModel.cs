@@ -22,5 +22,7 @@ namespace AndroidApp.Resources.Models
         public string Location { get; set; }
         [JsonProperty("status")]
         public int AttendanceStatus { get; set; }
+        [JsonProperty("isOwner")]
+        public bool IsOwner { get; set; }
     }
 }

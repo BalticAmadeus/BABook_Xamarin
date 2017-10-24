@@ -70,7 +70,6 @@
     <Compile Include="ChatActivity.cs" />
     <Compile Include="GroupActivity.cs" />
     <Compile Include="EventDetailActivity.cs" />
-    <Compile Include="LoginActivity.cs" />
     <Compile Include="EventActivity.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="QueueChatActivity.cs" />
@@ -78,8 +77,8 @@
     <Compile Include="Resources\Fragments\Dialog\NewEventSummaryDialog.cs" />
     <Compile Include="Resources\Fragments\Dialog\NewEventPickDataDialog.cs" />
     <Compile Include="Resources\Fragments\Dialog\NewEventPickTimeDialog.cs" />
-    <Compile Include="Resources\Functions\ApiRequest.cs" />
-    <Compile Include="Resources\Functions\Chat.cs" />
+    <Compile Include="MainActivityClass.cs" />
+    <Compile Include="Chat.cs" />
     <Compile Include="Resources\ListViews\ChatMessageList.cs" />
     <Compile Include="Resources\ListViews\CommentsList.cs" />
     <Compile Include="Resources\ListViews\GroupList.cs" />
@@ -115,9 +114,6 @@
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\AddEventFinalDialogView.axml">
-      <SubType>Designer</SubType>
-    </AndroidResource>
-    <AndroidResource Include="Resources\layout\LoginMainView.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\EventDetailMainView.axml">
@@ -315,6 +311,9 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable-xxxhdpi\ic_person_white_24dp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\LoginDialog.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

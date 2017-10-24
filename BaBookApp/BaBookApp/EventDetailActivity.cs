@@ -23,46 +23,40 @@ using Newtonsoft.Json;
 
 namespace BaBookApp
 {
-    [Activity(Label = "BaBook.Event.Detail" ,ParentActivity = typeof(EventActivity))]
-    public class EventDetailActivity : Activity
+    [Activity(Label = "BaBook.Event.Detail", ParentActivity = typeof(EventActivity))]
+    public class EventDetailActivity : MainActivityCalss
     {
-        private int EventId;
-        private List<GetInvitableUsers> InvitableUsers = new List<GetInvitableUsers>();
+        private List<GetInvitableUsers> _invitableUsers = new List<GetInvitableUsers>();
         private GetEventModel _event;
-        private ApiRequest ApiRequest = new ApiRequest();
-        private IMenu EventDetailMenu;
+        private IMenu _eventDetailMenu;
+        private int _eventId;
 
         protected override async void OnCreate(Bundle savedInstanceState)
         {
-            base.OnCreate(savedInstanceState);
             Window.RequestFeature(WindowFeatures.NoTitle);
             Window.RequestFeature(WindowFeatures.ActionBar);
             SetContentView(Resource.Layout.EventDetailMainView);
-
-            var loadingDialog = new Dialog(this, Android.Resource.Style.ThemeOverlayMaterial);
-            loadingDialog.SetContentView(Resource.Layout.LoadingScreenView);
-            loadingDialog.Show();
 
             SetActionBar(FindViewById<Toolbar>(Resource.Id.EventDetail_Toolbar));
             ActionBar.SetDisplayHomeAsUpEnabled(true);
             ActionBar.SetHomeButtonEnabled(true);
 
-            FindViewById<ImageButton>(Resource.Id.EventDetail_CommentButton).Click += AddNewComment; 
-            FindViewById<ImageButton>(Resource.Id.EventDetail_RefreshButton).Click += RefreshComments; 
+            FindViewById<ImageButton>(Resource.Id.EventDetail_CommentButton).Click += AddNewComment;
+            FindViewById<ImageButton>(Resource.Id.EventDetail_RefreshButton).Click += RefreshComments;
 
-            var imm = (InputMethodManager)GetSystemService(InputMethodService);
+            var imm = (InputMethodManager) GetSystemService(InputMethodService);
             imm.HideSoftInputFromWindow(FindViewById<EditText>(Resource.Id.EventDetail_CommentTxt).WindowToken, 0);
 
-            EventId = Int32.Parse(Intent.GetStringExtra("EventId") ?? "0");
+            base.OnCreate(savedInstanceState);
+            _eventId = GetEventId();
             await LoadEvent();
-
-            loadingDialog.Hide();
+            LoadingDialog.Hide();
         }
 
         public override bool OnCreateOptionsMenu(IMenu menu)
         {
             MenuInflater.Inflate(Resource.Menu.EventDetailMenu, menu);
-            EventDetailMenu = menu;
+            _eventDetailMenu = menu;
             return base.OnCreateOptionsMenu(menu);
         }
 
@@ -73,8 +67,8 @@ namespace BaBookApp
                 case Resource.Id.EventDetailMenu_Invite:
                 {
                     var transaction = FragmentManager.BeginTransaction();
-                    var inviteDialog = new EventInviteDialog(InvitableUsers);
-                    inviteDialog.SetStyle(DialogFragmentStyle.Normal, Resource.Style.DialogFragment);
+                    var inviteDialog = new EventInviteDialog(_invitableUsers);
+                    inviteDialog.SetStyle(DialogFragmentStyle.Normal, Resource.Style.Theme_Dialog);
                     inviteDialog.Show(transaction, "eventinvite");
                     inviteDialog.InvitedUsers += InviteUsers;
                     break;
@@ -90,29 +84,84 @@ namespace BaBookApp
                         Location = _event.Location
 
                     }, false);
-                    editEventDialog.SetStyle(DialogFragmentStyle.Normal, Resource.Style.DialogFragment);
+                    editEventDialog.SetStyle(DialogFragmentStyle.Normal, Resource.Style.Theme_Dialog);
                     editEventDialog.Show(transaction, "EditEvent");
                     editEventDialog.EventNextStep += UpdateEvent;
-                        break;
+                    break;
+                }
+
+                case Resource.Id.EventDetailMenu_Status:
+                {
+                    switch (_event.AttendanceStatus)
+                    {
+                        case 1:
+                            item.SetIcon(Resource.Drawable.ic_check_circle_white_24dp);
+                            item.SetTitle("Not Going");
+                            ChangeUserStatus(2);
+                            Toast.MakeText(this, "You are not going !", ToastLength.Short).Show();
+                            break;
+                        case 2:
+                            item.SetIcon(Resource.Drawable.ic_cancel_white_24dp);
+                            item.SetTitle("Going");
+                            ChangeUserStatus(1);
+                            Toast.MakeText(this, "You are going !", ToastLength.Short).Show();
+                            break;
+                        case 3:
+                            ShowUserRequest();
+                            break;
+                    }
+                    break;
                 }
             }
             return base.OnOptionsItemSelected(item);
         }
 
+        private void ShowUserRequest()
+        {
+            var statusItem = _eventDetailMenu.FindItem(Resource.Id.EventDetailMenu_Status);
+            var request = new AlertDialog.Builder(this);
+            request.SetTitle("Accept request");
+            request.SetPositiveButton("Going", (sender, args) =>
+            {
+                statusItem.SetIcon(Resource.Drawable.ic_cancel_white_24dp);
+                statusItem.SetTitle("Going");
+                ChangeUserStatus(1);
+                Toast.MakeText(this, "You are going !", ToastLength.Short).Show();
+                request.Dispose();
+            });
+
+            request.SetNegativeButton("Not going", (sender, args) =>
+            {
+                statusItem.SetTitle("Not Going");
+                statusItem.SetIcon(Resource.Drawable.ic_check_circle_white_24dp);
+                ChangeUserStatus(2);
+                Toast.MakeText(this, "You are  not going !", ToastLength.Short).Show();
+                request.Dispose();
+            });
+            request.Show();
+        }
+
+        private async void ChangeUserStatus(int status)
+        {
+            await PostObjectByApi("userevent",
+                new PostAttendenceModel {EventId = EventId, Status = status});
+            _event.AttendanceStatus = status;
+        }
+
         private void InviteUsers(object sender, EventInviteDialogArgs e)
         {
-            List<PostAttendenceModel> invitedUserList = new List<PostAttendenceModel>();
+            var invitedUserList = new List<PostAttendenceModel>();
             foreach (var user in e.InvitedUsers)
             {
-                if(user != null)
-                    invitedUserList.Add(new PostAttendenceModel{EventId = EventId, Status = 3, UserId = user.UserId});
+                if (user != null)
+                    invitedUserList.Add(new PostAttendenceModel {EventId = EventId, Status = 3, UserId = user.UserId});
             }
-            invitedUserList.ForEach(async x=> await ApiRequest.PostObjectByApi("userevent", x));
+            invitedUserList.ForEach(async x => await PostObjectByApi("userevent", x));
         }
 
         private async void UpdateEvent(object sender, AddNewEventFinall e)
         {
-            await ApiRequest.PutObjectByApi("events/"+ EventId, e.Event);
+            await PutObjectByApi("events/" + EventId, e.Event);
             await LoadEvent();
         }
 
@@ -125,88 +174,83 @@ namespace BaBookApp
         private async void AddNewComment(object sender, EventArgs e)
         {
             var txtcomment = FindViewById<EditText>(Resource.Id.EventDetail_CommentTxt);
-            var comment = new PostNewCommentModel
-            {
-                UserId = 1,
-                CommentText = txtcomment.Text
-            };
-
+            var comment = new PostNewCommentModel {CommentText = txtcomment.Text};
             txtcomment.Text = "";
-            var imm = (InputMethodManager)GetSystemService(InputMethodService);
+
+            var imm = (InputMethodManager) GetSystemService(InputMethodService);
             imm.HideSoftInputFromWindow(txtcomment.WindowToken, 0);
 
-            await ApiRequest.PostObjectByApi("comments/" + EventId, comment);
+            await PostObjectByApi("comments/" + EventId, comment);
             await GetComments();
-            Toast.MakeText(this, "Sended!", ToastLength.Short).Show();
+            Toast.MakeText(this, "Sent!", ToastLength.Short).Show();
         }
 
         public async Task LoadEvent()
         {
-            string api = @"events/" + EventId;
-            var json = await ApiRequest.GetJsonByApi(api);
-            _event = JsonConvert.DeserializeObject<GetEventModel>(json);
-            if (_event != null)
+            var json = await GetJsonByApi("events/" + EventId);
+            if (json != null)
             {
-                ActionBar.Title = _event.Title;
-                FindViewById<TextView>(Resource.Id.EventDetail_Desc).Text = _event.Description;
-                FindViewById<TextView>(Resource.Id.EventDetail_Loc).Text = _event.Location;
-                FindViewById<TextView>(Resource.Id.EventDetail_Date).Text = _event.DateOfOccurance.ToShortDateString();
-                FindViewById<TextView>(Resource.Id.EventDetail_Time).Text = _event.DateOfOccurance.ToShortTimeString();
+                _event = JsonConvert.DeserializeObject<GetEventModel>(json);
+                if (_event != null)
+                {
+                    ActionBar.Title = _event.Title;
+                    FindViewById<TextView>(Resource.Id.EventDetail_Desc).Text = _event.Description;
+                    FindViewById<TextView>(Resource.Id.EventDetail_Loc).Text = _event.Location;
+                    FindViewById<TextView>(Resource.Id.EventDetail_Date).Text =
+                        _event.DateOfOccurance.ToShortDateString();
+                    FindViewById<TextView>(Resource.Id.EventDetail_Time).Text =
+                        _event.DateOfOccurance.ToShortTimeString();
 
-                //ToDo Edit event by eventowner
-                if (_event.OwnerName == "guest")
-                {
-                    EventDetailMenu.FindItem(Resource.Id.EventDetailMenu_Edit).SetVisible(true);
-                }
-                else
-                {
+                    //ToDo Edit event by eventowner
+                    if (_event.IsOwner)
+                    {
+                        _eventDetailMenu.FindItem(Resource.Id.EventDetailMenu_Edit).SetVisible(true);
+                    }
 
+                    var statusItem = _eventDetailMenu.FindItem(Resource.Id.EventDetailMenu_Status);
+                    switch (_event.AttendanceStatus)
+                    {
+                        case 1:
+                            statusItem.SetIcon(Resource.Drawable.ic_cancel_white_24dp);
+                            statusItem.SetTitle("Going");
+                            statusItem.SetVisible(true);
+                            break;
+                        case 2:
+                            statusItem.SetTitle("Not Going");
+                            statusItem.SetIcon(Resource.Drawable.ic_check_circle_white_24dp);
+                            statusItem.SetVisible(true);
+                            break;
+                        case 3:
+                            statusItem.SetTitle("Request");
+                            statusItem.SetIcon(Resource.Drawable.ic_person_white_24dp);
+                            statusItem.SetVisible(true);
+                            break;
+                    }
+                    await GetComments();
+                    await GetInvitableUsers();
                 }
-                //2 not going, 1 going, 3 ivite.
-                var statusItem = EventDetailMenu.FindItem(Resource.Id.EventDetailMenu_Status);
-                switch (_event.AttendanceStatus)
-                {
-                    case 1:
-                        statusItem.SetIcon(Resource.Drawable.ic_cancel_white_24dp);
-                        statusItem.SetTitle("Not Going");
-                        await ApiRequest.PostObjectByApi("", new PostAttendenceModel { EventId = EventId, Status = 1 });
-                        Toast.MakeText(this, "You are going !", ToastLength.Short).Show();
-                        statusItem.SetVisible(true);
-                        break;
-                    case 2:
-                        statusItem.SetTitle("Going");
-                        statusItem.SetIcon(Resource.Drawable.ic_check_circle_white_24dp);
-                        await ApiRequest.PostObjectByApi("", new PostAttendenceModel { EventId = EventId, Status = 2 });
-                        statusItem.SetVisible(true);
-                        break;
-                    case 3:
-                        statusItem.SetTitle("Request");
-                        statusItem.SetIcon(Resource.Drawable.ic_person_white_24dp);
-                        //TODO Accet or not invitation
-                        //await ApiRequest.PostObjectByApi("", new PostAttendenceModel { EventId = EventId, Status = 1});
-                        statusItem.SetVisible(true);
-                        break;
-                }
-                await GetComments();
-                await GetInvitableUsers();
             }
         }
 
         public async Task GetInvitableUsers()
         {
-            var json = await ApiRequest.GetJsonByApi(@"userevent/invitable/" + EventId);
-            InvitableUsers = JsonConvert.DeserializeObject<List<GetInvitableUsers>>(json);
+            var json = await GetJsonByApi(@"userevent/invitable/" + EventId);
+            if (json != null)
+                _invitableUsers = JsonConvert.DeserializeObject<List<GetInvitableUsers>>(json);
         }
 
         public async Task GetComments()
         {
-            var json = await ApiRequest.GetJsonByApi(@"comments/" + EventId);
-            var commentListview = FindViewById<ListView>(Resource.Id.EventDetail_CommentsList);
-            var eventComments = JsonConvert.DeserializeObject<List<GetEventComments>>(json);
-            if (eventComments != null)
+            var json = await GetJsonByApi(@"comments/" + EventId);
+            if (json != null)
             {
-                var commentAdabter = new CommentsList(this, eventComments);
-                commentListview.Adapter = commentAdabter;
+                var commentListview = FindViewById<ListView>(Resource.Id.EventDetail_CommentsList);
+                var eventComments = JsonConvert.DeserializeObject<List<GetEventComments>>(json);
+                if (eventComments != null)
+                {
+                    var commentAdabter = new CommentsList(this, eventComments);
+                    commentListview.Adapter = commentAdabter;
+                }
             }
         }
     }

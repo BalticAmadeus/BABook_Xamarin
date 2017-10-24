@@ -6,9 +6,13 @@
     android:minWidth="25px"
     android:minHeight="25px">
     <Toolbar
-        android:minHeight="?android:attr/actionBarSize"
-        android:minWidth="25px"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/MainToolbar" />
+        android:id="@+id/Main_Toolbar" />
+  <Button
+    android:text="Groups"
+    android:id="@+id/Main_GroupButton"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:layout_margin="@dimen/Button.Margin"/>
 </LinearLayout>

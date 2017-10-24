@@ -11,6 +11,7 @@
         android:minWidth="25px"
         android:minHeight="25px"
         android:layout_marginLeft="15dp"
+        android:layout_marginTop="15dp"
         android:divider="@drawable/EventListSeperator"
         android:dividerHeight="15dp"
         android:layout_marginRight="15dp"
