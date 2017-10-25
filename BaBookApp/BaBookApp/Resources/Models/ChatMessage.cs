@@ -12,8 +12,9 @@ using Android.Widget;
 
 namespace BaBookApp.Resources.Models
 {
-    public class ChatMessageModel
+    class ChatMessage
     {
-        public string[] A { get; set; }
+        public string Massage { get; set; }
+        public DateTime MessageTime { get; set; }
     }
 }

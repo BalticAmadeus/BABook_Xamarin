@@ -86,7 +86,8 @@
     <Compile Include="Resources\ListViews\GroupList.cs" />
     <Compile Include="Resources\ListViews\EventList.cs" />
     <Compile Include="Resources\Fragments\Dialog\NewEventBaseDialog.cs" />
-    <Compile Include="Resources\Models\ChatMessageModel.cs" />
+    <Compile Include="Resources\Models\ChatMessage.cs" />
+    <Compile Include="Resources\Models\GetChatMessageModel.cs" />
     <Compile Include="Resources\Models\Get\GetEventComments.cs" />
     <Compile Include="Resources\Models\Get\GetEventModel.cs" />
     <Compile Include="Resources\Models\Get\GetGroupModel.cs" />
@@ -318,7 +319,9 @@
     <AndroidResource Include="Resources\drawable-xxxhdpi\ic_person_white_24dp.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\layout\LoginDialog.xml" />
+    <AndroidResource Include="Resources\layout\LoginDialog.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable-hdpi\ic_refresh_white_24dp.png" />

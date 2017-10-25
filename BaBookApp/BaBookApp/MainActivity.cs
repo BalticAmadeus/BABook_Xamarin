@@ -5,6 +5,7 @@ using System.Text;
 
 using Android.App;
 using Android.Content;
+using Android.Content.PM;
 using Android.Icu.Text;
 using Android.Net;
 using Android.OS;
@@ -15,7 +16,7 @@ using BaBookApp.Resources.Functions;
 
 namespace BaBookApp
 {
-    [Activity(Label = "BaBook", MainLauncher = true)]
+    [Activity(Label = "BaBook", LaunchMode = LaunchMode.SingleInstance, MainLauncher = true)]
     public class MainActivity : MainActivityCalss
     {
         protected override async void OnCreate(Bundle savedInstanceState)

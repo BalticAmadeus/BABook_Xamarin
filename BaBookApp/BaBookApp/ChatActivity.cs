@@ -17,19 +17,22 @@ using Newtonsoft.Json;
 
 namespace BaBookApp
 {
-    [Activity(Label = "BaBook.Chat", ParentActivity = typeof(MainActivity), ScreenOrientation = ScreenOrientation.Portrait)]
+    [Activity(Label = "BaBook.Chat", LaunchMode = LaunchMode.SingleInstance, ParentActivity = typeof(MainActivity),
+        ScreenOrientation = ScreenOrientation.Portrait)]
+
     public class ChatActivity : MainActivityCalss
     {
         private IHubProxy _chat;
-        private List<string> _messagesList = new List<string>();
-        private List<string> _messagesListNotification = new List<string>();
+        private List<ChatMessage> _chatMessages;
+        private List<string> _notificationChatMessages = new List<string>();
         private ListView _chatMessagesListView;
         private ArrayAdapter<string> _messageListViewAdabter;
         private bool _connected = false;
-        private Notification.Builder _builder;
+        private Notification.Builder __notificationBuilder;
         private const int _notificationId = 0;
         private NotificationManager _notificationManager;
         private bool _activityIsShown;
+        private ISharedPreferences _storageReference;
 
         protected override async void OnCreate(Bundle savedInstanceState)
         {
@@ -56,7 +59,7 @@ namespace BaBookApp
             {
                 await chatHub.Start();
                 _connected = true;
-                SendMessage(); 
+                SendMessage();
             }
             catch (Exception ex)
             {
@@ -71,13 +74,15 @@ namespace BaBookApp
                 });
             };
 
+            ReadMessages();
+
             Intent intent = new Intent(this, typeof(ChatActivity));
             const int pendingIntentId = 0;
             PendingIntent pendingIntent =
                 PendingIntent.GetActivity(this, pendingIntentId, intent, PendingIntentFlags.OneShot);
 
-            _builder = new Notification.Builder(this)
-                //.SetContentIntent(pendingIntent)
+            __notificationBuilder = new Notification.Builder(this)
+                .SetContentIntent(pendingIntent)
                 .SetContentTitle("BaBook")
                 .SetSmallIcon(Resource.Drawable.icon);
 
@@ -85,11 +90,40 @@ namespace BaBookApp
             LoadingDialog.Hide();
         }
 
+        public void SaveMessages()
+        {
+            _storageReference = Application.Context.GetSharedPreferences("Messages", FileCreationMode.Private);
+            var editor = _storageReference.Edit();
+            editor.PutString("Message", JsonConvert.SerializeObject(_chatMessages));
+            editor.Apply();
+        }
+
+        public void ReadMessages()
+        {
+            _storageReference = Application.Context.GetSharedPreferences("Messages", FileCreationMode.Private);
+            var json = _storageReference.GetString("Message", null);
+            _chatMessages = json != null ? JsonConvert.DeserializeObject<List<ChatMessage>>(json) : new List<ChatMessage>();
+        }
+
+        protected override void OnDestroy()
+        {
+            base.OnDestroy();
+            SaveMessages();
+        }
+
         protected override void OnStart()
         {
             base.OnStart();
             _activityIsShown = true;
         }
+
+        protected override void OnResume()
+        {
+            base.OnResume();
+            _notificationManager?.Cancel(_notificationId);
+            _notificationChatMessages.Clear();
+        }
+
 
         protected override void OnStop()
         {
@@ -99,41 +133,41 @@ namespace BaBookApp
 
         public void ResiveMessage(string message)
         {
-            var messages = JsonConvert.DeserializeObject<ChatMessageModel>(message);
-            _messagesList.Add(messages.A[0] + ":" + messages.A[1]);
-            _messageListViewAdabter = new ArrayAdapter<string>(this, Resource.Layout.ChatText, _messagesList);
+            var messageFromServer = JsonConvert.DeserializeObject<GetChatMessageModel>(message);
+            var _message = new ChatMessage()
+            {
+                Massage = messageFromServer.A[0] + ":" + messageFromServer.A[1],
+                MessageTime = DateTime.Now
+            };
+            _chatMessages.Add(_message);
+
+            _messageListViewAdabter = new ArrayAdapter<string>(this, Resource.Layout.ChatText,
+                _chatMessages.Select(x => x.Massage).ToList());
             _chatMessagesListView.Adapter = _messageListViewAdabter;
             if (!_activityIsShown)
             {
-                _messagesListNotification.Add(messages.A[0] + ":" + messages.A[1]);
-
+                _notificationChatMessages.Add(_message.Massage);
                 var notificationList = new Notification.InboxStyle();
 
-                _builder.SetContentTitle(_messagesListNotification.Count + " Unred messages.");
-                _builder.SetContentText("BaBook chat.");
-                if (_messagesListNotification.Count >= 3)
+                __notificationBuilder.SetContentTitle(_notificationChatMessages.Count + " Unred messages.");
+                __notificationBuilder.SetContentText("BaBook chat.");
+                if (_notificationChatMessages.Count > 4)
                 {
-                    notificationList.AddLine(_messagesListNotification[0]);
-                    notificationList.AddLine(_messagesListNotification[1]);
-                    notificationList.AddLine(_messagesListNotification[2]);
-                    if((_messagesListNotification.Count - 3) != 0)
-                        notificationList.AddLine("+"+ (_messagesListNotification.Count -3) + "more.");
+                    notificationList.AddLine(_notificationChatMessages[0]);
+                    notificationList.AddLine(_notificationChatMessages[1]);
+                    notificationList.AddLine(_notificationChatMessages[2]);
+                    notificationList.AddLine("+" + (_notificationChatMessages.Count - 3) + "more.");
                 }
                 else
                 {
-                    foreach (var mesg in _messagesListNotification)
+                    foreach (var mesg in _notificationChatMessages)
                     {
                         notificationList.AddLine(mesg);
                     }
                 }
-
-                _builder.SetStyle(notificationList);
-                var notification = _builder.Build();
+                __notificationBuilder.SetStyle(notificationList);
+                var notification = __notificationBuilder.Build();
                 _notificationManager.Notify(_notificationId, notification);
-            }
-            else
-            {
-                _messagesListNotification.Clear();
             }
         }
 
