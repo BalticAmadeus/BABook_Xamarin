@@ -86,6 +86,7 @@
     <Compile Include="Resources\ListViews\GroupList.cs" />
     <Compile Include="Resources\ListViews\EventList.cs" />
     <Compile Include="Resources\Fragments\Dialog\NewEventBaseDialog.cs" />
+    <Compile Include="Resources\Models\ChatMessageModel.cs" />
     <Compile Include="Resources\Models\Get\GetEventComments.cs" />
     <Compile Include="Resources\Models\Get\GetEventModel.cs" />
     <Compile Include="Resources\Models\Get\GetGroupModel.cs" />
@@ -354,6 +355,9 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\menu\ParticipateEventsMenu.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\ChatText.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

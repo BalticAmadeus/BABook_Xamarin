@@ -106,6 +106,12 @@ namespace BaBookApp
                 {
                     switch (_event.AttendanceStatus)
                     {
+                        case 0:
+                            item.SetIcon(Resource.Drawable.ic_cancel_white_24dp);
+                            item.SetTitle("Going");
+                            ChangeUserStatus(1);
+                            Toast.MakeText(this, "You are going !", ToastLength.Short).Show();
+                                break;
                         case 1:
                             item.SetIcon(Resource.Drawable.ic_check_circle_white_24dp);
                             item.SetTitle("Not Going");
@@ -127,9 +133,6 @@ namespace BaBookApp
             }
             return base.OnOptionsItemSelected(item);
         }
-
-
-
         private void ShowUserRequest()
         {
             var statusItem = _eventDetailMenu.FindItem(Resource.Id.EventDetailMenu_Status);
@@ -249,6 +252,11 @@ namespace BaBookApp
                     var statusItem = _eventDetailMenu.FindItem(Resource.Id.EventDetailMenu_Status);
                     switch (_event.AttendanceStatus)
                     {
+                        case 0:
+                            statusItem.SetTitle("Not Going");
+                            statusItem.SetIcon(Resource.Drawable.ic_check_circle_white_24dp);
+                            statusItem.SetVisible(true);
+                            break;
                         case 1:
                             statusItem.SetIcon(Resource.Drawable.ic_cancel_white_24dp);
                             statusItem.SetTitle("Going");

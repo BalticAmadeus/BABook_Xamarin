@@ -14,7 +14,9 @@ using Android.Widget;
 using BaBookApp.Resources.Fragments.Dialog;
 using BaBookApp.Resources.Models;
 using BaBookApp.Resources.Models.Get;
+using Java.Lang;
 using Newtonsoft.Json;
+using Object = System.Object;
 using Uri = System.Uri;
 
 namespace BaBookApp
@@ -59,6 +61,19 @@ namespace BaBookApp
             LoadingDialog.Show();
         }
 
+        long doublePressInterval_ms = 300;
+        DateTime lastPressTime = DateTime.Now;
+
+        public override void OnBackPressed()
+        {
+            DateTime pressTime = DateTime.Now;
+            if ((pressTime - lastPressTime).TotalMilliseconds <= doublePressInterval_ms)
+            {
+                Java.Lang.JavaSystem.Exit(0);
+            }
+            lastPressTime = pressTime;
+        }
+
         public async Task AuthorizationCheck()
         {
             var json = await GetJsonByApi("user");
@@ -78,15 +93,22 @@ namespace BaBookApp
 
         private async void UserLoging(object sender, LoginArgs e)
         {
-            var responce = await UserLogin(e.UserName, e.Password);
-            if (responce.StatusCode == HttpStatusCode.BadRequest)
+            if (IsNetworkConnected())
             {
-                Toast.MakeText(this, "Invalid data !", ToastLength.Short).Show();
+                var responce = await UserLogin(e.UserName, e.Password);
+                if (responce.StatusCode == HttpStatusCode.BadRequest)
+                {
+                    Toast.MakeText(this, "Invalid data !", ToastLength.Short).Show();
+                }
+                else
+                {
+                    LoginDialog.Cancelable = true;
+                    LoginDialog.Dismiss();
+                }
             }
             else
             {
-                LoginDialog.Cancelable = true;
-                LoginDialog.Dismiss();
+                NetworkErrorMessage.Show();
             }
         }
 
