@@ -16,11 +16,22 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:hint="password" />
-  <Button
-    android:text="Login"
-    android:id ="@+id/Login_LoginButton"
-    android:layout_width="wrap_content"
+  <RelativeLayout
     android:layout_height="wrap_content"
-    android:layout_margin="5dp"
-    android:layout_gravity="end"/>
+    android:layout_width="wrap_content">
+    <Button
+      android:text="Login"
+      android:id="@+id/Login_LoginButton"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_margin="5dp"
+      android:layout_alignParentRight="true" />
+    <Button
+      android:text="Quit"
+      android:id="@+id/Login_QuitButton"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_margin="5dp"
+      android:layout_toLeftOf="@+id/Login_LoginButton" />
+  </RelativeLayout>
 </LinearLayout>

@@ -1,25 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
 using Android.App;
-using Android.Content;
 using Android.Content.PM;
-using Android.Icu.Text;
-using Android.Net;
 using Android.OS;
-using Android.Runtime;
 using Android.Views;
 using Android.Widget;
-using BaBookApp.Resources.Functions;
+using Java.Lang;
 
 namespace BaBookApp
 {
     [Activity(Label = "BaBook", LaunchMode = LaunchMode.SingleInstance, MainLauncher = true)]
     public class MainActivity : MainActivityCalss
     {
-        protected override async void OnCreate(Bundle savedInstanceState)
+        private readonly long _doublePressInterval_ms = 300;
+        private DateTime _lastPressTime = DateTime.Now;
+
+        protected override void OnCreate(Bundle savedInstanceState)
         {
             Window.RequestFeature(WindowFeatures.NoTitle);
             Window.RequestFeature(WindowFeatures.ActionBar);
@@ -47,30 +42,51 @@ namespace BaBookApp
             };
 
             base.OnCreate(savedInstanceState);
+
             ActionBar.Title = "Welcome Back !";
-            await AuthorizationCheck();
             LoadingDialog.Hide();
         }
 
         public override bool OnCreateOptionsMenu(IMenu menu)
         {
             MenuInflater.Inflate(Resource.Menu.MainMenu, menu);
+            var menuLoginItem = menu.FindItem(Resource.Id.MainMenu_Logout);
+            menuLoginItem.SetTitle(UserToken.UserAccessToken != null ? "Logout" : "Login");
+            MainMenuLoginItem = menuLoginItem;
             return base.OnCreateOptionsMenu(menu);
+        }
+
+        public override void OnBackPressed()
+        {
+            var pressTime = DateTime.Now;
+            if ((pressTime - _lastPressTime).TotalMilliseconds <= _doublePressInterval_ms)
+                JavaSystem.Exit(0);
+            Toast.MakeText(this, "Press agian to exit ... ", ToastLength.Short).Show();
+            _lastPressTime = pressTime;
         }
 
         public override bool OnOptionsItemSelected(IMenuItem item)
         {
             switch (item.ItemId)
             {
-                case Resource.Id.MainMenu_Refresh:
-                {
-                    break;
-                }
                 case Resource.Id.MainMenu_Logout:
                 {
-                    LogoutUser();
+                    if (UserToken.UserAccessToken == null)
+                    {
+                        MainMenuLoginItem = item;
+                        ShowLogin();
+                        item.SetTitle("Logout");
+                    }
+                    else
+                    {
+                        MainMenuLoginItem = item;
+                        LogoutUser();
+                        item.SetTitle("Login");
+                    }
                     break;
                 }
+                    default:
+                        break;
             }
             return base.OnOptionsItemSelected(item);
         }

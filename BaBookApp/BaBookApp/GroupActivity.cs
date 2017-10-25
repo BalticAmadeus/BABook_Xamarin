@@ -1,34 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Net.Http;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Android.App;
-using Android.Widget;
+using Android.Content;
 using Android.OS;
 using Android.Views;
-using AndroidApp.Resources.Models;
-using Newtonsoft.Json;
-using BaBookApp.Resources;
-using BaBookApp.Resources.Fragments.Dialog;
-using System.Text;
-using BaBookApp.Resources.Models;
-using Android.Content;
-using Android.Runtime;
-using BaBookApp.Resources.Functions;
+using Android.Widget;
 using BaBookApp.Resources.GroupList;
 using BaBookApp.Resources.Models.Get;
-using Void = Java.Lang.Void;
+using Newtonsoft.Json;
 
 namespace BaBookApp
 {
     [Activity(Label = "BaBook.Group", ParentActivity = typeof(MainActivity))]
     public class GroupActivity : MainActivityCalss
     {
-        private List<GetGroupModel> _groups = new List<GetGroupModel>();
-        private GroupList _groupListViewAdabter;
         private ListView _groupListView;
+        private GroupList _groupListViewAdabter;
+        private List<GetGroupModel> _groups = new List<GetGroupModel>();
 
-        protected override async void OnCreate(Bundle savedInstanceState)
+        protected override void OnCreate(Bundle savedInstanceState)
         {
             Window.RequestFeature(WindowFeatures.NoTitle);
             Window.RequestFeature(WindowFeatures.ActionBar);
@@ -41,8 +31,39 @@ namespace BaBookApp
 
             _groupListView = FindViewById<ListView>(Resource.Id.Events_EventsList);
             base.OnCreate(savedInstanceState);
+        }
+
+        protected override async void OnResume()
+        {
+            base.OnResume();
             await UpdateGroupList(_groupListView);
             LoadingDialog.Hide();
+        }
+
+        private async void UpdateGroups()
+        {
+            await UpdateGroupList(_groupListView);
+        }
+
+        public override bool OnCreateOptionsMenu(IMenu menu)
+        {
+            MenuInflater.Inflate(Resource.Menu.GroupMenu, menu);
+            return base.OnCreateOptionsMenu(menu);
+        }
+
+        public override bool OnOptionsItemSelected(IMenuItem item)
+        {
+            switch (item.ItemId)
+            {
+                case Resource.Id.GroupMenu_refresh:
+                {
+                        UpdateGroups();
+                    break;
+                }
+                default:
+                    break;
+            }
+            return base.OnOptionsItemSelected(item);
         }
 
         private async Task UpdateGroupList(ListView listView)
@@ -63,9 +84,8 @@ namespace BaBookApp
         private void GroupListItemClicked(object sender, AdapterView.ItemClickEventArgs e)
         {
             var events = new Intent(this, typeof(EventActivity));
-            GroupId = (int)e.Id;
+            GroupId = (int) e.Id;
             StartActivity(events);
         }
     }
 }
-

@@ -1,67 +1,68 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@drawable/EventListViewItemBackground">
+  <GridLayout
     android:layout_height="wrap_content"
-    android:background="@drawable/EventListViewItemBackground">
-    <GridLayout
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:columnCount="2"
-        android:rowCount="1">
-        <TextView
-            android:text="Kas ? "
-            style="@style/TextEventListItem"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_row="0"
-            android:layout_column="0" />
-        <TextView
-            android:text="Title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/Title"
-            android:layout_row="0"
-            android:layout_column="1" />
-    </GridLayout>
-    <GridLayout
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:columnCount="2"
-        android:rowCount="1">
-        <TextView
-            android:text="Kur ? "
-            style="@style/TextEventListItem"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_row="0"
-            android:layout_column="0" />
-        <TextView
-            android:text="Location"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/Location"
-            android:layout_row="0"
-            android:layout_column="1" />
-    </GridLayout>
-    <GridLayout
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:columnCount="2"
-        android:rowCount="1">
-        <TextView
-            android:text="Kada ? "
-            style="@style/TextEventListItem"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_row="0"
-            android:layout_column="0" />
-        <TextView
-            android:text="Date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/Date"
-            android:layout_row="0"
-            android:layout_column="1" />
-    </GridLayout>
+    android:layout_width="match_parent"
+    android:columnCount="2"
+    android:rowCount="1">
+    <TextView
+      android:text="Kas ? "
+      style="@style/TextEventListItem"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_row="0"
+      android:layout_column="0" />
+    <TextView
+      android:text="Title"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:id="@+id/Title"
+      android:layout_row="0"
+      android:layout_column="1" />
+  </GridLayout>
+  <GridLayout
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:columnCount="2"
+    android:rowCount="1">
+    <TextView
+      android:text="Kur ? "
+      style="@style/TextEventListItem"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_row="0"
+      android:layout_column="0" />
+    <TextView
+      android:text="Location"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:id="@+id/Location"
+      android:layout_row="0"
+      android:layout_column="1" />
+  </GridLayout>
+  <GridLayout
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:columnCount="2"
+    android:rowCount="1">
+    <TextView
+      android:text="Kada ? "
+      style="@style/TextEventListItem"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_row="0"
+      android:layout_column="0" />
+    <TextView
+      android:text="Date"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:id="@+id/Date"
+      android:layout_row="0"
+      android:layout_column="1" />
+  </GridLayout>
 </LinearLayout>

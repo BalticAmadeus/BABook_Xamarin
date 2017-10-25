@@ -1,122 +1,123 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:minWidth="25px"
+              android:minHeight="25px">
+  <Toolbar
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/EventDetail_Toolbar" />
+  <TextView
+    android:text=""
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:textSize="20dp"
+    android:id="@+id/EventDetail_Desc" />
+  <RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:layout_below="@id/EventDetail_Desc">
+    <TextView
+      android:text="Location:"
+      android:id="@+id/EventDetail_Loc1"
+      android:textStyle="bold"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_alignParentLeft="true" />
+    <TextView
+      android:text=""
+      android:id="@+id/EventDetail_Loc"
+      android:layout_width="wrap_content"
+      android:layout_toRightOf="@+id/EventDetail_Loc1"
+      android:layout_height="wrap_content" />
+  </RelativeLayout>
+  <RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp">
+    <TextView
+      android:text="Date:"
+      android:textStyle="bold"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_alignParentLeft="true"
+      android:id="@+id/EventDetail_Date1" />
+    <TextView
+      android:text=""
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_toRightOf="@+id/EventDetail_Date1"
+      android:id="@+id/EventDetail_Date" />
+    <TextView
+      android:text="Time:"
+      android:textStyle="bold"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_toRightOf="@+id/EventDetail_Date"
+      android:id="@+id/EventDetail_Time1" />
+    <TextView
+      android:text=""
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_toRightOf="@+id/EventDetail_Time1"
+      android:id="@+id/EventDetail_Time" />
+  </RelativeLayout>
+  <TextView
+    android:text="Comments"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center" />
+  <ListView
     android:minWidth="25px"
-    android:minHeight="25px">
-    <Toolbar
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/EventDetail_Toolbar" />
-    <TextView
-        android:text=""
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:textSize="20dp"
-        android:id="@+id/EventDetail_Desc" />
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_below="@id/EventDetail_Desc">
-        <TextView
-            android:text="Location:"
-            android:id="@+id/EventDetail_Loc1"
-            android:textStyle="bold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true" />
-        <TextView
-            android:text=""
-            android:id="@+id/EventDetail_Loc"
-            android:layout_width="wrap_content"
-            android:layout_toRightOf="@+id/EventDetail_Loc1"
-            android:layout_height="wrap_content" />
-    </RelativeLayout>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp">
-        <TextView
-            android:text="Date:"
-            android:textStyle="bold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:id="@+id/EventDetail_Date1" />
-        <TextView
-            android:text=""
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/EventDetail_Date1"
-            android:id="@+id/EventDetail_Date" />
-        <TextView
-            android:text="Time:"
-            android:textStyle="bold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/EventDetail_Date"
-            android:id="@+id/EventDetail_Time1" />
-        <TextView
-            android:text=""
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/EventDetail_Time1"
-            android:id="@+id/EventDetail_Time" />
-    </RelativeLayout>
-    <TextView
-        android:text="Comments"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center" />
-    <ListView
-        android:minWidth="25px"
-        android:minHeight="25px"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:stackFromBottom="true"
-        android:id="@+id/EventDetail_CommentsList"
-        android:layout_weight="1" />
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginBottom="5dp"
-        android:layout_marginRight="10dp">
-        <EditText
-            android:layout_height="wrap_content"
-            android:layout_width="0dp"
-            android:maxLines="1"
-            android:id="@+id/EventDetail_CommentTxt"
-            android:hint="Comment"
-            android:layout_marginRight="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginTop="5dp"
-            android:imeOptions="actionSend"
-            android:layout_alignParentLeft="true"
-            android:layout_toLeftOf="@+id/EventDetail_CommentButton" />
-        <ImageButton
-            android:src="@drawable/ic_send_black_24dp"
-            android:background="?android:selectableItemBackground"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:layout_margin="10dp"
-            android:id="@+id/EventDetail_CommentButton"
-            android:layout_toLeftOf="@+id/EventDetail_RefreshButton" />
-        <ImageButton
-            android:src="@drawable/ic_refresh_black_24dp"
-            android:background="?android:selectableItemBackground"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:layout_margin="10dp"
-            android:layout_alignParentRight="true"
-            android:id="@+id/EventDetail_RefreshButton" />
-    </RelativeLayout>
+    android:minHeight="25px"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:stackFromBottom="true"
+    android:id="@+id/EventDetail_CommentsList"
+    android:layout_weight="1" />
+  <RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="10dp"
+    android:layout_marginBottom="5dp"
+    android:layout_marginRight="10dp">
+    <EditText
+      android:layout_height="wrap_content"
+      android:layout_width="0dp"
+      android:maxLines="1"
+      android:id="@+id/EventDetail_CommentTxt"
+      android:hint="Comment"
+      android:layout_marginRight="5dp"
+      android:layout_marginLeft="5dp"
+      android:layout_marginTop="5dp"
+      android:imeOptions="actionSend"
+      android:layout_alignParentLeft="true"
+      android:layout_toLeftOf="@+id/EventDetail_CommentButton" />
+    <ImageButton
+      android:src="@drawable/ic_send_black_24dp"
+      android:background="?android:selectableItemBackground"
+      android:layout_height="wrap_content"
+      android:layout_width="wrap_content"
+      android:layout_margin="10dp"
+      android:id="@+id/EventDetail_CommentButton"
+      android:layout_toLeftOf="@+id/EventDetail_RefreshButton" />
+    <ImageButton
+      android:src="@drawable/ic_refresh_black_24dp"
+      android:background="?android:selectableItemBackground"
+      android:layout_height="wrap_content"
+      android:layout_width="wrap_content"
+      android:layout_margin="10dp"
+      android:layout_alignParentRight="true"
+      android:id="@+id/EventDetail_RefreshButton" />
+  </RelativeLayout>
 </LinearLayout>

@@ -1,31 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Net.Http;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Android.App;
-using Android.Widget;
+using Android.Content;
 using Android.OS;
 using Android.Views;
+using Android.Widget;
 using AndroidApp.Resources.Models;
-using Newtonsoft.Json;
+using BaBookApp.Fragments.Dialog;
 using BaBookApp.Resources;
-using BaBookApp.Resources.Fragments.Dialog;
 using BaBookApp.Resources.Models;
-using Android.Content;
-using BaBookApp.Resources.Functions;
+using Newtonsoft.Json;
 
 namespace BaBookApp
 {
     [Activity(Label = "BaBook.Event", ParentActivity = typeof(GroupActivity))]
     public class EventActivity : MainActivityCalss
     {
-        private PostEventModel _newEvent = new PostEventModel();
-        private List<GetEventModel> _events = new List<GetEventModel>();
-        private EventList _eventListViewAdabter;
         private ListView _eventListView;
+        private EventList _eventListViewAdabter;
+        private List<GetEventModel> _events = new List<GetEventModel>();
         private int _groupId;
+        private readonly PostEventModel _newEvent = new PostEventModel();
 
-        protected override async void OnCreate(Bundle savedInstanceState)
+        protected override void OnCreate(Bundle savedInstanceState)
         {
             Window.RequestFeature(WindowFeatures.NoTitle);
             Window.RequestFeature(WindowFeatures.ActionBar);
@@ -41,6 +38,12 @@ namespace BaBookApp
 
             base.OnCreate(savedInstanceState);
             _groupId = GetGroupId();
+            
+        }
+
+        protected override async void OnResume()
+        {
+            base.OnResume();
             await UpdateEventList(_eventListView);
             LoadingDialog.Hide();
         }
@@ -59,10 +62,10 @@ namespace BaBookApp
                 {
                     var transaction = FragmentManager.BeginTransaction();
                     var addEventDialog = new NewEventBaseDialog();
-                    addEventDialog.SetStyle(DialogFragmentStyle.Normal,Resource.Style.Theme_Dialog);
+                    addEventDialog.SetStyle(DialogFragmentStyle.Normal, Resource.Style.Theme_Dialog);
                     addEventDialog.Show(transaction, "NewEventBase");
                     addEventDialog.EventNextStep += GetNewEventDate;
-                        break;
+                    break;
                 }
                 case Resource.Id.EventsMenu_Refresh:
                     UpdateAllItems();
@@ -135,9 +138,8 @@ namespace BaBookApp
         private void EventClicked(object sender, AdapterView.ItemClickEventArgs e)
         {
             var eventDetail = new Intent(this, typeof(EventDetailActivity));
-            EventId = (int)e.Id;
+            EventId = (int) e.Id;
             StartActivity(eventDetail);
         }
     }
 }
-

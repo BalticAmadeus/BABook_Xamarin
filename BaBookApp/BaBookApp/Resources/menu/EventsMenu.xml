@@ -1,13 +1,14 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
+
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
   <item
     android:id="@+id/EventsMenu_Refresh"
     android:showAsAction="ifRoom"
     android:icon="@drawable/ic_refresh_white_24dp"
-    android:title="Refresh"/>
+    android:title="Refresh" />
   <item
-  android:id="@+id/EventsMenu_AddNewEvent"
-  android:icon="@drawable/ic_add_circle_outline_white_24dp"
-  android:showAsAction="ifRoom"
-  android:title="Add"/>
+    android:id="@+id/EventsMenu_AddNewEvent"
+    android:icon="@drawable/ic_add_circle_outline_white_24dp"
+    android:showAsAction="ifRoom"
+    android:title="Add" />
 </menu>

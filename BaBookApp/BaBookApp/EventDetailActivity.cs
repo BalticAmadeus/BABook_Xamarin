@@ -1,20 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Android.App;
-using Android.Content;
-using Android.OS;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
-using System.Threading;
 using System.Threading.Tasks;
-using System.Net.Http;
+using Android.App;
+using Android.OS;
+using Android.Views;
 using Android.Views.InputMethods;
+using Android.Widget;
 using AndroidApp.Resources.Models;
-using BaBookApp.Resources.Fragments.Dialog;
-using BaBookApp.Resources.Functions;
+using BaBookApp.Fragments.Dialog;
 using BaBookApp.Resources.ListViews;
 using BaBookApp.Resources.Models;
 using BaBookApp.Resources.Models.Get;
@@ -23,13 +16,12 @@ using Newtonsoft.Json;
 
 namespace BaBookApp
 {
-    [Activity(Label = "BaBook.Event.Detail", ParentActivity = typeof(EventActivity))]
-    public class EventDetailActivity : MainActivityCalss
+    [Activity(Label = "BaBook.MyEvent.Detail", ParentActivity = typeof(MyEvents))]
+    public class MyEventDetailActivity : MainActivityCalss
     {
-        private List<GetInvitableUsers> _invitableUsers = new List<GetInvitableUsers>();
         private GetEventModel _event;
         private IMenu _eventDetailMenu;
-        private int _eventId;
+        private List<GetInvitableUsers> _invitableUsers = new List<GetInvitableUsers>();
 
         protected override async void OnCreate(Bundle savedInstanceState)
         {
@@ -56,7 +48,6 @@ namespace BaBookApp
             };
 
             base.OnCreate(savedInstanceState);
-            _eventId = GetEventId();
             await LoadEvent();
             LoadingDialog.Hide();
         }
@@ -94,7 +85,6 @@ namespace BaBookApp
                         Description = _event.Description,
                         DateOfOccurance = _event.DateOfOccurance,
                         Location = _event.Location
-
                     }, false);
                     editEventDialog.SetStyle(DialogFragmentStyle.Normal, Resource.Style.Theme_Dialog);
                     editEventDialog.Show(transaction, "EditEvent");
@@ -111,7 +101,7 @@ namespace BaBookApp
                             item.SetTitle("Going");
                             ChangeUserStatus(1);
                             Toast.MakeText(this, "You are going !", ToastLength.Short).Show();
-                                break;
+                            break;
                         case 1:
                             item.SetIcon(Resource.Drawable.ic_check_circle_white_24dp);
                             item.SetTitle("Not Going");
@@ -130,9 +120,12 @@ namespace BaBookApp
                     }
                     break;
                 }
+                    default:
+                        break;
             }
             return base.OnOptionsItemSelected(item);
         }
+
         private void ShowUserRequest()
         {
             var statusItem = _eventDetailMenu.FindItem(Resource.Id.EventDetailMenu_Status);
@@ -141,7 +134,7 @@ namespace BaBookApp
             request.SetPositiveButton("Going", (sender, args) =>
             {
                 statusItem.SetIcon(Resource.Drawable.ic_cancel_white_24dp);
-                statusItem.SetTitle("Going");
+                statusItem.SetTitle("Not going");
                 ChangeUserStatus(1);
                 Toast.MakeText(this, "You are going !", ToastLength.Short).Show();
                 request.Dispose();
@@ -149,7 +142,7 @@ namespace BaBookApp
 
             request.SetNegativeButton("Not going", (sender, args) =>
             {
-                statusItem.SetTitle("Not Going");
+                statusItem.SetTitle("Going");
                 statusItem.SetIcon(Resource.Drawable.ic_check_circle_white_24dp);
                 ChangeUserStatus(2);
                 Toast.MakeText(this, "You are  not going !", ToastLength.Short).Show();
@@ -169,16 +162,13 @@ namespace BaBookApp
         {
             var invitedUserList = new List<PostAttendenceModel>();
             foreach (var user in e.InvitedUsers)
-            {
                 if (user != null)
                     invitedUserList.Add(new PostAttendenceModel {EventId = EventId, Status = 3, UserId = user.UserId});
-            }
             invitedUserList.ForEach(async x => await PostObjectByApi("userevent", x));
         }
 
         private async void UpdateEvent(object sender, AddNewEventFinall e)
         {
-            
             await PutObjectByApi("events", new PutEventModel
             {
                 EventId = EventId,
@@ -201,10 +191,10 @@ namespace BaBookApp
             var txtcomment = FindViewById<EditText>(Resource.Id.EventDetail_CommentTxt);
             if (txtcomment.Text.Length > 0)
             {
-                var comment = new PostNewCommentModel { CommentText = txtcomment.Text };
+                var comment = new PostNewCommentModel {CommentText = txtcomment.Text};
                 txtcomment.Text = "";
 
-                var imm = (InputMethodManager)GetSystemService(InputMethodService);
+                var imm = (InputMethodManager) GetSystemService(InputMethodService);
                 imm.HideSoftInputFromWindow(txtcomment.WindowToken, 0);
 
                 await PostObjectByApi("comments/" + EventId, comment);
@@ -243,27 +233,24 @@ namespace BaBookApp
                     FindViewById<TextView>(Resource.Id.EventDetail_Time).Text =
                         _event.DateOfOccurance.ToShortTimeString();
 
-                    //ToDo Edit event by eventowner
                     if (_event.IsOwner)
-                    {
                         _eventDetailMenu.FindItem(Resource.Id.EventDetailMenu_Edit).SetVisible(true);
-                    }
 
                     var statusItem = _eventDetailMenu.FindItem(Resource.Id.EventDetailMenu_Status);
                     switch (_event.AttendanceStatus)
                     {
                         case 0:
-                            statusItem.SetTitle("Not Going");
+                            statusItem.SetTitle("Going");
                             statusItem.SetIcon(Resource.Drawable.ic_check_circle_white_24dp);
                             statusItem.SetVisible(true);
                             break;
                         case 1:
                             statusItem.SetIcon(Resource.Drawable.ic_cancel_white_24dp);
-                            statusItem.SetTitle("Going");
+                            statusItem.SetTitle("Not goind");
                             statusItem.SetVisible(true);
                             break;
                         case 2:
-                            statusItem.SetTitle("Not Going");
+                            statusItem.SetTitle("Going");
                             statusItem.SetIcon(Resource.Drawable.ic_check_circle_white_24dp);
                             statusItem.SetVisible(true);
                             break;

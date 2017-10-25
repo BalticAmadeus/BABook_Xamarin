@@ -68,36 +68,37 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ChatActivity.cs" />
+    <Compile Include="PariEventDetailActivity.cs" />
+    <Compile Include="MyEventDetailActivity.cs" />
     <Compile Include="ParticipateEventsActivity.cs" />
     <Compile Include="MyEventsActivity.cs" />
     <Compile Include="GroupActivity.cs" />
     <Compile Include="EventDetailActivity.cs" />
     <Compile Include="EventActivity.cs" />
     <Compile Include="MainActivity.cs" />
-    <Compile Include="Resources\Fragments\Dialog\EventInviteDialog.cs" />
-    <Compile Include="Resources\Fragments\Dialog\LoginDialog.cs" />
-    <Compile Include="Resources\Fragments\Dialog\NewEventSummaryDialog.cs" />
-    <Compile Include="Resources\Fragments\Dialog\NewEventPickDataDialog.cs" />
-    <Compile Include="Resources\Fragments\Dialog\NewEventPickTimeDialog.cs" />
+    <Compile Include="Fragments\Dialog\EventInviteDialog.cs" />
+    <Compile Include="Fragments\Dialog\LoginDialog.cs" />
+    <Compile Include="Fragments\Dialog\NewEventSummaryDialog.cs" />
+    <Compile Include="Fragments\Dialog\NewEventPickDataDialog.cs" />
+    <Compile Include="Fragments\Dialog\NewEventPickTimeDialog.cs" />
     <Compile Include="MainActivityClass.cs" />
-    <Compile Include="Chat.cs" />
-    <Compile Include="Resources\ListViews\ChatMessageList.cs" />
-    <Compile Include="Resources\ListViews\CommentsList.cs" />
-    <Compile Include="Resources\ListViews\GroupList.cs" />
-    <Compile Include="Resources\ListViews\EventList.cs" />
-    <Compile Include="Resources\Fragments\Dialog\NewEventBaseDialog.cs" />
-    <Compile Include="Resources\Models\ChatMessage.cs" />
-    <Compile Include="Resources\Models\GetChatMessageModel.cs" />
-    <Compile Include="Resources\Models\Get\GetEventComments.cs" />
-    <Compile Include="Resources\Models\Get\GetEventModel.cs" />
-    <Compile Include="Resources\Models\Get\GetGroupModel.cs" />
-    <Compile Include="Resources\Models\Get\GetInvitableUsers.cs" />
-    <Compile Include="Resources\Models\Get\GetUserModel.cs" />
-    <Compile Include="Resources\Models\Get\GetUserTokenModel.cs" />
-    <Compile Include="Resources\Models\Post\PostAttendenceModel.cs" />
-    <Compile Include="Resources\Models\Post\PostEventModel.cs" />
-    <Compile Include="Resources\Models\Post\PostNewCommentModel.cs" />
-    <Compile Include="Resources\Models\Put\PutEventModel.cs" />
+    <Compile Include="ListViews\ChatMessageList.cs" />
+    <Compile Include="ListViews\CommentsList.cs" />
+    <Compile Include="ListViews\GroupList.cs" />
+    <Compile Include="ListViews\EventList.cs" />
+    <Compile Include="Fragments\Dialog\NewEventBaseDialog.cs" />
+    <Compile Include="Models\ChatMessage.cs" />
+    <Compile Include="Models\GetChatMessageModel.cs" />
+    <Compile Include="Models\Get\GetEventComments.cs" />
+    <Compile Include="Models\Get\GetEventModel.cs" />
+    <Compile Include="Models\Get\GetGroupModel.cs" />
+    <Compile Include="Models\Get\GetInvitableUsers.cs" />
+    <Compile Include="Models\Get\GetUserModel.cs" />
+    <Compile Include="Models\Get\GetUserTokenModel.cs" />
+    <Compile Include="Models\Post\PostAttendenceModel.cs" />
+    <Compile Include="Models\Post\PostEventModel.cs" />
+    <Compile Include="Models\Post\PostNewCommentModel.cs" />
+    <Compile Include="Models\Put\PutEventModel.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -361,6 +362,30 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\ChatText.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-hdpi\ic_chat_bubble_white_24dp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-mdpi\ic_chat_bubble_white_24dp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_chat_bubble_white_24dp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xxhdpi\ic_chat_bubble_white_24dp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xxxhdpi\ic_chat_bubble_white_24dp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\menu\ChatMenu.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\ChatMenuItem.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\menu\GroupMenu.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,4 +1,5 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
+
 <resources>
   <color name="MainColor">#8A02FA</color>
   <color name="SecondMainColor">#F80AAF</color>
@@ -41,11 +42,11 @@
     <item name="android:textColor">@color/White</item>
     <item name="android:textSize">@dimen/ButtonTextSize</item>
   </style>
-  
+
   <style name="Theme.Dialog.Alert" parent="@android:style/Theme.Material.Light">
     <item name="android:windowIsFloating">true</item>
   </style>
-    
+
 
   <style name="Theme.Dialog" parent="@android:style/Theme.Holo.Dialog">
     <item name="android:windowTitleStyle">@style/Theme.Dialog.Title</item>

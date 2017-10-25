@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -11,12 +10,9 @@ using Android.Net;
 using Android.OS;
 using Android.Views;
 using Android.Widget;
-using BaBookApp.Resources.Fragments.Dialog;
-using BaBookApp.Resources.Models;
+using BaBookApp.Fragments.Dialog;
 using BaBookApp.Resources.Models.Get;
-using Java.Lang;
 using Newtonsoft.Json;
-using Object = System.Object;
 using Uri = System.Uri;
 
 namespace BaBookApp
@@ -26,26 +22,29 @@ namespace BaBookApp
         private const string Url = @"http://trycatch2017.azurewebsites.net/api/";
         public static GetUserTokenModel UserToken = new GetUserTokenModel();
         public static GetUserModel User;
-        private ISharedPreferences _storageReference;
         public static int GroupId;
         public static int EventId;
+        public static bool StartLogin;
+        public static bool ShowNotification;
+        private ISharedPreferences _storageReference;
         public HttpClient ApiClient;
         public Toast ErrorMessage;
-        public Toast NetworkErrorMessage;
-        public LoginDialog LoginDialog;
         public Dialog LoadingDialog;
-        public FragmentTransaction transaction;
-        public static bool StartLogin;
+        public LoginDialog LoginDialog;
+        public IMenuItem MainMenuLoginItem;
+        public Toast NetworkErrorMessage;
+        public FragmentTransaction Transaction;
 
         public MainActivityCalss()
         {
             ApiClient = new HttpClient {BaseAddress = new Uri(Url)};
+            ShowNotification = true;
         }
 
-        protected override void OnCreate(Bundle savedInstanceState)
+        protected override async void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-            LoginDialog = new LoginDialog { Cancelable = false };
+            LoginDialog = new LoginDialog {Cancelable = false};
             LoginDialog.LoginBegin += UserLoging;
 
             GetUserToken();
@@ -58,37 +57,24 @@ namespace BaBookApp
 
             LoadingDialog = new Dialog(this, Android.Resource.Style.ThemeOverlayMaterial);
             LoadingDialog.SetContentView(Resource.Layout.LoadingScreenView);
+            LoginDialog.Cancelable = false;
             LoadingDialog.Show();
-        }
-
-        long doublePressInterval_ms = 300;
-        DateTime lastPressTime = DateTime.Now;
-
-        public override void OnBackPressed()
-        {
-            DateTime pressTime = DateTime.Now;
-            if ((pressTime - lastPressTime).TotalMilliseconds <= doublePressInterval_ms)
-            {
-                Java.Lang.JavaSystem.Exit(0);
-            }
-            lastPressTime = pressTime;
+            await AuthorizationCheck();
         }
 
         public async Task AuthorizationCheck()
         {
             var json = await GetJsonByApi("user");
             if (json != null)
-            {
                 User = JsonConvert.DeserializeObject<GetUserModel>(json);
-            }
         }
 
         public void ShowLogin()
         {
-            transaction = FragmentManager.BeginTransaction();
+            Transaction = FragmentManager.BeginTransaction();
             LoginDialog.SetStyle(DialogFragmentStyle.Normal, Resource.Style.Theme_Dialog);
-            transaction.Add(LoginDialog, "Login");
-            transaction.CommitAllowingStateLoss();
+            Transaction.Add(LoginDialog, "Login");
+            Transaction.CommitAllowingStateLoss();
         }
 
         private async void UserLoging(object sender, LoginArgs e)
@@ -103,6 +89,9 @@ namespace BaBookApp
                 else
                 {
                     LoginDialog.Cancelable = true;
+                    LoginDialog.UserNameTxt.Text = "";
+                    LoginDialog.PasswordTxt.Text = "";
+                    MainMenuLoginItem?.SetTitle("Logout");
                     LoginDialog.Dismiss();
                 }
             }
@@ -133,13 +122,9 @@ namespace BaBookApp
                     return content;
                 }
                 if (response.StatusCode == HttpStatusCode.Unauthorized)
-                {
                     ShowLogin();
-                }
                 else
-                {
                     ErrorMessage.Show();
-                }
                 return null;
             }
             NetworkErrorMessage.Show();
@@ -154,13 +139,9 @@ namespace BaBookApp
                 if (result.IsSuccessStatusCode) return result;
 
                 if (result.StatusCode == HttpStatusCode.Unauthorized)
-                {
                     ShowLogin();
-                }
                 else
-                {
                     ErrorMessage.Show();
-                }
                 return result;
             }
             NetworkErrorMessage.Show();
@@ -174,13 +155,9 @@ namespace BaBookApp
                 var result = await ApiClient.PutAsync(Url + api, ConvertContent(o));
                 if (result.IsSuccessStatusCode) return result;
                 if (result.StatusCode == HttpStatusCode.Unauthorized)
-                {
                     ShowLogin();
-                }
                 else
-                {
                     ErrorMessage.Show();
-                }
                 return result;
             }
             NetworkErrorMessage.Show();
@@ -224,6 +201,7 @@ namespace BaBookApp
             var editor = _storageReference.Edit();
             editor.PutString("UserToken", null);
             editor.Apply();
+            UserToken.UserAccessToken = null;
             ShowLogin();
         }
 
@@ -240,7 +218,7 @@ namespace BaBookApp
             return networkInfo != null && networkInfo.IsConnected;
         }
 
-        public StringContent ConvertContent(Object o)
+        public StringContent ConvertContent(object o)
         {
             return new StringContent(JsonConvert.SerializeObject(o), Encoding.UTF8, "application/json");
         }

@@ -1,27 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Net.Http;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Android.App;
-using Android.Widget;
+using Android.Content;
 using Android.OS;
 using Android.Views;
+using Android.Widget;
 using AndroidApp.Resources.Models;
-using Newtonsoft.Json;
 using BaBookApp.Resources;
-using BaBookApp.Resources.Fragments.Dialog;
-using BaBookApp.Resources.Models;
-using Android.Content;
-using BaBookApp.Resources.Functions;
+using Newtonsoft.Json;
 
 namespace BaBookApp
 {
     [Activity(Label = "BaBook.ParticipateEvents", ParentActivity = typeof(MainActivity))]
     public class ParticipateEventsActivity : MainActivityCalss
     {
-        private List<GetEventModel> _partiEvents = new List<GetEventModel>();
-        private EventList _partiEventListViewAdabter;
         private ListView _partiEventListView;
+        private EventList _partiEventListViewAdabter;
+        private List<GetEventModel> _partiEvents = new List<GetEventModel>();
 
         protected override async void OnCreate(Bundle savedInstanceState)
         {
@@ -38,8 +33,6 @@ namespace BaBookApp
             _partiEventListView = FindViewById<ListView>(Resource.Id.Events_EventsList);
 
             base.OnCreate(savedInstanceState);
-            await UpdateEventList(_partiEventListView);
-            LoadingDialog.Hide();
         }
 
         public override bool OnCreateOptionsMenu(IMenu menu)
@@ -57,6 +50,14 @@ namespace BaBookApp
                     break;
             }
             return base.OnOptionsItemSelected(item);
+        }
+
+        protected override async void OnResume()
+        {
+            base.OnResume();
+            LoadingDialog.Show();
+            await UpdateEventList(_partiEventListView);
+            LoadingDialog.Hide();
         }
 
         public async void UpdateAllItems()
@@ -81,10 +82,9 @@ namespace BaBookApp
 
         private void EventClicked(object sender, AdapterView.ItemClickEventArgs e)
         {
-            var eventDetail = new Intent(this, typeof(EventDetailActivity));
-            EventId = (int)e.Id;
+            var eventDetail = new Intent(this, typeof(PartiEventDetailActivity));
+            EventId = (int) e.Id;
             StartActivity(eventDetail);
         }
     }
 }
-

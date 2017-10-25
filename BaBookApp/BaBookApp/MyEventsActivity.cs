@@ -1,29 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Net.Http;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Android.App;
-using Android.Widget;
+using Android.Content;
 using Android.OS;
 using Android.Views;
+using Android.Widget;
 using AndroidApp.Resources.Models;
-using Newtonsoft.Json;
 using BaBookApp.Resources;
-using BaBookApp.Resources.Fragments.Dialog;
-using BaBookApp.Resources.Models;
-using Android.Content;
-using BaBookApp.Resources.Functions;
+using Newtonsoft.Json;
 
 namespace BaBookApp
 {
     [Activity(Label = "BaBook.MyEvent", ParentActivity = typeof(MainActivity))]
     public class MyEvents : MainActivityCalss
     {
-        private List<GetEventModel> _myevents = new List<GetEventModel>();
-        private EventList _myEventListViewAdabter;
         private ListView _myEventListView;
+        private EventList _myEventListViewAdabter;
+        private List<GetEventModel> _myevents = new List<GetEventModel>();
 
-        protected override async void OnCreate(Bundle savedInstanceState)
+        protected override void OnCreate(Bundle savedInstanceState)
         {
             Window.RequestFeature(WindowFeatures.NoTitle);
             Window.RequestFeature(WindowFeatures.ActionBar);
@@ -38,6 +33,11 @@ namespace BaBookApp
             _myEventListView = FindViewById<ListView>(Resource.Id.Events_EventsList);
 
             base.OnCreate(savedInstanceState);
+        }
+
+        protected override async void OnResume()
+        {
+            base.OnResume();
             await UpdateEventList(_myEventListView);
             LoadingDialog.Hide();
         }
@@ -55,6 +55,8 @@ namespace BaBookApp
                 case Resource.Id.MyEventsMenu_Refresh:
                     UpdateAllItems();
                     break;
+                    default:
+                        break;
             }
             return base.OnOptionsItemSelected(item);
         }
@@ -81,10 +83,9 @@ namespace BaBookApp
 
         private void EventClicked(object sender, AdapterView.ItemClickEventArgs e)
         {
-            var eventDetail = new Intent(this, typeof(EventDetailActivity));
-            EventId = (int)e.Id;
+            var eventDetail = new Intent(this, typeof(MyEventDetailActivity));
+            EventId = (int) e.Id;
             StartActivity(eventDetail);
         }
     }
 }
-

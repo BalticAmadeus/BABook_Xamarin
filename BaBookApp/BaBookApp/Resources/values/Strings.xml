@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
+
 <resources>
   <string name="app_name">BaBookApp</string>
   <string name="BackApiUrl">http://trycatch2017.azurewebsites.net/api/</string>
