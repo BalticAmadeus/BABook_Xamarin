@@ -21,6 +21,7 @@ namespace BaBookApp
     {
         private readonly List<string> _notificationChatMessages = new List<string>();
         private bool _activityIsShown;
+        private bool _activityDestroyed;
         private IHubProxy _chat;
         private HubConnection _chatHub;
         private List<ChatMessage> _chatMessages;
@@ -45,6 +46,7 @@ namespace BaBookApp
             base.OnCreate(savedInstanceState);
             ReadMessages();
             await StartChat();
+            _activityDestroyed = false;
             LoadingDialog.Hide();
         }
 
@@ -59,10 +61,32 @@ namespace BaBookApp
             switch (item.ItemId)
             {
                 case Resource.Id.ChatMenu_Notifications:
+                    _storageReference = Application.Context.GetSharedPreferences("Token", FileCreationMode.Private);
+                    var editor = _storageReference.Edit();
                     var notificationDIalog = new AlertDialog.Builder(this);
                     notificationDIalog.SetTitle("Notifications");
-                    notificationDIalog.SetPositiveButton("On", (sender, args) => { ShowNotification = true; });
-                    notificationDIalog.SetNegativeButton("Off", (sender, args) => { ShowNotification = false; });
+                    notificationDIalog.SetPositiveButton("On", (sender, args) =>
+                    {
+                        ShowNotification = true;
+                        MuteNotification = false;
+                        editor.PutBoolean("Notification", ShowNotification);
+                        editor.PutBoolean("NotificationMute", MuteNotification);
+                        editor.Apply();
+                    });
+                    notificationDIalog.SetNegativeButton("Off", (sender, args) =>
+                    {
+                        ShowNotification = false;
+                        editor.PutBoolean("Notification", ShowNotification);
+                        editor.Apply();
+                    });
+                    notificationDIalog.SetNeutralButton("Mute", (sender, args) =>
+                    {
+                        ShowNotification = true;
+                        MuteNotification = true;
+                        editor.PutBoolean("NotificationMute", MuteNotification);
+                        editor.PutBoolean("Notification", ShowNotification);
+                        editor.Apply();
+                    });
                     notificationDIalog.Show();
                     break;
                 default:
@@ -88,8 +112,15 @@ namespace BaBookApp
 
             _chatHub.ConnectionSlow += () => { Toast.MakeText(this, "Slow connection.", ToastLength.Short).Show(); };
 
-            await _chatHub.Start();
-            SendConnectionMessage();
+            try
+            {
+                await _chatHub.Start();
+                SendConnectionMessage();
+            }
+            catch (Exception ex)
+            {
+                Toast.MakeText(this,"Server error.", ToastLength.Long).Show();
+            }
             _chatHub.Received += message => RunOnUiThread(() => ResiveMessage(message));
         }
 
@@ -118,6 +149,7 @@ namespace BaBookApp
             SaveMessages();
             if (_chatHub == null || _chat == null) return;
             _chatMessages.Add(new ChatMessage{Massage = User.Username+"has disconnected !", MessageTime = DateTime.Now});
+            _activityDestroyed = true;
             await _chat.Invoke("Send", User.Username, " has disconnected!");
             _chatHub.Stop();
         }
@@ -154,10 +186,17 @@ namespace BaBookApp
 
         public Notification.Builder CreateNotificationBuilder()
         {
-            return new Notification.Builder(this)
+            var notification =  new Notification.Builder(this)
                 .SetAutoCancel(true)
                 .SetContentTitle("BaBook chat")
                 .SetSmallIcon(Resource.Drawable.ic_chat_bubble_white_24dp);
+
+            if (!MuteNotification)
+            {
+                notification?.SetDefaults(NotificationDefaults.Vibrate);
+            }
+
+            return notification;
         }
 
         public PendingIntent CreatePendingIntent()
@@ -168,6 +207,7 @@ namespace BaBookApp
 
         public void ShowNotifications(string message)
         {
+            if (_activityDestroyed) return;
             if (!ShowNotification) return;
             _notificationChatMessages.Add(message);
             var notificationStyle = new Notification.InboxStyle();
@@ -212,6 +252,9 @@ namespace BaBookApp
                 NetworkErrorMessage.Show();
                 return;
             }
+
+            if(_chatHub == null || _chat == null)return;
+
             var messageTxt = FindViewById<EditText>(Resource.Id.Chat_MessageTxt);
             var imm = (InputMethodManager) GetSystemService(InputMethodService);
             imm.HideSoftInputFromWindow(messageTxt.WindowToken, 0);

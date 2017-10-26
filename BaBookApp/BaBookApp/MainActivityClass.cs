@@ -26,6 +26,7 @@ namespace BaBookApp
         public static int EventId;
         public static bool StartLogin;
         public static bool ShowNotification;
+        public static bool MuteNotification;
         private ISharedPreferences _storageReference;
         public HttpClient ApiClient;
         public Toast ErrorMessage;
@@ -38,7 +39,6 @@ namespace BaBookApp
         public MainActivityCalss()
         {
             ApiClient = new HttpClient {BaseAddress = new Uri(Url)};
-            ShowNotification = true;
         }
 
         protected override async void OnCreate(Bundle savedInstanceState)
@@ -209,6 +209,8 @@ namespace BaBookApp
         {
             _storageReference = Application.Context.GetSharedPreferences("Token", FileCreationMode.Private);
             UserToken.UserAccessToken = _storageReference.GetString("UserToken", null);
+            ShowNotification = _storageReference.GetBoolean("Notification", false);
+            MuteNotification = _storageReference.GetBoolean("NotificationMute", false);
         }
 
         public bool IsNetworkConnected()
